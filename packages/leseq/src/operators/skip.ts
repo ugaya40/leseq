@@ -1,6 +1,6 @@
 import { Gen, Seq } from '../seq';
 
-export const drop = <T>(count: number) =>
+export const skip = <T>(count: number) =>
   function* (source: Seq<T>): Gen<T> {
     let current = 0;
     for (const i of source) {

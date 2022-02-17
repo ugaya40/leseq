@@ -1,4 +1,4 @@
-import { concat, concatValue, drop, dropWhile, filter, flatten, from, map, orderBy, take, takeWhile, tap, uniq } from '../src';
+import { concat, concatValue, skip, skipWhile, filter, flatten, from, map, orderBy, take, takeWhile, tap, uniq } from '../src';
 
 test('operator: simple concat', () => {
   const output = from([1, 2, 3, 4, 5])
@@ -12,19 +12,19 @@ test('operator: simple concatValue', () => {
   expect(output).toEqual([1, 2, 3, 4, 5, 6]);
 });
 
-test('operator: simple drop', () => {
-  const output = from([1, 2, 3, 4, 5]).pipe(drop(2)).toArray();
+test('operator: simple skip', () => {
+  const output = from([1, 2, 3, 4, 5]).pipe(skip(2)).toArray();
   expect(output).toEqual([3, 4, 5]);
 });
 
-test('operator: drop over count', () => {
-  const output = from([1, 2, 3, 4, 5]).pipe(drop(10)).toArray();
+test('operator: skip over count', () => {
+  const output = from([1, 2, 3, 4, 5]).pipe(skip(10)).toArray();
   expect(output).toEqual([]);
 });
 
-test('operator: simple dropWhile', () => {
+test('operator: simple skipWhile', () => {
   const output = from([2, 4, 5, 6, 7, 8])
-    .pipe(dropWhile(i => i % 2 == 0))
+    .pipe(skipWhile(i => i % 2 == 0))
     .toArray();
   expect(output).toEqual([5, 6, 7, 8]);
 });
@@ -129,7 +129,7 @@ test('operator: orderBy keySelector', () => {
   ]);
 });
 
-test('operator: orderBy compareFunction', () => {
+test('operator: orderBy compareFunction1', () => {
   const output = from([1, 2, 3, 4, 5, 6])
     .pipe(
       orderBy(
@@ -144,6 +144,19 @@ test('operator: orderBy compareFunction', () => {
     )
     .toArray();
   expect(output).toEqual([6, 5, 4, 3, 2, 1]);
+});
+
+test('operator: orderBy compareFunction2', () => {
+  const originalCompareFunction = (a: number, b:number) => {
+    if(a % 2 < b % 2) return - 1;
+    if(a % 2 > b % 2) return 1;
+    return 0;
+  }
+  
+  const output = from([4,1,5,3,2]).pipe(
+    orderBy(i => i, 'asc', originalCompareFunction)
+  ).toArray();
+  expect(output).toEqual([4,2,1,5,3]);
 });
 
 test('operator: simple take', () => {

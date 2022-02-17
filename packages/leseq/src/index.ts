@@ -14,8 +14,8 @@ export { filter } from './operators/filter';
 export { flatten } from './operators/flatten';
 export { take } from './operators/take';
 export { takeWhile } from './operators/takeWhile';
-export { drop } from './operators/drop';
-export { dropWhile } from './operators/dropWhile';
+export { skip } from './operators/skip';
+export { skipWhile } from './operators/skipWhile';
 //pure
 export { Seq, type Gen } from './seq';
 //value

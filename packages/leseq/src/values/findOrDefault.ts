@@ -1,7 +1,7 @@
 import { Seq } from '../seq';
 
 export const findOrDefault =
-  <T>(predicate: (arg: T, index: number) => boolean = () => true, defaultValue: T | undefined = undefined) =>
+  <T>(predicate: (arg: T, index: number) => boolean, defaultValue: T | undefined = undefined) =>
   (seq: Seq<T>): T | undefined => {
     let count = 0;
     for (const i of seq) {

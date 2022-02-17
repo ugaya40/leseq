@@ -1,6 +1,6 @@
 import { Gen, Seq } from '../seq';
 
-export const dropWhile = <T>(predicate: (arg: T) => boolean) =>
+export const skipWhile = <T>(predicate: (arg: T) => boolean) =>
   function* (source: Seq<T>): Gen<T> {
     let skipCompleted = false;
     for (const i of source) {
