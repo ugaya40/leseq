@@ -1,7 +1,7 @@
 import { Seq } from '../seq';
 
 export const find =
-  <T>(predicate: (arg: T, index: number) => boolean) =>
+  <T>(predicate: (arg: T, index: number) => boolean = () => true) =>
   (seq: Seq<T>): T => {
     let count = 0;
     for (const i of seq) {

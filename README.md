@@ -14,7 +14,7 @@ Lazy evaluation list with high tree-shaking affinity and easy customization.
 npm install leseq
 ```
 ```
-import {from, map, take,find} from 'leseq';
+import {from, map, take, find} from 'leseq';
 
 const result1 = from([1,2,3,4,5]).pipe(
   map(i => i * i),
@@ -206,7 +206,7 @@ const result2 = from([1,3,5,7]).value(findOrDefault(i => i % 2 == 0, 9999));
 # Create original functions
 ## Original Operator
 ```
-import { Seq, type Gen } from 'leseq';
+import { Seq, from, type Gen } from 'leseq';
 
 const mapOriginal = <T, TResult>(func: (arg: T, index: number) => TResult) =>
   function* (source: Seq<T>): Gen<TResult> {
@@ -227,7 +227,7 @@ const result = from([1,2,3]).pipe(
 
 ## Original Value
 ```
-import { Seq } from 'leseq';
+import { Seq, from } from 'leseq';
 
 const everyOriginal =
   <T>(predicate: (arg: T) => boolean) =>
