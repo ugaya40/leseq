@@ -1,0 +1,37 @@
+{
+  "name": "leseq",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "license": "MIT",
+  "description": "Lazy evaluation list with high tree-shaking affinity and easy customization.",
+  "sideEffects": false,
+  "author": "Masanori Onoue <ugaya40@hotmail.com> (https://github.com/ugaya40)",
+  "repository": "git://github.com/ugaya40/leseq.git",
+  "files": [
+    "dist/"
+  ],
+  "keywords": [
+    "lazy",
+    "util",
+    "sequence",
+    "collection",
+    "treeshaking"
+  ],
+  "scripts": {
+    "build": "run-s fmt cleanBuildDir build:tsc",
+    "build:tsc": "tsc",
+    "fmt": "prettier --write \"src/**/*.ts\"",
+    "cleanBuildDir": "node -e \"if(require('fs').existsSync('dist')) require('fs').rmSync('dist',{recursive:true})\"",
+    "test": "jest",
+    "pk": "npm pack"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.4.0",
+    "jest": "^27.4.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.5.1",
+    "typescript": "^4.5.4",
+    "ts-jest": "^27.1.3"
+  }
+}

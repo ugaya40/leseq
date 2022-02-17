@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "yarn workspace leseq build",
+    "test": "yarn workspace leseq test",
+    "pk": "yarn workspace leseq pk",
+    "treeShaking": "yarn workspace treeshaking-inspect build"
+  },
+  "devDependencies": {
+    "node-sass": "^7.0.1",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.5.1",
+    "typescript": "^4.5.4"
+  }
+}
