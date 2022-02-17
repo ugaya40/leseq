@@ -1,6 +1,6 @@
 {
   "name": "leseq",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
@@ -9,7 +9,8 @@
   "author": "Masanori Onoue <ugaya40@hotmail.com> (https://github.com/ugaya40)",
   "repository": "git://github.com/ugaya40/leseq.git",
   "files": [
-    "dist/"
+    "dist/",
+    "../../README.md"
   ],
   "keywords": [
     "lazy",
@@ -24,7 +25,10 @@
     "fmt": "prettier --write \"src/**/*.ts\"",
     "cleanBuildDir": "node -e \"if(require('fs').existsSync('dist')) require('fs').rmSync('dist',{recursive:true})\"",
     "test": "jest",
-    "pk": "npm pack"
+    "copyReadMe": "node -e \"require('fs').copyFileSync('../../README.md','README.md')\"",
+    "removeReadMe": "node -e \"require('fs').unlinkSync('README.md')\"",
+    "pub:internal": "yarn publish",
+    "pub": "run-s copyReadMe pub:internal removeReadMe"
   },
   "devDependencies": {
     "@types/jest": "^27.4.0",
