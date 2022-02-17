@@ -1,6 +1,6 @@
 {
   "name": "leseq",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
@@ -31,7 +31,7 @@
     "jest": "^27.4.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.5.1",
-    "typescript": "^4.5.4",
-    "ts-jest": "^27.1.3"
+    "ts-jest": "^27.1.3",
+    "typescript": "^4.5.4"
   }
 }
