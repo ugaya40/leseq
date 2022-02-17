@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/leseq.svg)](https://badge.fury.io/js/leseq)
+
 Lazy evaluation list with high tree-shaking affinity and easy customization.
 
 # Features

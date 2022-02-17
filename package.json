@@ -6,7 +6,7 @@
   "scripts": {
     "build": "yarn workspace leseq build",
     "test": "yarn workspace leseq test",
-    "pk": "yarn workspace leseq pk",
+    "pub": "yarn workspace leseq pub",
     "treeShaking": "yarn workspace treeshaking-inspect build"
   },
   "devDependencies": {
