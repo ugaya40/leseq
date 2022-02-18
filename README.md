@@ -13,7 +13,7 @@ Lazy evaluation list with high tree-shaking affinity and easy customization.
 ```
 npm install leseq
 ```
-```
+```typescript
 import {from, map, take, find} from 'leseq';
 
 const result1 = from([1,2,3,4,5]).pipe(
@@ -49,13 +49,13 @@ Generate Seq&lt;T&gt; Object.
 - **from&lt;T&gt;(source: Iterable&lt;T&gt;)**: Generates a sequence from an iterable object.
 - **fromValue&lt;T&gt;(source: T)**: Generates a sequence from a single value.
 - **fromConcat&lt;T&gt;(...args: (Iterable&lt;T&gt; | Seq&lt;T&gt;)[])**: Combines multiple iterable objects to generate a sequence.
-```
+```typescript
 const result = fromConcat([1,2],[3,4,5]).toArray();
 
 //result: [1,2,3,4,5]
 ```
 - **range(start: number, count: number)**: Generates a sequential number sequence.
-```
+```typescript
 const result = range(5,10).toArray();
 
 //result: [5,6,7,8,9,10,11,12,13,14]
@@ -67,7 +67,7 @@ It is used within the pipe method of the Seq&lt;T&gt; object. Any number of oper
 - **map&lt;T,TResult&gt(func: (arg: T, index: number) => TResult)**
 - **concat&lt;T&gt;(target: Iterable&lt;T&gt;)**: Connects target sequence.
 - **concatValue&lt;T&gt;(target: T)**: Adds target value to the sequence.
-```
+```typescript
 const result = from([1,2]).pipe(
   concat([3,4]),
   concatValue(5)
@@ -77,7 +77,7 @@ const result = from([1,2]).pipe(
 ```
 - **skip&lt;T&gt;(count: number)**: Skips the specified number of enumerations.
 - **skipWhile&lt;T&gt;(predicate: (arg: T) => boolean)**: Skip enumeration while the specified condition is met.
-```
+```typescript
 const result1 = range(1,10).pipe(
   skip(3)
 ).toArray()
@@ -92,7 +92,7 @@ const result2 = range(1,10).pipe(
 ```
 - **take&lt;T&gt;(count: number)**: Enumerate the specified number of items.
 - **takeWhile&lt;T&gt;(predicate: (arg: T) => boolean)**: Enumerate only while the specified condition is met.
-```
+```typescript
 const result1 = range(1,10).pipe(
   take(3)
 ).toArray()
@@ -106,7 +106,7 @@ const result2 = range(1,10).pipe(
 //result2: [1,2,3,4]
 ```
 - **flatten&lt;T, TResult&gt;(func: (arg: T, index: number) => Iterable&lt;TResult&gt;)**: Flatten the sequence.
-```
+```typescript
 const result = from([[1,2],[3,4]]).pipe(
   flatten(i => i)
 );
@@ -115,7 +115,7 @@ const result = from([[1,2],[3,4]]).pipe(
 ```
 
 - **tap&lt;T&gt;(func: (arg: T, index: number) => void)**: Perform side effect. Does not affect the value passed to subsequent
-```
+```typescript
 const result = from([1,2,3]).pipe(
   tap(i => console.log(i * i))
 ).toArray();
@@ -129,7 +129,7 @@ const result = from([1,2,3]).pipe(
 ```
 
 - **uniq&lt;T&gt;(keySector: (source: T) => any)**: Eliminate duplicates.
-```
+```typescript
 const result = from([1,1,3,2,4,4,4,1,5]).pipe(
   uniq(i => i)
 ).toArray();
@@ -137,14 +137,14 @@ const result = from([1,1,3,2,4,4,4,1,5]).pipe(
 //result: [1,3,2,4,5]
 ```
 - **orderBy&lt;T, TKey&gt;(keySelector: (arg: T) => TKey, sortType: ('asc' | 'desc') = 'asc', compareFunction?: (a: TKey, b: TKey) => number)**: Reorder the sequence.The default implementation of compareFunction is as follows.
-```
+```typescript
 const defaultSortFunction = (a: any, b: any) => {
   if (a < b) return -1;
   if (a > b) return 1;
   return 0;
 };
 ```
-```
+```typescript
 const result1 = from([4,1,2,5,3]).pipe(
   orderBy(i => i, 'asc')
 ).toArray();
@@ -169,7 +169,7 @@ Generates a value from a sequence. Used in the value method of the Seq&lt;T&gt; 
 - **toArray&lt;T&gt;():T[]**: Returns the sequence as an array.
 - **reduce&lt;T, TAccumulate&gt;(seed: TAccumulate, func: (previous: TAccumulate, current: T, index: number) => TAccumulate):TAccumulate**
 - **every&lt;T&gt;(predicate: (arg: T) => boolean):boolean**: Returns whether or not all elements of a sequence meet the specified conditions.
-```
+```typescript
 const result1 = from([2,4,6]).value(every(i => i % 2 == 0));
 
 //result1: true
@@ -179,7 +179,7 @@ const result2 = from([2,4,6,7]).value(every(i => i % 2 == 0));
 //result2: false
 ```
 - **some&lt;T&gt;(predicate: (arg: T) => boolean):boolean**: Returns whether any element of the sequence satisfies the specified condition.
-```
+```typescript
 const result1 = from([1,3,5,6,7]).value(some(i => i % 2 == 0));
 
 //result1: true
@@ -193,7 +193,7 @@ const result2 = from([1,3,5,7]).value(some(i => i % 2 == 0));
 
 - **findOrDefault&lt;T&gt;(predicate: (arg: T, index: number) => boolean, defaultValue: T | undefined = undefined): T | undefined**: Returns the first item that satisfies the specified condition. You can specify the item to be returned if it is not found.
 
-```
+```typescript
 const result1 = from([1,2,3,4]).value(find(i => i % 2 == 0));
 
 //result1: 2
@@ -205,7 +205,7 @@ const result2 = from([1,3,5,7]).value(findOrDefault(i => i % 2 == 0, 9999));
 
 # Create original functions
 ## Original Operator
-```
+```typescript
 import { Seq, from, type Gen } from 'leseq';
 
 const mapOriginal = <T, TResult>(func: (arg: T, index: number) => TResult) =>
@@ -226,7 +226,7 @@ const result = from([1,2,3]).pipe(
 ```
 
 ## Original Value
-```
+```typescript
 import { Seq, from } from 'leseq';
 
 const everyOriginal =
