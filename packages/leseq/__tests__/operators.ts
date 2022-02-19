@@ -1,4 +1,4 @@
-import { concat, concatValue, skip, skipWhile, filter, flatten, from, map, orderBy, take, takeWhile, tap, uniq } from '../src';
+import { concat, concatValue, skip, skipWhile, filter, flatten, from, map, orderBy, take, takeWhile, tap, uniq, groupBy, chunk, scan, union, difference, intersect } from '../src';
 
 test('operator: simple concat', () => {
   const output = from([1, 2, 3, 4, 5])
@@ -201,9 +201,74 @@ test('operator: tap index', () => {
   expect(sideEffects).toEqual([1, 4, 9]);
 });
 
-test('operator: simple uniq', () => {
+test('operator: simple uniq 1', () => {
+  const output = from([1, 1, 2, 3, 2, 1, 3])
+    .pipe(uniq())
+    .toArray();
+  expect(output).toEqual([1, 2, 3]);
+});
+
+test('operator: simple uniq 2', () => {
   const output = from([1, 1, 2, 3, 2, 1, 3])
     .pipe(uniq(i => i))
     .toArray();
   expect(output).toEqual([1, 2, 3]);
 });
+
+test('operator: simple chunk', () => {
+  const output = from([1, 2, 3, 4, 5, 6, 7]).pipe(chunk(2)).toArray();
+  expect(output).toEqual([[1, 2],[3,4],[5,6],[7]]);
+});
+
+test('operator: simple scan', () => {
+  const indexes: number[] = [];
+  const output = from([1, 2, 3, 4, 5]).pipe(
+    scan(100, (acc, i, index) => {
+      indexes.push(index);
+      return acc + i;
+    })
+  ).toArray();
+  expect(indexes).toEqual([0, 1, 2, 3, 4]);
+  expect(output).toEqual([101, 103, 106, 110, 115]);
+});
+
+test('operator: simple groupBy',() => {
+  const source = [
+    {groupKey: 1, value: "test1"},
+    {groupKey: 3, value: "test2"},
+    {groupKey: 1, value: "test3"},
+    {groupKey: 1, value: "test4"},
+    {groupKey: 3, value: "test5"},
+    {groupKey: 2, value: "test6"}
+  ]
+
+  const output = from(source).pipe(groupBy(one => one.groupKey),).toArray();
+
+  expect(output).toEqual([
+    {key: 1, values: [{groupKey: 1, value: "test1"}, {groupKey: 1, value: "test3"}, {groupKey: 1, value: "test4"}]},
+    {key: 3, values: [{groupKey: 3, value: "test2"}, {groupKey: 3, value: "test5"}]},
+    {key: 2, values: [{groupKey: 2, value: "test6"}]}
+  ]);
+});
+
+test('operator: simple union', () => {
+  const output = from([1, 2, 3]).pipe(union([2,3,4,5])).toArray();
+  expect(output).toEqual([1,2,3,4,5]);
+});
+
+test('operator: simple difference', () => {
+  const output = from([1, 2, 3, 6]).pipe(difference([2,3,4,5])).toArray();
+  expect(output).toEqual([1,6]);
+});
+
+test('operator: difference removeDuplicate', () => {
+  const output = from([1, 2, 3, 6, 6]).pipe(difference([2,3,4,5],i => i, false)).toArray();
+  expect(output).toEqual([1,6,6]);
+});
+
+
+test('operator: simple intersect', () => {
+  const output = from([1, 2, 3]).pipe(intersect([2,3,4,5])).toArray();
+  expect(output).toEqual([2,3]);
+});
+

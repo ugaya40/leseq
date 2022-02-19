@@ -1,4 +1,4 @@
-import { find, from, some, take, takeWhile } from '../src';
+import { find, from, map, some, take, takeWhile } from '../src';
 
 function createTestIterator(start: number, count: number) {
   const readed: number[] = [];

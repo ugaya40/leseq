@@ -60,6 +60,12 @@ const result = range(5,10).toArray();
 
 //result: [5,6,7,8,9,10,11,12,13,14]
 ```
+- **repeat&lt;T&gt;(target: T, count: number)**: Generates a sequence in which the specified value is repeated a specified number of times.
+```typescript
+const result = repeat(5,3).toArray();
+
+//result: [5,5,5]
+```
 
 ## Predefined Operators
 It is used within the pipe method of the Seq&lt;T&gt; object. Any number of operators can be connected.
