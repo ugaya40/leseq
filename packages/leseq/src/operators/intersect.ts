@@ -1,20 +1,21 @@
 import { Gen, Seq } from '../seq';
 import { defaultSelector } from '../utils/defaultSelector';
 
-export const intersect = <T,TKey = T>(target: Iterable<T>, keySector: (one: T) => TKey = defaultSelector) =>
+export const intersect = <T,TKey = T, TComparableValue = string | number>(target: Iterable<T>, keySelector: (one: T) => TKey = defaultSelector, equalityValueForKey?: (key: TKey) => TComparableValue) =>
   function* (source: Seq<T>): Gen<T> {
-    const appeared: Set<TKey> = new Set();
+    const appeared: Set<TKey | TComparableValue> = new Set();
+    const createKeyValue = (i: T) => equalityValueForKey ? equalityValueForKey(keySelector(i)) : keySelector(i);
 
     for(const i of target) {
-      const key = keySector(i)
-      if (!appeared.has(key)) {
-        appeared.add(key);
+      const keyValue = createKeyValue(i);
+      if (!appeared.has(keyValue)) {
+        appeared.add(keyValue);
       }
     }
 
     for (const i of source) {
-      const key = keySector(i)
-      if (appeared.has(key)) {
+      const keyValue = createKeyValue(i);
+      if (appeared.has(keyValue)) {
         yield i;
       }
     }
