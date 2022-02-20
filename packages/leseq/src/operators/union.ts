@@ -1,10 +1,10 @@
 import { Gen, Seq } from '../seq';
 import { defaultSelector } from '../utils/defaultSelector';
 
-export const union = <T,TKey = T, TComparableValue = string | number>(target: Iterable<T>, keySelector: (one: T) => TKey = defaultSelector, equalityValueForKey?: (key: TKey) => TComparableValue) =>
+export const union = <T,TComparableValue, TKey = T>(target: Iterable<T>, keySelector: (one: T) => TKey = defaultSelector, comparableValueForKey?: (key: TKey) => TComparableValue) =>
   function* (source: Seq<T>): Gen<T> {
     const appeared: Set<TKey | TComparableValue> = new Set();
-    const createKeyValue = (i: T) => equalityValueForKey ? equalityValueForKey(keySelector(i)) : keySelector(i);
+    const createKeyValue = (i: T) => comparableValueForKey ? comparableValueForKey(keySelector(i)) : keySelector(i);
     for (const i of source) {
       const keyValue = createKeyValue(i)
       if (!appeared.has(keyValue)) {

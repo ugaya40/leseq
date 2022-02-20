@@ -215,6 +215,44 @@ test('operator: simple uniq 2', () => {
   expect(output).toEqual([1, 2, 3]);
 });
 
+test('operator: uniq value equality 1',() => {
+  const source = [
+    {groupKey: {mainKey: 1, subKey: 'a'}, value: "test1"},
+    {groupKey: {mainKey: 2, subKey: 'b'}, value: "test2"},
+    {groupKey: {mainKey: 1, subKey: 'a'}, value: "test3"},
+    {groupKey: {mainKey: 1, subKey: 'c'}, value: "test4"},
+  ]
+
+  const output = from(source).pipe(uniq(one => one.groupKey),).toArray();
+
+  expect(output).toEqual([
+    {groupKey: {mainKey: 1, subKey: 'a'}, value: "test1"},
+    {groupKey: {mainKey: 2, subKey: 'b'}, value: "test2"},
+    {groupKey: {mainKey: 1, subKey: 'a'}, value: "test3"},
+    {groupKey: {mainKey: 1, subKey: 'c'}, value: "test4"},
+  ]);
+});
+
+test('operator: simple uniq value equality 2',() => {
+
+  const source = [
+    {groupKey: {mainKey: 1, subKey: 'a'}, value: "test1"},
+    {groupKey: {mainKey: 2, subKey: 'b'}, value: "test2"},
+    {groupKey: {mainKey: 1, subKey: 'a'}, value: "test3"},
+    {groupKey: {mainKey: 1, subKey: 'c'}, value: "test4"},
+  ]
+
+  const comparableValueForKey = (key: {mainKey: number, subKey: string}) => key.mainKey + key.subKey;
+
+  const output = from(source).pipe(uniq(one => one.groupKey,comparableValueForKey)).toArray();
+
+  expect(output).toEqual([
+    {groupKey: {mainKey: 1, subKey: 'a'}, value: "test1"},
+    {groupKey: {mainKey: 2, subKey: 'b'}, value: "test2"},
+    {groupKey: {mainKey: 1, subKey: 'c'}, value: "test4"},
+  ]);
+});
+
 test('operator: simple chunk', () => {
   const output = from([1, 2, 3, 4, 5, 6, 7]).pipe(chunk(2)).toArray();
   expect(output).toEqual([[1, 2],[3,4],[5,6],[7]]);
@@ -248,6 +286,42 @@ test('operator: simple groupBy',() => {
     {key: 1, values: [{groupKey: 1, value: "test1"}, {groupKey: 1, value: "test3"}, {groupKey: 1, value: "test4"}]},
     {key: 3, values: [{groupKey: 3, value: "test2"}, {groupKey: 3, value: "test5"}]},
     {key: 2, values: [{groupKey: 2, value: "test6"}]}
+  ]);
+});
+
+test('operator: groupBy value equality 1',() => {
+
+  const source = [
+    {groupKey: {groupKey: 1}, value: "test1"},
+    {groupKey: {groupKey: 2}, value: "test2"},
+    {groupKey: {groupKey: 1}, value: "test3"},
+    {groupKey: {groupKey: 1}, value: "test4"},
+  ]
+
+  const output = from(source).pipe(groupBy(one => one.groupKey),).toArray();
+
+  expect(output).toEqual([
+    {key: {groupKey: 1}, values: [{groupKey: {groupKey: 1}, value: "test1"}]},
+    {key: {groupKey: 2}, values: [{groupKey: {groupKey: 2}, value: "test2"}]},
+    {key: {groupKey: 1}, values: [{groupKey: {groupKey: 1}, value: "test3"}]},
+    {key: {groupKey: 1}, values: [{groupKey: {groupKey: 1}, value: "test4"}]},
+  ]);
+});
+
+test('operator: groupBy value equality 1',() => {
+
+  const source = [
+    {groupKey: {groupKey: 1}, value: "test1"},
+    {groupKey: {groupKey: 2}, value: "test2"},
+    {groupKey: {groupKey: 1}, value: "test3"},
+    {groupKey: {groupKey: 1}, value: "test4"},
+  ]
+
+  const output = from(source).pipe(groupBy(one => one.groupKey,i => i,k => k.groupKey),).toArray();
+
+  expect(output).toEqual([
+    {key: {groupKey: 1}, values: [{groupKey: {groupKey: 1}, value: "test1"}, {groupKey: {groupKey: 1}, value: "test3"},{groupKey: {groupKey: 1}, value: "test4"}]},
+    {key: {groupKey: 2}, values: [{groupKey: {groupKey: 2}, value: "test2"}]}
   ]);
 });
 

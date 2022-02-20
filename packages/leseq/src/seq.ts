@@ -21,11 +21,11 @@ export class Seq<T> {
     return this.source[Symbol.iterator]();
   }
 
-  pipe<T1>(op1: Operator<T, T1>): PipelineSeq<T1>;
-  pipe<T1, T2>(op1: Operator<T, T1>, op2: Operator<T1, T2>): PipelineSeq<T2>;
-  pipe<T1, T2, T3>(op1: Operator<T, T1>, op2: Operator<T1, T2>, op3: Operator<T2, T3>): PipelineSeq<T3>;
-  pipe<T1, T2, T3, T4>(op1: Operator<T, T1>, op2: Operator<T1, T2>, op3: Operator<T2, T3>, op4: Operator<T3, T4>): PipelineSeq<T4>;
-  pipe<T1, T2, T3, T4, T5>(op1: Operator<T, T1>, op2: Operator<T1, T2>, op3: Operator<T2, T3>, op4: Operator<T3, T4>, op5: Operator<T4, T5>): PipelineSeq<T5>;
+  pipe<T1>(op1: Operator<T, T1>): Seq<T1>;
+  pipe<T1, T2>(op1: Operator<T, T1>, op2: Operator<T1, T2>): Seq<T2>;
+  pipe<T1, T2, T3>(op1: Operator<T, T1>, op2: Operator<T1, T2>, op3: Operator<T2, T3>): Seq<T3>;
+  pipe<T1, T2, T3, T4>(op1: Operator<T, T1>, op2: Operator<T1, T2>, op3: Operator<T2, T3>, op4: Operator<T3, T4>): Seq<T4>;
+  pipe<T1, T2, T3, T4, T5>(op1: Operator<T, T1>, op2: Operator<T1, T2>, op3: Operator<T2, T3>, op4: Operator<T3, T4>, op5: Operator<T4, T5>): Seq<T5>;
   pipe<T1, T2, T3, T4, T5, T6>(
     op1: Operator<T, T1>,
     op2: Operator<T1, T2>,
@@ -33,7 +33,7 @@ export class Seq<T> {
     op4: Operator<T3, T4>,
     op5: Operator<T4, T5>,
     op6: Operator<T5, T6>
-  ): PipelineSeq<T6>;
+  ): Seq<T6>;
   pipe<T1, T2, T3, T4, T5, T6, T7>(
     op1: Operator<T1, T2>,
     op2: Operator<T2, T3>,
@@ -41,7 +41,7 @@ export class Seq<T> {
     op4: Operator<T4, T5>,
     op5: Operator<T5, T6>,
     op6: Operator<T6, T7>
-  ): PipelineSeq<T7>;
+  ): Seq<T7>;
   pipe<T1, T2, T3, T4, T5, T6, T7, T8>(
     op1: Operator<T1, T2>,
     op2: Operator<T2, T3>,
@@ -50,7 +50,7 @@ export class Seq<T> {
     op5: Operator<T5, T6>,
     op6: Operator<T6, T7>,
     op7: Operator<T7, T8>
-  ): PipelineSeq<T8>;
+  ): Seq<T8>;
   pipe<T1, T2, T3, T4, T5, T6, T7, T8, T9>(
     op1: Operator<T1, T2>,
     op2: Operator<T2, T3>,
@@ -60,7 +60,7 @@ export class Seq<T> {
     op6: Operator<T6, T7>,
     op7: Operator<T7, T8>,
     op8: Operator<T8, T9>
-  ): PipelineSeq<T9>;
+  ): Seq<T9>;
   pipe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(
     op1: Operator<T1, T2>,
     op2: Operator<T2, T3>,
@@ -71,7 +71,7 @@ export class Seq<T> {
     op7: Operator<T7, T8>,
     op8: Operator<T8, T9>,
     op9: Operator<T9, T10>
-  ): PipelineSeq<T10>;
+  ): Seq<T10>;
   pipe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(
     op1: Operator<T1, T2>,
     op2: Operator<T2, T3>,
@@ -83,7 +83,7 @@ export class Seq<T> {
     op8: Operator<T8, T9>,
     op9: Operator<T9, T10>,
     op10: Operator<T10, T11>
-  ): PipelineSeq<T11>;
+  ): Seq<T11>;
   pipe(...operators: Operator[]): Seq<T> {
     if (operators.length === 0) {
       return this;
