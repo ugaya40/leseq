@@ -23,6 +23,7 @@ export { skipWhile } from './operators/skipWhile';
 export { union } from './operators/union';
 export { difference } from './operators/difference';
 export { intersect } from './operators/intersect';
+export { reverse } from './operators/reverse';
 //pure
 export { Seq, Gen } from './seq';
 //value

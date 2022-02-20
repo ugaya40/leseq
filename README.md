@@ -316,6 +316,14 @@ const result3 = from([1, 2, 3]).pipe(intersect([2,3,4,5])).toArray();
 //result3: [2,3]
 ```
 
+- **reverse&lt;T&gt;()**: Enumerate the sequence in reverse order.
+
+```typescript
+const result = from([1, 2, 3, 4, 5]).pipe(reverse()).toArray();
+
+//result: [5,4,3,2,1]
+```
+
 ## Predefined Values
 Generates a value from a sequence. Used in the value method of the Seq&lt;T&gt; object.
 - **toArray&lt;T&gt;():T[]**: Returns the sequence as an array.

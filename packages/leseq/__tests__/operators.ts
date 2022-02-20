@@ -1,4 +1,4 @@
-import { concat, concatValue, skip, skipWhile, filter, flatten, from, map, orderBy, take, takeWhile, tap, uniq, groupBy, chunk, scan, union, difference, intersect } from '../src';
+import { concat, concatValue, skip, skipWhile, filter, flatten, from, map, orderBy, take, takeWhile, tap, uniq, groupBy, chunk, scan, union, difference, intersect, reverse } from '../src';
 
 test('operator: simple concat', () => {
   const output = from([1, 2, 3, 4, 5])
@@ -340,9 +340,13 @@ test('operator: difference removeDuplicate', () => {
   expect(output).toEqual([1,6,6]);
 });
 
-
 test('operator: simple intersect', () => {
   const output = from([1, 2, 3]).pipe(intersect([2,3,4,5])).toArray();
   expect(output).toEqual([2,3]);
+});
+
+test('operator: simple reverse', () => {
+  const output = from([1, 2, 3, 4, 5]).pipe(reverse()).toArray();
+  expect(output).toEqual([5,4,3,2,1]);
 });
 
