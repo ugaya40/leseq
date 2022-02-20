@@ -1,6 +1,6 @@
 {
   "name": "leseq",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
@@ -28,7 +28,7 @@
     "copyReadMe": "node -e \"require('fs').copyFileSync('../../README.md','README.md')\"",
     "removeReadMe": "node -e \"require('fs').unlinkSync('README.md')\"",
     "pub:internal": "yarn publish",
-    "pub": "run-s copyReadMe pub:internal removeReadMe"
+    "pub": "run-s build copyReadMe pub:internal removeReadMe"
   },
   "devDependencies": {
     "@types/jest": "^27.4.0",
