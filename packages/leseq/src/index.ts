@@ -24,7 +24,7 @@ export { union } from './operators/union';
 export { difference } from './operators/difference';
 export { intersect } from './operators/intersect';
 //pure
-export { Seq, type Gen } from './seq';
+export { Seq, Gen } from './seq';
 //value
 export { every } from './values/every';
 export { some } from './values/some';
