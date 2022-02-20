@@ -37,6 +37,12 @@ Here are the results of the Bundle Analyzer for the above example. You can see t
 <img width="500" src="https://user-images.githubusercontent.com/1430166/154478759-126c874e-e33c-4f6e-a5f7-e4ba9c8e0211.png">
 
 # Usage
+
+<h2>
+<a href target=”_blank” src='https://stackblitz.com/edit/typescript-vygaa6?file=index.ts'>Live Demo - StackBlitz</a>
+</h2>
+
+
 You can generate a sequence(Seq&lt;T&gt; object) with **Generator**, perform transformations and other operations with any number of **Operators**, and convert it to a value with **Value**.
 ```
 Generators(ex: from, fromConcat, ..etc).pipe(
