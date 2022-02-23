@@ -6604,11 +6604,6 @@ latest-version@^5.1.0:
   dependencies:
     package-json "^6.3.0"
 
-leseq@latest:
-  version "1.1.8"
-  resolved "https://registry.yarnpkg.com/leseq/-/leseq-1.1.8.tgz#8885f32709403a933a84a2e4eafca10f6c99d814"
-  integrity sha512-LkU4gm4VMwOAR6m4xWRRZm9SLaWHdU5uXa/bJEv8sBM4UMi7exEusEI/J0Dv0lApiveADESDB3nL2L/irIlrPA==
-
 leven@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/leven/-/leven-3.1.0.tgz#77891de834064cccba82ae7842bb6b14a13ed7f2"

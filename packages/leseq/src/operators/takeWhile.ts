@@ -2,15 +2,15 @@ import { Gen, Operator, Seq } from '../seq';
 
 /**
  * Returns a sequence to be enumerated only while the condition is matched.
- * 
+ *
  * ```typescript
  * const result = range(1,10).pipe(
  *   takeWhile(i => i < 5)
  * ).toArray()
- * 
+ *
  * //result: [1,2,3,4]
  * ```
- * 
+ *
  * @param predicate Condition.
  * @typeParam T Source element type.
  * @returns Operator function.

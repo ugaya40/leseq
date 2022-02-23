@@ -3,15 +3,15 @@ import { Seq } from '../seq';
 /**
  * Returns the result of applying the aggregate function to the elements of the current sequence.
  * The difference with [scan()](/api/operators/#scan) is that it only returns the final result.
- * 
+ *
  * ```typescript
  * const output = from([1, 2, 3, 4, 5]).value(
  *   reduce(100, (acc, i) => acc + i)
  * );
- * 
+ *
  * //result: 115
  * ```
- * 
+ *
  * @param seed This is the initial value for aggregation.
  * @param func Aggregate function.
  * @typeParam T Source element type.

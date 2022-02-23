@@ -49,7 +49,7 @@ import { defaultSelector } from '../utils/defaultSelector';
  * @typeParam TComparableValue The type of the return value returned by *comparableValueForKey*.
  *
  * @remarks For more information on *keySelector* and *comparableValueForKey*, please refer to [Equality Strategy](/#equality-strategy).
- * 
+ *
  * @remarks The implementation of *defaultSelector* is as follows.
  * ```typescript
  * export const defaultSelector = (target: any): any => target;
