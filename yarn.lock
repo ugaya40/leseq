@@ -1400,7 +1400,7 @@
     react-json-view "^1.21.3"
     tslib "^2.3.1"
 
-"@docusaurus/plugin-google-analytics@2.0.0-beta.15":
+"@docusaurus/plugin-google-analytics@2.0.0-beta.15", "@docusaurus/plugin-google-analytics@^2.0.0-beta.15":
   version "2.0.0-beta.15"
   resolved "https://registry.yarnpkg.com/@docusaurus/plugin-google-analytics/-/plugin-google-analytics-2.0.0-beta.15.tgz#6ffebe76d9caac5383cfb78d2baa5883c9c2df6c"
   integrity sha512-ELAnxNYiC2i7gfu/ViurNIdm1/DdnbEfVDmpffS9niQhOREM1U3jpxkz/ff1GIC6heOLyHTtini/CZBDoroVGw==
@@ -6603,11 +6603,6 @@ latest-version@^5.1.0:
   integrity sha512-weT+r0kTkRQdCdYCNtkMwWXQTMEswKrFBkm4ckQOMVhhqhIMI1UT2hMj+1iigIhgSZm5gTmrRXBNoGUgaTY1xA==
   dependencies:
     package-json "^6.3.0"
-
-leseq@latest:
-  version "1.1.8"
-  resolved "https://registry.yarnpkg.com/leseq/-/leseq-1.1.8.tgz#8885f32709403a933a84a2e4eafca10f6c99d814"
-  integrity sha512-LkU4gm4VMwOAR6m4xWRRZm9SLaWHdU5uXa/bJEv8sBM4UMi7exEusEI/J0Dv0lApiveADESDB3nL2L/irIlrPA==
 
 leven@^3.1.0:
   version "3.1.0"

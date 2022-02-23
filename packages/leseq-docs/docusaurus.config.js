@@ -18,6 +18,7 @@ const leseqApisConfigBase = (kind) => ({
   },
   frontmatter: {
     id: `api-${kind}`,
+    title: `${kind}`,
     hide_title: true,
     sidebar_label: `${kind}`,
   }
@@ -63,6 +64,10 @@ const config = {
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
+        googleAnalytics: {
+          trackingID: 'UA-55248908-3',
+          anonymizeIP: true,
+        },
       }),
     ],
   ],
@@ -73,6 +78,11 @@ const config = {
       navbar: {
         title: 'leseq',
         items: [
+          {
+            href: 'https://stackblitz.com/edit/typescript-vygaa6?file=index.ts',
+            label: 'Live Demo',
+            position: 'right',
+          },
           {
             href: 'https://github.com/ugaya40/leseq',
             label: 'GitHub',
