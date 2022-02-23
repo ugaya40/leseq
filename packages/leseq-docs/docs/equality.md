@@ -9,7 +9,7 @@ hide_title: true
 
 ## Equality Strategy
 
-Some Operators, such as [uniq](/api/operators/#uniq), [groupBy](/api/operators/#groupBy), [union](/api/operators/#union), etc., can take **keySelector** and **comparableValueForKey** as arguments. If the key is a string or a number, there is nothing to worry about, but if the key is an object, you need to be careful.
+Some Operators, such as [uniq](/api/operators/#uniq), [groupBy](/api/operators/#groupby), [union](/api/operators/#union), etc., can take **keySelector** and **comparableValueForKey** as arguments. If the key is a string or a number, there is nothing to worry about, but if the key is an object, you need to be careful.
 
 If the key is an object, it will be processed using the so-called *"reference equality"* of the object unless **comparableValueForKey** argument is specified at the same time.
 

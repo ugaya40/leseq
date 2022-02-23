@@ -61,8 +61,8 @@ If the function you want to use does not exist, you can also define your own Ope
 | Generator | Description |
 | --- | --- |
 | [from](https://ugaya40.github.io/leseq/api/generators/#from) | Generates a sequence from an iterable object. |
-| [fromConcat](https://ugaya40.github.io/leseq/api/generators/#fromConcat) | Generates a concatenated sequence of multiple iterable objects. |
-| [fromValue](https://ugaya40.github.io/leseq/api/generators/#fromValue) | Generates a sequence from a single value. |
+| [fromConcat](https://ugaya40.github.io/leseq/api/generators/#fromconcat) | Generates a concatenated sequence of multiple iterable objects. |
+| [fromValue](https://ugaya40.github.io/leseq/api/generators/#fromvalue) | Generates a sequence from a single value. |
 | [range](https://ugaya40.github.io/leseq/api/generators/#range) | Generates a sequential number sequence. |
 | [repeat](https://ugaya40.github.io/leseq/api/generators/#repeat) | Generates a sequence in which the specified value is repeated a specified number of times. |
 
@@ -73,20 +73,20 @@ It is used within the pipe method of the Seq&lt;T&gt; object. Any number of oper
 | --- | --- |
 | [chunk](https://ugaya40.github.io/leseq/api/operators/#chunk) | Returns a sequence divided into array of the specified size. |
 | [concat](https://ugaya40.github.io/leseq/api/operators/#concat) | Returns a sequence in which the current sequence and the specified sequence are concatenated. |
-| [concatValue](https://ugaya40.github.io/leseq/api/operators/#concatValue) | Returns the sequence to which the specified value is added. |
+| [concatValue](https://ugaya40.github.io/leseq/api/operators/#concatvalue) | Returns the sequence to which the specified value is added. |
 | [difference](https://ugaya40.github.io/leseq/api/operators/#difference) | Returns the sequence that is the difference set between the current sequence and the specified sequence. |
 | [filter](https://ugaya40.github.io/leseq/api/operators/#filter) | Returns a sequence that has been filtered by the specified condition. |
 | [flatten](https://ugaya40.github.io/leseq/api/operators/#flatten) | Returns a flattened sequence. |
-| [groupBy](https://ugaya40.github.io/leseq/api/operators/#groupBy) | Returns a sequence grouped by a specified key. |
+| [groupBy](https://ugaya40.github.io/leseq/api/operators/#groupby) | Returns a sequence grouped by a specified key. |
 | [intersect](https://ugaya40.github.io/leseq/api/operators/#intersect) | Returns a sequence that is the product set of the current sequence and the specified sequence. |
 | [map](https://ugaya40.github.io/leseq/api/operators/#map) | Returns the sequence in which each element has been transformed by the specified transformation function. |
-| [orderBy](https://ugaya40.github.io/leseq/api/operators/#orderBy) | Returns a sequence sorted by a specified key. |
+| [orderBy](https://ugaya40.github.io/leseq/api/operators/#orderby) | Returns a sequence sorted by a specified key. |
 | [reverse](https://ugaya40.github.io/leseq/api/operators/#reverse) | Returns a sequence in reverse order of the current sequence. |
 | [scan](https://ugaya40.github.io/leseq/api/operators/#scan) | Returns the resulting sequence after applying the aggregate function to the elements of the current sequence. |
 | [skip](https://ugaya40.github.io/leseq/api/operators/#skip) | Returns the sequence with the specified number of skips. |
-| [skipWhile](https://ugaya40.github.io/leseq/api/operators/#skipWhile) | Returns the sequence of elements skipped while matching the condition. |
+| [skipWhile](https://ugaya40.github.io/leseq/api/operators/#skipwhile) | Returns the sequence of elements skipped while matching the condition. |
 | [take](https://ugaya40.github.io/leseq/api/operators/#take) | Returns a sequence that enumerates the specified number of items. |
-| [takeWhile](https://ugaya40.github.io/leseq/api/operators/#takeWhile) | Returns a sequence to be enumerated only while the condition is matched. |
+| [takeWhile](https://ugaya40.github.io/leseq/api/operators/#takewhile) | Returns a sequence to be enumerated only while the condition is matched. |
 | [tap](https://ugaya40.github.io/leseq/api/operators/#tap) | Run side effects. |
 | [union](https://ugaya40.github.io/leseq/api/operators/#union) | Returns a sequence that is the union set of the current sequence and the specified sequence. |
 | [uniq](https://ugaya40.github.io/leseq/api/operators/#uniq) | Returns a deduplicated sequence. |
@@ -99,7 +99,7 @@ Generates a value from a sequence. Used in the value method of the Seq&lt;T&gt; 
 | --- | --- |
 | [every](https://ugaya40.github.io/leseq/api/values/#every) | Returns whether or not all elements of a sequence meet the specified conditions. |
 | [find](https://ugaya40.github.io/leseq/api/values/#find) | Returns the first element that satisfies the condition. If no element satisfying the condition is found, an error is thrown. |
-| [findOrDefault](https://ugaya40.github.io/leseq/api/values/#findOrDefault) | Returns the first element that satisfies the condition. If no element is found that satisfies the condition, it returns the specified default value. |
+| [findOrDefault](https://ugaya40.github.io/leseq/api/values/#findordefault) | Returns the first element that satisfies the condition. If no element is found that satisfies the condition, it returns the specified default value. |
 | [reduce](https://ugaya40.github.io/leseq/api/values/#reduce) | Returns the result of applying the aggregate function to the elements of the current sequence. |
 | [some](https://ugaya40.github.io/leseq/api/values/#some) | Returns whether or not any element of the sequence satisfies the specified condition. |
 
