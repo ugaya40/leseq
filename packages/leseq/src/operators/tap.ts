@@ -1,20 +1,20 @@
 import { Gen, Operator, Seq } from '../seq';
 /**
  * Run side effects. The returning sequence is the same as the current one.
- * 
+ *
  * ```typescript
  * const result = from([1,2,3]).pipe(
  *   tap(i => console.log(i * i))
  * ).toArray();
- * 
+ *
  * //result: [1,2,3]
- * 
+ *
  * //console:
  * // 1
  * // 4
  * // 9
  * ```
- * 
+ *
  * @typeParam T Source element type.
  * @param func Side effects to perform
  * @returns Operator function.

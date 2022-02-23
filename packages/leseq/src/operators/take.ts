@@ -2,15 +2,15 @@ import { Gen, Operator, Seq } from '../seq';
 
 /**
  * Returns a sequence that enumerates the specified number of items.
- * 
+ *
  * ```typescript
  * const result = range(1,10).pipe(
  *   take(3)
  * ).toArray()
- * 
+ *
  * //result: [1,2,3]
  * ```
- * 
+ *
  * @param count Number to enumerate.
  * @typeParam T Source element type.
  * @returns Operator function.
