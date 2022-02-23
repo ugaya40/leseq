@@ -1,6 +1,19 @@
-import { Gen, Seq } from '../seq';
+import { Gen, Operator, Seq } from '../seq';
 
-export const concat = <T>(target: Iterable<T>) =>
+/**
+ * Returns a sequence in which the current sequence and the specified sequence are concatenated.
+ *
+ * ```typescript
+ * const result = from([1, 2]).pipe(concat([3,4])).toArray();
+ * //result: [1,2,3,4]
+ * ```
+ *
+ * @param target Sequence to be concatenated.
+ * @returns Operator function.
+ * @typeParam T Source element type.
+ * @category Operators
+ */
+export const concat = <T>(target: Iterable<T>): Operator<T> =>
   function* (source: Seq<T>): Gen<T> {
     yield* source;
     yield* target;

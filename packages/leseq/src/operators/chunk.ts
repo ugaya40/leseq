@@ -1,6 +1,19 @@
-import { Gen, Seq } from '../seq';
+import { Gen, Operator, Seq } from '../seq';
 
-export const chunk = <T>(size: number) =>
+/**
+ * Returns a sequence divided into array of the specified size.
+ *
+ * ```typescript
+ * const result = from([1, 2, 3, 4, 5, 6, 7]).pipe(chunk(2)).toArray();
+ * //result: [[1,2],[3,4],[5,6],[7]]
+ * ```
+ *
+ * @param size Length of elements per array.
+ * @returns Operator function.
+ * @typeParam T Source element type.
+ * @category Operators
+ */
+export const chunk = <T>(size: number): Operator<T, T[]> =>
   function* (source: Seq<T>): Gen<T[]> {
     let ch: T[] = [];
     for (const one of source) {

@@ -349,4 +349,3 @@ test('operator: simple reverse', () => {
   const output = from([1, 2, 3, 4, 5]).pipe(reverse()).toArray();
   expect(output).toEqual([5,4,3,2,1]);
 });
-

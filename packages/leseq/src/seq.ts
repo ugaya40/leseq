@@ -1,7 +1,5 @@
-import { toArray } from './values/toArray';
-
 export type Gen<T = unknown> = Generator<T, any, undefined>;
-export type Operator<T = any, TResult = any> = (source: Seq<T>) => Gen<TResult>;
+export type Operator<T = any, TResult = T> = (source: Seq<T>) => Gen<TResult>;
 export type SeqToValue<T = any, TResult = any> = (source: Seq<T>) => TResult;
 
 function pipe(...operators: Operator[]): (source: Seq<any>) => PipelineSeq<any> {
@@ -14,6 +12,9 @@ const value =
     return seqToValue(seq);
   };
 
+/**
+ * @ignore
+ */
 export class Seq<T> {
   constructor(protected source: Iterable<T>) {}
 
@@ -102,7 +103,7 @@ export class Seq<T> {
   }
 
   toArray(): T[] {
-    return value(toArray<T>())(this);
+    return [...this];
   }
 }
 

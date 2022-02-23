@@ -28,7 +28,7 @@
     "copyReadMe": "node -e \"require('fs').copyFileSync('../../README.md','README.md')\"",
     "removeReadMe": "node -e \"require('fs').unlinkSync('README.md')\"",
     "pub:internal": "yarn publish",
-    "pub": "run-s build copyReadMe pub:internal removeReadMe"
+    "pub": "run-s test build copyReadMe pub:internal removeReadMe"
   },
   "devDependencies": {
     "@types/jest": "^27.4.0",

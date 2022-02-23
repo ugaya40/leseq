@@ -1,6 +1,22 @@
-import { Gen, Seq } from '../seq';
+import { Gen, Operator, Seq } from '../seq';
 
-export const skipWhile = <T>(predicate: (arg: T) => boolean) =>
+/**
+ * Returns the sequence of elements skipped while matching the condition.
+ * 
+ * ```typescript
+ * const result = range(1,10).pipe(
+ *   skipWhile(i => i < 8)
+ * ).toArray()
+ * 
+ * //result: [8,9,10]
+ * ```
+ * 
+ * @param predicate Condition to skip enumeration.
+ * @typeParam T Source element type.
+ * @returns Operator function.
+ * @category Operators
+ */
+export const skipWhile = <T>(predicate: (arg: T) => boolean): Operator<T> =>
   function* (source: Seq<T>): Gen<T> {
     let skipCompleted = false;
     for (const i of source) {
