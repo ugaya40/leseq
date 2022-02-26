@@ -1,25 +1,24 @@
+import { AsyncSeq } from "./asyncSeq";
+
 export type Gen<T = unknown> = Generator<T, any, undefined>;
 export type Operator<T = any, TResult = T> = (source: Seq<T>) => Gen<TResult>;
 export type SeqToValue<T = any, TResult = any> = (source: Seq<T>) => TResult;
 
-function pipe(...operators: Operator[]): (source: Seq<any>) => PipelineSeq<any> {
-  return (seq: Seq<any>) => new PipelineSeq(seq, operators);
-}
-
-const value =
-  <T, TResult>(seqToValue: SeqToValue<T, TResult>) =>
-  (seq: Seq<T>) => {
-    return seqToValue(seq);
-  };
-
 /**
  * @ignore
  */
-export class Seq<T> {
+export class Seq<T> implements Iterable<T>, AsyncIterable<T> {
   constructor(protected source: Iterable<T>) {}
 
   [Symbol.iterator](): Iterator<T> {
     return this.source[Symbol.iterator]();
+  }
+
+  [Symbol.asyncIterator](): AsyncIterator<T> {
+    const iterator = this[Symbol.iterator]();
+    return {
+      next: () => Promise.resolve(iterator.next())
+    }
   }
 
   pipe<T1>(op1: Operator<T, T1>): Seq<T1>;
@@ -89,11 +88,11 @@ export class Seq<T> {
     if (operators.length === 0) {
       return this;
     }
-    return pipe(...operators)(this);
+    return new PipelineSeq(this,operators)
   }
 
   value<TResult>(seqToValue: SeqToValue<T, TResult>): TResult {
-    return value(seqToValue)(this);
+    return seqToValue(this);
   }
 
   forEach(func: (arg: T) => void): void {
@@ -104,6 +103,10 @@ export class Seq<T> {
 
   toArray(): T[] {
     return [...this];
+  }
+
+  toAsyncSeq(): AsyncSeq<T> {
+    return new AsyncSeq(this);
   }
 }
 
