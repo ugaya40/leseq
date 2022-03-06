@@ -1,4 +1,4 @@
-import { Gen, Seq } from '../seq';
+import { Gen, Operator, Seq } from '../seq';
 import { defaultSelector } from '../utils/defaultSelector';
 
 /**
@@ -70,7 +70,7 @@ export const groupBy = <T, TComparableValue, TKey = T, TValue = T>(
   keySelector: (target: T) => TKey,
   elementSelector: (target: T) => TValue = defaultSelector,
   comparableValueForKey?: (key: TKey) => TComparableValue
-) =>
+): Operator<T, { key: TKey; values: TValue[] }> =>
   function* (source: Seq<T>): Gen<{ key: TKey; values: TValue[] }> {
     const resultMap = new Map<TComparableValue | TKey, { key: TKey; values: TValue[] }>();
     const createKeyValue = (i: T) => (comparableValueForKey ? comparableValueForKey(keySelector(i)) : keySelector(i));

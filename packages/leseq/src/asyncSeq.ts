@@ -1,20 +1,37 @@
+import { isAsyncIterable } from './utils/isAsyncIterable';
+
 export type AsyncGen<T = unknown> = AsyncGenerator<T, any, undefined>;
 export type AsyncOperator<T = any, TResult = T> = (source: AsyncSeq<T>) => AsyncGen<TResult>;
 export type AsyncSeqToValue<T = any, TResult = any> = (source: AsyncSeq<T>) => Promise<TResult>;
 
+/**
+ * @ignore
+ */
 export class AsyncSeq<T> implements AsyncIterable<T> {
-
-  constructor(protected source: AsyncIterable<T>) {}
+  constructor(protected source: AsyncIterable<T> | Iterable<T>) {}
 
   [Symbol.asyncIterator](): AsyncIterator<T> {
-    return this.source[Symbol.asyncIterator]();
+    if (isAsyncIterable(this.source)) {
+      return this.source[Symbol.asyncIterator]();
+    } else {
+      const iterator = this.source[Symbol.iterator]();
+      return {
+        next: () => Promise.resolve(iterator.next()),
+      };
+    }
   }
 
   pipe<T1>(op1: AsyncOperator<T, T1>): AsyncSeq<T1>;
   pipe<T1, T2>(op1: AsyncOperator<T, T1>, op2: AsyncOperator<T1, T2>): AsyncSeq<T2>;
   pipe<T1, T2, T3>(op1: AsyncOperator<T, T1>, op2: AsyncOperator<T1, T2>, op3: AsyncOperator<T2, T3>): AsyncSeq<T3>;
   pipe<T1, T2, T3, T4>(op1: AsyncOperator<T, T1>, op2: AsyncOperator<T1, T2>, op3: AsyncOperator<T2, T3>, op4: AsyncOperator<T3, T4>): AsyncSeq<T4>;
-  pipe<T1, T2, T3, T4, T5>(op1: AsyncOperator<T, T1>, op2: AsyncOperator<T1, T2>, op3: AsyncOperator<T2, T3>, op4: AsyncOperator<T3, T4>, op5: AsyncOperator<T4, T5>): AsyncSeq<T5>;
+  pipe<T1, T2, T3, T4, T5>(
+    op1: AsyncOperator<T, T1>,
+    op2: AsyncOperator<T1, T2>,
+    op3: AsyncOperator<T2, T3>,
+    op4: AsyncOperator<T3, T4>,
+    op5: AsyncOperator<T4, T5>
+  ): AsyncSeq<T5>;
   pipe<T1, T2, T3, T4, T5, T6>(
     op1: AsyncOperator<T, T1>,
     op2: AsyncOperator<T1, T2>,
@@ -77,14 +94,14 @@ export class AsyncSeq<T> implements AsyncIterable<T> {
     if (operators.length === 0) {
       return this;
     }
-    return new AsyncPipelineSeq(this,operators)
+    return new AsyncPipelineSeq(this, operators);
   }
 
   async valueAsync<TResult>(seqToValue: AsyncSeqToValue<T, TResult>): Promise<TResult> {
     return await seqToValue(this);
   }
 
-  async forEachAsync(func: (arg: T) => void): Promise<void>{
+  async forEachAsync(func: (arg: T) => void): Promise<void> {
     for await (const i of this) {
       await func(i);
     }
@@ -95,7 +112,6 @@ export class AsyncSeq<T> implements AsyncIterable<T> {
     await this.forEachAsync(one => result.push(one));
     return result;
   }
-
 }
 
 export class AsyncPipelineSeq<T> extends AsyncSeq<T> {

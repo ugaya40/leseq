@@ -1,8 +1,12 @@
-import { from } from './from';
-import { Seq } from '../seq';
-import { concat } from '../operators/concat';
-import { map } from '../operators/map';
-import { reduce } from '../values/reduce';
+import { AsyncGen, AsyncSeq } from '../asyncSeq';
+import { Gen, Seq } from '../seq';
+import { isAsyncIterable } from '../utils/isAsyncIterable';
+
+function* fromConcatInternal<T>(args: Iterable<T>[]): Gen<T> {
+  for (const one of args) {
+    yield* one;
+  }
+}
 
 /**
  * Generates a concatenated sequence of multiple iterable objects.
@@ -19,7 +23,5 @@ import { reduce } from '../values/reduce';
  *
  */
 export function fromConcat<T>(...args: Iterable<T>[]): Seq<T> {
-  return from(args)
-    .pipe(map(source => (source instanceof Seq ? source : from(source)) as Seq<T>))
-    .value(reduce(from<T>([]), (result, current) => result.pipe(concat(current))));
+  return new Seq(fromConcatInternal(args));
 }

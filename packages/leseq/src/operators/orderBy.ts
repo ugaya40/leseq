@@ -1,6 +1,5 @@
 import { Gen, Operator, Seq } from '../seq';
-
-export type SortType = 'asc' | 'desc';
+import { SortType } from '../utils/sortUtil';
 
 /**
  * Returns a sequence sorted by a specified key.
@@ -55,7 +54,7 @@ export const orderBy = <T, TKey>(
     yield* sortedArray;
   };
 
-const createSortFunction =
+export const createSortFunction =
   <T, TKey>(keySelector: (arg: T) => TKey, sortType: SortType, compareFunction: (a: TKey, b: TKey) => number) =>
   (a: T, b: T) => {
     const aKey = keySelector(a);

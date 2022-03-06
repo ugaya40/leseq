@@ -1,4 +1,4 @@
-import { AsyncSeq } from "./asyncSeq";
+import { AsyncSeq } from './asyncSeq';
 
 export type Gen<T = unknown> = Generator<T, any, undefined>;
 export type Operator<T = any, TResult = T> = (source: Seq<T>) => Gen<TResult>;
@@ -17,8 +17,8 @@ export class Seq<T> implements Iterable<T>, AsyncIterable<T> {
   [Symbol.asyncIterator](): AsyncIterator<T> {
     const iterator = this[Symbol.iterator]();
     return {
-      next: () => Promise.resolve(iterator.next())
-    }
+      next: () => Promise.resolve(iterator.next()),
+    };
   }
 
   pipe<T1>(op1: Operator<T, T1>): Seq<T1>;
@@ -88,7 +88,7 @@ export class Seq<T> implements Iterable<T>, AsyncIterable<T> {
     if (operators.length === 0) {
       return this;
     }
-    return new PipelineSeq(this,operators)
+    return new PipelineSeq(this, operators);
   }
 
   value<TResult>(seqToValue: SeqToValue<T, TResult>): TResult {
