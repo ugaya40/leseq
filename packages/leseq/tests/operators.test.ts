@@ -298,25 +298,6 @@ test('operator: groupBy value equality 1',() => {
     {groupKey: {groupKey: 1}, value: "test4"},
   ]
 
-  const output = from(source).pipe(groupBy(one => one.groupKey),).toArray();
-
-  expect(output).toEqual([
-    {key: {groupKey: 1}, values: [{groupKey: {groupKey: 1}, value: "test1"}]},
-    {key: {groupKey: 2}, values: [{groupKey: {groupKey: 2}, value: "test2"}]},
-    {key: {groupKey: 1}, values: [{groupKey: {groupKey: 1}, value: "test3"}]},
-    {key: {groupKey: 1}, values: [{groupKey: {groupKey: 1}, value: "test4"}]},
-  ]);
-});
-
-test('operator: groupBy value equality 1',() => {
-
-  const source = [
-    {groupKey: {groupKey: 1}, value: "test1"},
-    {groupKey: {groupKey: 2}, value: "test2"},
-    {groupKey: {groupKey: 1}, value: "test3"},
-    {groupKey: {groupKey: 1}, value: "test4"},
-  ]
-
   const output = from(source).pipe(groupBy(one => one.groupKey,i => i,k => k.groupKey),).toArray();
 
   expect(output).toEqual([
