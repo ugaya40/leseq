@@ -17,6 +17,10 @@
     "util",
     "sequence",
     "collection",
+    "iterator",
+    "async iterator",
+    "iterable",
+    "async iterable",
     "treeshaking"
   ],
   "scripts": {

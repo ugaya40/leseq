@@ -4,9 +4,6 @@ export type Gen<T = unknown> = Generator<T, any, undefined>;
 export type Operator<T = any, TResult = T> = (source: Seq<T>) => Gen<TResult>;
 export type SeqToValue<T = any, TResult = any> = (source: Seq<T>) => TResult;
 
-/**
- * @ignore
- */
 export class Seq<T> implements Iterable<T>, AsyncIterable<T> {
   constructor(protected source: Iterable<T>) {}
 

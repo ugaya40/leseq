@@ -4,9 +4,6 @@ export type AsyncGen<T = unknown> = AsyncGenerator<T, any, undefined>;
 export type AsyncOperator<T = any, TResult = T> = (source: AsyncSeq<T>) => AsyncGen<TResult>;
 export type AsyncSeqToValue<T = any, TResult = any> = (source: AsyncSeq<T>) => Promise<TResult>;
 
-/**
- * @ignore
- */
 export class AsyncSeq<T> implements AsyncIterable<T> {
   constructor(protected source: AsyncIterable<T> | Iterable<T>) {}
 
