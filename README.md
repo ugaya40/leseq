@@ -12,8 +12,11 @@ Lazy evaluation list with high tree-shaking affinity and easy customization.
 - 💯 **All Typed**: The whole thing is written in TypeScript, which also provides completion for type conversion between operators.
 - 💨 **No dependencies**
 
+![asyncIterator](https://user-images.githubusercontent.com/1430166/157796751-d3217882-0ea3-4a38-9580-fdabe097cc6f.gif)
+
+
 # Resource
-- ### [Demo(StackBlitz)](https://stackblitz.com/edit/typescript-vygaa6?file=index.ts)
+- ### [Demo(StackBlitz)](https://stackblitz.com/edit/typescript-vygaa6?devtoolsheight=33&file=index.ts)
 
 - ### [Docs](https://ugaya40.github.io/leseq/)
 
