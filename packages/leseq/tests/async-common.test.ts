@@ -1,4 +1,4 @@
-import { from, mapAsync, reverse, tapAsync } from "../src";
+import { filterAsync, findAsync, from, fromAsAsync, mapAsync, reverse, tapAsync } from "../src";
 import { abortableSleep, performanceAsync } from "./testUtil";
 
 test('async operator: simple', async () => {
@@ -16,6 +16,21 @@ test('async operator: simple', async () => {
   );
 
   expect(output).toEqual([25,16,9,4,1]);
+  expect(time > 200 && time < 300).toBe(true);
+});
+
+test('async operator: simple 2', async () => {
+  const [output,time] = await performanceAsync(async () =>
+    await fromAsAsync([1,2,3,4,5]).pipe(
+      mapAsync(async i => {
+        await abortableSleep(100);
+        return i * i;
+      }),
+      filterAsync(async i => i % 2 == 0)
+    ).valueAsync(findAsync())
+  );
+
+  expect(output).toEqual(4);
   expect(time > 200 && time < 300).toBe(true);
 });
 

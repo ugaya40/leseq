@@ -5,7 +5,7 @@ import { defaultSelector } from '../utils/defaultSelector';
  * Returns a deduplicated sequence.
  *
  * ```typescript
- * const result1 = from([1, 2, 3]).pipe(uniq([1,1,3,2,4,4,4,1,5])).toArray();
+ * const result1 = from([1,1,3,2,4,4,4,1,5]).pipe(uniq()).toArray();
  * //result1: [1,3,2,4,5]
  *
  * const source = [

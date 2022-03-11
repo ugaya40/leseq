@@ -10,7 +10,7 @@ test('operator: everyAsync false case', async () => {
   expect(output).toBe(false);
 });
 
-test('operator: simpleAsync find', async () => {
+test('operator: simple findAsync', async () => {
   const output = await fromAsAsync([1, 2, 3, 4, 5]).valueAsync(findAsync(async i => i % 2 == 0));
   expect(output).toBe(2);
 });
@@ -33,7 +33,7 @@ test('operator: findAsync throw error', async () => {
     .toThrowError(`No elements matching the condition were found.`);
 });
 
-test('operator: simple findorDefaultAsync', async () => {
+test('operator: simple findOrDefaultAsync', async () => {
   const output = await fromAsAsync([1, 2, 3, 4, 5]).valueAsync(findOrDefaultAsync(async i => i % 2 == 0));
   expect(output).toBe(2);
 });

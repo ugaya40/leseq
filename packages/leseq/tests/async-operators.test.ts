@@ -3,10 +3,10 @@ import { abortableSleep } from './testUtil';
 
 test('operator: simple concatAsync', async () => {
 
-  const asyncSoruce = fromAsAsync([6,7]).pipe(tapAsync(async () => abortableSleep(20)))
+  const asyncSource = fromAsAsync([6,7]).pipe(tapAsync(async () => abortableSleep(20)))
 
   const output = await fromAsAsync([1, 2, 3, 4, 5])
-    .pipe(concatAsync(asyncSoruce))
+    .pipe(concatAsync(asyncSource))
     .toArrayAsync();
   expect(output).toEqual([1, 2, 3, 4, 5, 6, 7]);
 });

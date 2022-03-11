@@ -1,4 +1,5 @@
 import { Gen, Operator, Seq } from '../seq';
+
 /**
  * Run side effects. The returning sequence is the same as the current one.
  *

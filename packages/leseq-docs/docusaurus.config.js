@@ -39,15 +39,25 @@ const config = {
   plugins:[
     [
       'docusaurus-plugin-typedoc',
-      leseqApisConfigBase('generators')
+      {
+        ...leseqApisConfigBase('generators'),
+        categoryOrder: ['Generators', 'Async Generators']
+      }
     ],
     [
       'docusaurus-plugin-typedoc',
-      leseqApisConfigBase('operators')
+      {
+        ...leseqApisConfigBase('operators'),
+        categoryOrder: ['Operators', 'Async Operators']
+      }
+      
     ],
     [
       'docusaurus-plugin-typedoc',
-      leseqApisConfigBase('values')
+      {
+        ...leseqApisConfigBase('values'),
+        categoryOrder: ['Values', 'Async Values']
+      }
     ]
   ],
 

@@ -31,7 +31,7 @@ test('operator: find throw error', () => {
   expect(() => from([1, 2, 3, 4, 5]).value(find(i => i > 10))).toThrowError(`No elements matching the condition were found.`);
 });
 
-test('operator: simple findorDefault', () => {
+test('operator: simple findOrDefault', () => {
   const output = from([1, 2, 3, 4, 5]).value(findOrDefault(i => i % 2 == 0));
   expect(output).toBe(2);
 });
