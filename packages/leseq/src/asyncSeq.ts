@@ -1,8 +1,10 @@
-import { isAsyncIterable } from './utils/isAsyncIterable';
-
 export type AsyncGen<T = unknown> = AsyncGenerator<T, any, undefined>;
 export type AsyncOperator<T = any, TResult = T> = (source: AsyncSeq<T>) => AsyncGen<TResult>;
 export type AsyncSeqToValue<T = any, TResult = any> = (source: AsyncSeq<T>) => Promise<TResult>;
+
+function isAsyncIterable(source: any): source is AsyncIterable<unknown> {
+  return Symbol.asyncIterator in source;
+}
 
 export class AsyncSeq<T> implements AsyncIterable<T> {
   constructor(protected source: AsyncIterable<T> | Iterable<T>) {}

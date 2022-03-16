@@ -101,10 +101,6 @@ export class Seq<T> implements Iterable<T>, AsyncIterable<T> {
   toArray(): T[] {
     return [...this];
   }
-
-  toAsyncSeq(): AsyncSeq<T> {
-    return new AsyncSeq(this);
-  }
 }
 
 export class PipelineSeq<T> extends Seq<T> {
