@@ -12,8 +12,19 @@ Lazy evaluation list with high tree-shaking affinity and easy customization.
 - 💯 **All Typed**: The whole thing is written in TypeScript, which also provides completion for type conversion between operators.
 - 💨 **No dependencies**
 
-![asyncIterator](https://user-images.githubusercontent.com/1430166/157796751-d3217882-0ea3-4a38-9580-fdabe097cc6f.gif)
+```typescript
+import {from, map, take} from 'leseq';
 
+export const result1 = from([1,2,3,4,5]).pipe(
+  map(i => i * i),
+  take(3)
+).toArray();
+
+//result1: [1,4,9]
+```
+This is the result of [bundle visualizer](https://github.com/btd/rollup-plugin-visualizer) in the example above (1.21KB gzipped).
+
+<img src="https://user-images.githubusercontent.com/1430166/158516201-cd001af0-1177-49ad-a59d-c3079f8a88f7.png" width="350px">
 
 # Resource
 - ### [Demo(StackBlitz)](https://stackblitz.com/edit/typescript-vygaa6?devtoolsheight=33&file=index.ts)
@@ -36,7 +47,7 @@ If you are using Async Iterable and *"target "* in **tsconfig.json** is smaller 
 ```
 ## Iterable
 ```typescript
-import {from, map, take, find} from 'leseq';
+import {from, map, take, find, range, reverse, filter} from 'leseq';
 
 const result1 = from([1,2,3,4,5]).pipe(
   map(i => i * i),
@@ -70,12 +81,12 @@ const result3 = range(1, 10000000).pipe(
 ```
 ## Async Iterable
 ```typescript
-import {from, mapAsync, filterAsync, fromAsAsync, findAsync} from 'leseq';
+import {from, mapAsync, filterAsync, fromAsAsync, findAsync, toAsync} from 'leseq';
 
 const sleep = (milliseconds: number) => new Promise(resolve => setTimeout(resolve,milliseconds));
 
 //from iterable to async iterable.
-const result1 = await from([1,2,3,4,5]).toAsyncSeq().pipe(
+const result1 = await from([1,2,3,4,5]).value(toAsync()).pipe(
   mapAsync(async i => {
     await sleep(1000);
     return i * i;
@@ -128,7 +139,7 @@ value = SyncSource.value(SyncValues(ex: find,some, ...etc));
 // async iterator
 AsyncSource = 
   AsyncGenerators(ex: fromAsAsync, fromConcatAsAsync, ...etc) |
-  SyncSource.toAsyncSeq() | // iterable to async iterable.
+  SyncSource.value(toAsync()) | // iterable to async iterable.
   AsyncSource.pipe(
     ...AsyncOperators(ex: mapAsync, filterAsync, ...etc)
   );
@@ -138,8 +149,8 @@ value = await AsyncSource.valueAsync(AsyncValues(ex: findAsync,someAsync, ...etc
 
 Since lazy evaluation is employed, the process is not executed when **pipe()** is called, but only when **value(valueAsync)**, **toArray(toArrayAsync)**, or **forEach(forEachAsync)** is called.
 
-> Changes from "Iterable" or Seq<T\> to "Async Iterable" can be made at any time with the **toAsyncSeq()** method.
-but **Once the chain is changed to "Async Iterable" by *toAsyncSeq()* or other means, only the asynchronous version of Operator/Value can be used in the same chain thereafter.** This is because, in principle, it is impossible to change from an "Async Iterable" to "Iterable".
+> Changes from "Iterable" or Seq<T\> to "Async Iterable" can be made at any time with **.value(toAsync())**.
+but **Once the chain is changed to "Async Iterable" by **.value(toAsync())** or other means, only the asynchronous version of Operator/Value can be used in the same chain thereafter.** This is because, in principle, it is impossible to change from an "Async Iterable" to "Iterable".
 
 The predefined **Generators/Operators/Values** are as follows. And all of them have asynchronous versions(*xxxAsAsync* or *xxxAsync*).
 
@@ -187,6 +198,7 @@ Generates a value from a sequence. Used in the value method of the Seq&lt;T&gt; 
 
 | Value | Description |
 | --- | --- |
+| [toAsync](https://ugaya40.github.io/leseq/api/values/#toasync) | Converts the current sequence to AsyncSeq<T\> and returns it.  | |
 | [every](https://ugaya40.github.io/leseq/api/values/#every) | Returns whether or not all elements of a sequence meet the specified conditions. (async version: [everyAsync](https://ugaya40.github.io/leseq/api/values/#everyasync) )  | |
 | [find](https://ugaya40.github.io/leseq/api/values/#find) | Returns the first element that satisfies the condition. If no element satisfying the condition is found, an error is thrown. (async version: [findAsync](https://ugaya40.github.io/leseq/api/values/#findasync) )  | |
 | [findOrDefault](https://ugaya40.github.io/leseq/api/values/#findordefault) | Returns the first element that satisfies the condition. If no element is found that satisfies the condition, it returns the specified default value. (async version: [findOrDefaultAsync](https://ugaya40.github.io/leseq/api/values/#findordefaultasync) )  | |

@@ -18,11 +18,11 @@ The Seq<T\> object has the following methods
 | value | Takes only one **Value** and converts the sequence to a value. |
 | forEach | Performs iterative processing on elements of a sequence. |
 | toArray | Converts a sequence to an array. |
-| toAsyncSeq | Convents a sequence to **AsyncSeq<T\>** |
 
 Since lazy evaluation is employed, the process is not executed when **pipe()** is called, but only when **value()**, **toArray()**, or **forEach()** is called.
 
 ## AsyncSeq<T\> Object
+It can be created by passing [toAsync()](https://ugaya40.github.io/leseq/api/values/#toasync) to **value()** of Seq<T\> or by using [Async Generators](https://ugaya40.github.io/leseq/api/generators/#async-generators).
 Basically the same as Seq<T\>, but **valueAsync()**, **toArrayAsync()**, and **foreachAsync()** are async function. Also, only an asynchronous version of **Operators**/**Values**, which is passed to **pipe()/valueAsync()**, is allowed.
 
 | method | Description |
