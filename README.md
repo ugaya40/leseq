@@ -24,7 +24,7 @@ export const result1 = from([1,2,3,4,5]).pipe(
 ```
 This is the result of [bundle visualizer](https://github.com/btd/rollup-plugin-visualizer) in the example above (1.21KB gzipped).
 
-<img src="https://user-images.githubusercontent.com/1430166/158516201-cd001af0-1177-49ad-a59d-c3079f8a88f7.png" width="350px">
+<img src="https://user-images.githubusercontent.com/1430166/158516201-cd001af0-1177-49ad-a59d-c3079f8a88f7.png" width="350px"></img>
 
 # Resource
 - ### [Demo(StackBlitz)](https://stackblitz.com/edit/typescript-vygaa6?devtoolsheight=33&file=index.ts)
