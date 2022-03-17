@@ -17,7 +17,7 @@ import { Gen, Operator, Seq } from '../seq';
  * @category Operators
  */
 export const skip = <T>(count: number): Operator<T> =>
-  function* (source: Seq<T>): Gen<T> {
+  function* skip(source: Seq<T>): Gen<T> {
     let current = 0;
     for (const i of source) {
       if (current >= count) {

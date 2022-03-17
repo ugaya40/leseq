@@ -57,7 +57,7 @@ export const union = <T, TComparableValue, TKey = T>(
   keySelector: (one: T) => TKey = defaultSelector,
   comparableValueForKey?: (key: TKey) => TComparableValue
 ): Operator<T> =>
-  function* (source: Seq<T>): Gen<T> {
+  function* union(source: Seq<T>): Gen<T> {
     const appeared: Set<TKey | TComparableValue> = new Set();
     const createKeyValue = (i: T) => (comparableValueForKey ? comparableValueForKey(keySelector(i)) : keySelector(i));
     for (const i of source) {

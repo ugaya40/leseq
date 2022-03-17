@@ -56,7 +56,7 @@ export const intersectAsync = <T, TComparableValue, TKey = T>(
   keySelector: (one: T) => Promise<TKey> = asyncDefaultSelector,
   comparableValueForKey?: (key: TKey) => Promise<TComparableValue>
 ): AsyncOperator<T> =>
-  async function* (source: AsyncSeq<T>): AsyncGen<T> {
+  async function* intersectAsync(source: AsyncSeq<T>): AsyncGen<T> {
     const appeared: Set<TKey | TComparableValue> = new Set();
     const returned: Set<TKey | TComparableValue> = new Set();
     const createKeyValue = async (i: T) => (comparableValueForKey ? comparableValueForKey(await keySelector(i)) : keySelector(i));

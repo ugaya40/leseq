@@ -63,7 +63,7 @@ export const difference = <T, TComparableValue, TKey = T>(
   removeDuplicate = true,
   comparableValueForKey?: (key: TKey) => TComparableValue
 ): Operator<T> =>
-  function* (source: Seq<T>): Gen<T> {
+  function* difference(source: Seq<T>): Gen<T> {
     const appeared: Set<TKey | TComparableValue> = new Set();
     const createKeyValue = (i: T) => (comparableValueForKey ? comparableValueForKey(keySelector(i)) : keySelector(i));
 

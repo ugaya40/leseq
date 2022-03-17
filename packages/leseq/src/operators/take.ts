@@ -17,7 +17,7 @@ import { Gen, Operator, Seq } from '../seq';
  * @category Operators
  */
 export const take = <T>(count: number): Operator<T> =>
-  function* (source: Seq<T>): Gen<T> {
+  function* take(source: Seq<T>): Gen<T> {
     if (count <= 0) return;
     let current = 0;
     for (const i of source) {

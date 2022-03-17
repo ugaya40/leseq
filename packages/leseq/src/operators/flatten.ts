@@ -25,7 +25,7 @@ import { Gen, Operator, Seq } from '../seq';
  * @category Operators
  */
 export const flatten = <T, TResult>(func: (arg: T, index: number) => Iterable<TResult>): Operator<T, TResult> =>
-  function* (source: Seq<T>): Gen<TResult> {
+  function* flatten(source: Seq<T>): Gen<TResult> {
     let count = 0;
     for (const i of source) {
       const result = func(i, count);

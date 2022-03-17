@@ -16,9 +16,8 @@ import { Seq, SeqToValue } from '../seq';
  * @returns
  * @category Values
  */
-export const every =
-  <T>(predicate: (arg: T) => boolean): SeqToValue<T, boolean> =>
-  (seq: Seq<T>): boolean => {
+export const every = <T>(predicate: (arg: T) => boolean): SeqToValue<T, boolean> =>
+  function every(seq: Seq<T>): boolean {
     for (const i of seq) {
       if (!predicate(i)) {
         return false;

@@ -16,7 +16,7 @@ import { AsyncGen, AsyncOperator, AsyncSeq } from '../../asyncSeq';
  * @category Async Operators
  */
 export const concatAsync = <T>(target: AsyncIterable<T> | Iterable<T>): AsyncOperator<T> =>
-  async function* (source: AsyncSeq<T>): AsyncGen<T> {
+  async function* concatAsync(source: AsyncSeq<T>): AsyncGen<T> {
     yield* source;
     yield* target;
   };

@@ -49,7 +49,7 @@ export const orderByAsync = <T, TKey>(
   sortType: SortType = 'asc',
   compareFunction: (a: TKey, b: TKey) => number = defaultCompareFunction
 ): AsyncOperator<T> =>
-  async function* (source: AsyncSeq<T>): AsyncGen<T> {
+  async function* orderByAsync(source: AsyncSeq<T>): AsyncGen<T> {
     const array = await source.toArrayAsync();
     const sortedArray = array.sort(createSortFunction(keySelector, sortType, compareFunction));
     yield* sortedArray;

@@ -16,9 +16,8 @@ import { Seq } from '../seq';
  * @returns
  * @category Values
  */
-export const some =
-  <T>(predicate: (arg: T) => boolean = () => true) =>
-  (seq: Seq<T>): boolean => {
+export const some = <T>(predicate: (arg: T) => boolean = () => true) =>
+  function some(seq: Seq<T>): boolean {
     for (const i of seq) {
       if (predicate(i)) {
         return true;

@@ -55,7 +55,7 @@ export const intersect = <T, TComparableValue, TKey = T>(
   keySelector: (one: T) => TKey = defaultSelector,
   comparableValueForKey?: (key: TKey) => TComparableValue
 ): Operator<T> =>
-  function* (source: Seq<T>): Gen<T> {
+  function* intersect(source: Seq<T>): Gen<T> {
     const appeared: Set<TKey | TComparableValue> = new Set();
     const returned: Set<TKey | TComparableValue> = new Set();
     const createKeyValue = (i: T) => (comparableValueForKey ? comparableValueForKey(keySelector(i)) : keySelector(i));

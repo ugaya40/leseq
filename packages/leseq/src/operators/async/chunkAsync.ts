@@ -16,7 +16,7 @@ import { AsyncGen, AsyncOperator, AsyncSeq } from '../../asyncSeq';
  * @category Async Operators
  */
 export const chunkAsync = <T>(size: number): AsyncOperator<T, T[]> =>
-  async function* (source: AsyncSeq<T>): AsyncGen<T[]> {
+  async function* chunkAsync(source: AsyncSeq<T>): AsyncGen<T[]> {
     let ch: T[] = [];
     for await (const one of source) {
       ch.push(one);

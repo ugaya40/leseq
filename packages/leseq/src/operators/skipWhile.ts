@@ -17,7 +17,7 @@ import { Gen, Operator, Seq } from '../seq';
  * @category Operators
  */
 export const skipWhile = <T>(predicate: (arg: T) => boolean): Operator<T> =>
-  function* (source: Seq<T>): Gen<T> {
+  function* skipWhile(source: Seq<T>): Gen<T> {
     let skipCompleted = false;
     for (const i of source) {
       if (skipCompleted) {

@@ -18,8 +18,7 @@ import { Seq } from '../seq';
  * @returns AsyncSeq<T\>
  * @category Values
  */
-export const toAsync =
-  <T>() =>
-  (seq: Seq<T>): AsyncSeq<T> => {
+export const toAsync = <T>() =>
+  function toAsync(seq: Seq<T>): AsyncSeq<T> {
     return new AsyncSeq(seq);
   };

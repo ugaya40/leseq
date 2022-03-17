@@ -17,12 +17,11 @@ import { AsyncSeq, AsyncSeqToValue } from '../../asyncSeq';
  * @returns The first element that matches the condition, or the default value.
  * @category Async Values
  */
-export const findOrDefaultAsync =
-  <T>(
-    predicate: (arg: T, index: number) => Promise<boolean> = () => Promise.resolve(true),
-    defaultValue: T | undefined = undefined
-  ): AsyncSeqToValue<T, T | undefined> =>
-  async (seq: AsyncSeq<T>): Promise<T | undefined> => {
+export const findOrDefaultAsync = <T>(
+  predicate: (arg: T, index: number) => Promise<boolean> = () => Promise.resolve(true),
+  defaultValue: T | undefined = undefined
+): AsyncSeqToValue<T, T | undefined> =>
+  async function findOrDefaultAsync(seq: AsyncSeq<T>): Promise<T | undefined> {
     let count = 0;
     for await (const i of seq) {
       if (await predicate(i, count)) {

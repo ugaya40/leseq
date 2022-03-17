@@ -15,7 +15,7 @@ import { AsyncGen, AsyncOperator, AsyncSeq } from '../../asyncSeq';
  * @category Async Operators
  */
 export const reverseAsync = <T>(): AsyncOperator<T> =>
-  async function* (source: AsyncSeq<T>): AsyncGen<T> {
+  async function* reverseAsync(source: AsyncSeq<T>): AsyncGen<T> {
     const sourceArray = await source.toArrayAsync();
     const length = sourceArray.length;
     for (let i = 0; i < length; i++) {

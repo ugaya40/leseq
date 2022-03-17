@@ -13,7 +13,7 @@ import { Gen, Operator, Seq } from '../seq';
  * @category Operators
  */
 export const reverse = <T>(): Operator<T> =>
-  function* (source: Seq<T>): Gen<T> {
+  function* reverse(source: Seq<T>): Gen<T> {
     const sourceArray = [...source];
     const length = sourceArray.length;
     for (let i = 0; i < length; i++) {

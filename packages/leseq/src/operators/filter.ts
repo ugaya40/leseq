@@ -14,7 +14,7 @@ import { Gen, Operator, Seq } from '../seq';
  * @category Operators
  */
 export const filter = <T>(predicate: (arg: T, index: number) => boolean): Operator<T> =>
-  function* (source: Seq<T>): Gen<T> {
+  function* filter(source: Seq<T>): Gen<T> {
     let count = 0;
     for (const i of source) {
       if (predicate(i, count)) {

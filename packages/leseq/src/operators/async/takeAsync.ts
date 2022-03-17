@@ -17,7 +17,7 @@ import { AsyncGen, AsyncOperator, AsyncSeq } from '../../asyncSeq';
  * @category Async Operators
  */
 export const takeAsync = <T>(count: number): AsyncOperator<T> =>
-  async function* (source: AsyncSeq<T>): AsyncGen<T> {
+  async function* takeAsync(source: AsyncSeq<T>): AsyncGen<T> {
     if (count <= 0) return;
     let current = 0;
     for await (const i of source) {

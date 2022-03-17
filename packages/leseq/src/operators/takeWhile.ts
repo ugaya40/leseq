@@ -17,7 +17,7 @@ import { Gen, Operator, Seq } from '../seq';
  * @category Operators
  */
 export const takeWhile = <T>(predicate: (arg: T) => boolean): Operator<T> =>
-  function* (source: Seq<T>): Gen<T> {
+  function* takeWhile(source: Seq<T>): Gen<T> {
     for (const i of source) {
       if (predicate(i)) {
         yield i;

@@ -14,9 +14,8 @@ import { Seq, SeqToValue } from '../seq';
  * @returns The first element that matches the condition
  * @category Values
  */
-export const find =
-  <T>(predicate: (arg: T, index: number) => boolean = () => true): SeqToValue<T, T> =>
-  (seq: Seq<T>): T => {
+export const find = <T>(predicate: (arg: T, index: number) => boolean = () => true): SeqToValue<T, T> =>
+  function find(seq: Seq<T>): T {
     let count = 0;
     for (const i of seq) {
       if (predicate(i, count)) {

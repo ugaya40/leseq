@@ -14,7 +14,7 @@ import { Gen, Operator, Seq } from '../seq';
  * @category Operators
  */
 export const chunk = <T>(size: number): Operator<T, T[]> =>
-  function* (source: Seq<T>): Gen<T[]> {
+  function* chunk(source: Seq<T>): Gen<T[]> {
     let ch: T[] = [];
     for (const one of source) {
       ch.push(one);

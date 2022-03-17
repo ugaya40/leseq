@@ -11,7 +11,7 @@ export default {
     sourcemap: true
   },
   plugins: [
-    terser(),
+    terser({keep_fnames:true}),
     typescript(),
   ]
 }

@@ -14,7 +14,7 @@ import { Gen, Operator, Seq } from '../seq';
  * @category Operators
  */
 export const concatValue = <T>(target: T): Operator<T> =>
-  function* (source: Seq<T>): Gen<T> {
+  function* concatValue(source: Seq<T>): Gen<T> {
     yield* source;
     yield target;
   };

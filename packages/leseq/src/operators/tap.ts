@@ -22,7 +22,7 @@ import { Gen, Operator, Seq } from '../seq';
  * @category Operators
  */
 export const tap = <T>(func: (arg: T, index: number) => void): Operator<T> =>
-  function* (source: Seq<T>): Gen<T> {
+  function* tap(source: Seq<T>): Gen<T> {
     let count = 0;
     for (const i of source) {
       func(i, count);

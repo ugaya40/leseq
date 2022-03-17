@@ -20,9 +20,8 @@ import { AsyncSeq, AsyncSeqToValue } from '../../asyncSeq';
  * @returns
  * @category Async Values
  */
-export const someAsync =
-  <T>(predicate: (arg: T) => Promise<boolean> = () => Promise.resolve(true)): AsyncSeqToValue<T, boolean> =>
-  async (seq: AsyncSeq<T>): Promise<boolean> => {
+export const someAsync = <T>(predicate: (arg: T) => Promise<boolean> = () => Promise.resolve(true)): AsyncSeqToValue<T, boolean> =>
+  async function someAsync(seq: AsyncSeq<T>): Promise<boolean> {
     for await (const i of seq) {
       if (await predicate(i)) {
         return true;
