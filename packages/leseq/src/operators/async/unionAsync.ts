@@ -1,5 +1,5 @@
 import { AsyncGen, AsyncOperator, AsyncSeq } from '../../asyncSeq';
-import { asyncDefaultSelector } from '../../utils/asyncDefaultSelector';
+import { asyncDefaultSelector } from '../../utils';
 
 /**
  * Returns a sequence that is the union set of the current sequence and the specified sequence.

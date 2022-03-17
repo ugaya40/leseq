@@ -113,7 +113,7 @@ export class AsyncSeq<T> implements AsyncIterable<T> {
   }
 }
 
-export class AsyncPipelineSeq<T> extends AsyncSeq<T> {
+class AsyncPipelineSeq<T> extends AsyncSeq<T> {
   constructor(source: AsyncIterable<T>, private operators: AsyncOperator[]) {
     super(source);
   }

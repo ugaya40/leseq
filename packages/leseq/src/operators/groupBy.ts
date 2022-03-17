@@ -1,5 +1,5 @@
 import { Gen, Operator, Seq } from '../seq';
-import { defaultSelector } from '../utils/defaultSelector';
+import { defaultSelector } from '../utils';
 
 /**
  * Returns a sequence grouped by a specified key.

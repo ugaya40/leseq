@@ -1,5 +1,5 @@
 import { AsyncGen, AsyncOperator, AsyncSeq } from '../../asyncSeq';
-import { asyncDefaultSelector } from '../../utils/asyncDefaultSelector';
+import { asyncDefaultSelector } from '../../utils';
 
 /**
  * Returns the sequence that is the difference set between the current sequence and the specified sequence.

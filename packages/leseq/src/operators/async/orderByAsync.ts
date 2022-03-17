@@ -1,5 +1,5 @@
 import { AsyncGen, AsyncOperator, AsyncSeq } from '../../asyncSeq';
-import { SortType } from '../../utils/sortUtil';
+import { defaultCompareFunction, SortType } from '../../utils';
 
 /**
  * Returns a sequence sorted by a specified key.
@@ -62,9 +62,3 @@ export const createSortFunction =
     const bKey = keySelector(b);
     return sortType === 'asc' ? compareFunction(aKey, bKey) : compareFunction(aKey, bKey) * -1;
   };
-
-const defaultCompareFunction = (a: any, b: any) => {
-  if (a < b) return -1;
-  if (a > b) return 1;
-  return 0;
-};

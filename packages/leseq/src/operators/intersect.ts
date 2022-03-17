@@ -1,5 +1,5 @@
 import { Gen, Operator, Seq } from '../seq';
-import { defaultSelector } from '../utils/defaultSelector';
+import { defaultSelector } from '../utils';
 
 /**
  * Returns a sequence that is the product set of the current sequence and the specified sequence.
