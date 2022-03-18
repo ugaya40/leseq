@@ -92,6 +92,10 @@ export class Seq<T> implements Iterable<T> {
   toArray(): T[] {
     return [...this];
   }
+
+  toReadonlyArray(): readonly T[] {
+    return [...this];
+  }
 }
 
 class PipelineSeq<T> extends Seq<T> {
