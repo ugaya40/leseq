@@ -1,4 +1,5 @@
 export { mapAsync } from './mapAsync';
+export { mapNotNullAsync } from './mapNotNullAsync';
 export { chunkAsync } from './chunkAsync';
 export { scanAsync } from './scanAsync';
 export { orderByAsync } from './orderByAsync';
@@ -8,6 +9,7 @@ export { uniqAsync } from './uniqAsync';
 export { concatAsync } from './concatAsync';
 export { concatValueAsync } from './concatValueAsync';
 export { filterAsync } from './filterAsync';
+export { filterNotNullAsync } from './filterNotNullAsync';
 export { flattenAsync } from './flattenAsync';
 export { takeAsync } from './takeAsync';
 export { takeWhileAsync } from './takeWhileAsync';

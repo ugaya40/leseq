@@ -1,4 +1,27 @@
-import { concat, concatValue, skip, skipWhile, filter, flatten, from, map, orderBy, take, takeWhile, tap, uniq, groupBy, chunk, scan, union, difference, intersect, reverse } from '../src';
+import {
+  concat,
+  concatValue,
+  skip,
+  skipWhile,
+  filter,
+  filterNotNull,
+  flatten,
+  from,
+  map,
+  mapNotNull,
+  orderBy,
+  take,
+  takeWhile,
+  tap,
+  uniq,
+  groupBy,
+  chunk,
+  scan,
+  union,
+  difference,
+  intersect,
+  reverse
+} from '../src';
 
 test('operator: simple concat', () => {
   const output = from([1, 2, 3, 4, 5])
@@ -50,6 +73,13 @@ test('operator: filter index', () => {
   expect(indexes).toEqual([0, 1, 2, 3, 4, 5]);
 });
 
+test('operator: simple filterNotNull', () => {
+  const output = from([2, 4, null, 5, null, undefined, 6, 7, 8])
+    .pipe(filterNotNull())
+    .toArray();
+  expect(output).toEqual([2, 4, 5, 6, 7, 8]);
+});
+
 test('operator: simple flatten', () => {
   const output = from([
     [1, 2],
@@ -98,6 +128,27 @@ test('operator: map index', () => {
     .toArray();
   expect(output).toEqual([1, 4, 9]);
   expect(indexes).toEqual([0, 1, 2]);
+});
+
+test('operator: simple mapNotNull', () => {
+  const output = from([1, 2, null, 3, null, null, 4, undefined, 5])
+    .pipe(mapNotNull(i => i?.toString()))
+    .toArray();
+  expect(output).toEqual(["1", "2", "3", "4", "5"]);
+});
+
+test('operator: mapNotNull index', () => {
+  const indexes: number[] = [];
+  const output = from([1, 2, null, 3, null, null, 4, undefined, 5])
+    .pipe(
+      mapNotNull((i, index) => {
+        indexes.push(index);
+        return i?.toString();
+      })
+    )
+    .toArray();
+  expect(output).toEqual(["1", "2", "3", "4", "5"]);
+  expect(indexes).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8]);
 });
 
 test('operator: orderBy asc', () => {

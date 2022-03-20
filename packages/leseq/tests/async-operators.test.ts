@@ -1,4 +1,27 @@
-import { concat, concatValue, skip, skipWhile, filter, flatten, from, map, orderBy, take, takeWhile, tap, uniq, groupBy, chunk, scan, union, difference, intersect, reverse, concatAsync, fromAsAsync, tapAsync, concatValueAsync, skipAsync, skipWhileAsync, filterAsync, flattenAsync, mapAsync, orderByAsync, takeAsync, takeWhileAsync, uniqAsync, chunkAsync, scanAsync, groupByAsync, unionAsync, differenceAsync, intersectAsync, reverseAsync } from '../src';
+import {
+  concatAsync,
+  fromAsAsync,
+  tapAsync,
+  concatValueAsync,
+  skipAsync,
+  skipWhileAsync,
+  filterAsync,
+  filterNotNullAsync,
+  flattenAsync,
+  mapAsync,
+  mapNotNullAsync,
+  orderByAsync,
+  takeAsync,
+  takeWhileAsync,
+  uniqAsync,
+  chunkAsync,
+  scanAsync,
+  groupByAsync,
+  unionAsync,
+  differenceAsync,
+  intersectAsync,
+  reverseAsync
+} from '../src';
 import { abortableSleep } from './testUtil';
 
 test('operator: simple concatAsync', async () => {
@@ -58,6 +81,13 @@ test('operator: filterAsync index', async () => {
   expect(indexes).toEqual([0, 1, 2, 3, 4, 5]);
 });
 
+test('operator: simple filterNotNullAsync', async () => {
+  const output = await fromAsAsync([2, 4, null, 5, null, undefined, 6, 7, 8])
+    .pipe(filterNotNullAsync())
+    .toArrayAsync();
+  expect(output).toEqual([2, 4, 5, 6, 7, 8]);
+});
+
 test('operator: simple flattenAsync', async () => {
   const output = await fromAsAsync([
     [1, 2],
@@ -108,6 +138,28 @@ test('operator: mapAsync index', async () => {
     .toArrayAsync();
   expect(output).toEqual([1, 4, 9]);
   expect(indexes).toEqual([0, 1, 2]);
+});
+
+test('operator: simple mapNotNullAsync', async () => {
+  const output = await fromAsAsync([1, 2, null, 3, null, null, 4, undefined, 5])
+    .pipe(mapNotNullAsync(async i => i?.toString()))
+    .toArrayAsync();
+  expect(output).toEqual(["1", "2", "3", "4", "5"]);
+});
+
+test('operator: mapNotNullAsync index', async () => {
+  const indexes: number[] = [];
+  const output = await fromAsAsync([1, 2, null, 3, null, null, 4, undefined, 5])
+    .pipe(
+      mapNotNullAsync(async (i, index) => {
+        await abortableSleep(20);
+        indexes.push(index);
+        return i?.toString();
+      })
+    )
+    .toArrayAsync();
+  expect(output).toEqual(["1", "2", "3", "4", "5"]);
+  expect(indexes).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8]);
 });
 
 test('operator: orderByAsync asc', async () => {
