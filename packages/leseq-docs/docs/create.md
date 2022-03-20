@@ -65,9 +65,11 @@ The synchronous version of **Operator** returns **Operator<T, TResult\>** type f
 
 **Operator<T, TResult\>**/**AsyncOperator<T, TResult\>** is a [function* declaration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*).  that takes the current sequence as an argument. **T** is the type of the elements of the current sequence, and **TResult** is the type returned by the yield of the [function* declaration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*)
 
+**It is also recommended that the Generator function always be named**, since the name of the Generator function will appear in the stack trace, which is related to debuggability.
+
 ```typescript
 const mapOriginal = <T, TResult>(func: (arg: T) => TResult): Operator<T, TResult> =>
-  function* (source: Seq<T>): Gen<TResult> {
+  function* mapOriginal(source: Seq<T>): Gen<TResult> {
     for (const i of source) {
       const result = func(i);
       yield result;
@@ -80,7 +82,7 @@ const result1 = fromOriginal([1,2,3,4,5]).pipe(mapOriginal(i => i * i)).toArray(
 
 //async version
 const mapAsyncOriginal = <T, TResult>(func: (arg: T) => Promise<TResult>): AsyncOperator<T, TResult> =>
-  async function* (source: AsyncSeq<T>): AsyncGen<TResult> {
+  async function* mapAsyncOriginal(source: AsyncSeq<T>): AsyncGen<TResult> {
     for await (const i of source) {
       const result = await func(i);
       yield result;
@@ -97,6 +99,24 @@ const result2 = await fromAsAsyncOriginal([1,2,3,4,5]).pipe(
 ).toArrayAsync();
 
 //5 seconds later... result2: [1,4,9,16,25]
+```
+
+If you want to create an operator easily by combining existing operators, you can do the following.
+```typescript
+const prefix = <T>(prefix: string): Operator<T,string> => 
+  function* test(source: Seq<T>): Gen<string> {
+    yield* source.pipe(
+      map(i => `${prefix}:${new String(i)}`)
+    )
+  }
+
+const result = from([1, 2, 3, 4, 5, 6, 7])
+  .pipe(
+    prefix('test'),
+    take(3)
+  ).toArray();
+
+//result: ["test:1", "test:2", "test:3"]
 ```
 
 ### Create Value Functions

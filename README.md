@@ -3,7 +3,7 @@
 Lazy evaluation list with high tree-shaking affinity and easy customization.
 
 # Features
-- 🎁 **Lazy Evaluation**: The collection is enumerated only as far as it needs to be, and never more than once.
+- 🎁 **Lazy Evaluation**: The collections are only enumerated to the minimum necessary. Infinite sequences are supported.
 - 🎄 **Tree-Shakeable**: Only the features you use will be bundled.
 - 👻 **Async Iterator Support**: *Iterable* can also be seamlessly treated as *Async Iterator*.
 - 📎 **Easy-Customization**: You can easily create the functions you need by yourself. [In this way.](https://ugaya40.github.io/leseq/create/)
@@ -35,7 +35,7 @@ This is the result of [bundle visualizer](https://github.com/btd/rollup-plugin-v
 ```
 npm install leseq
 ```
-If you are using Async Iterable and *"target "* in **tsconfig.json** is smaller than **"es2018"**, you must add **"ES2018.AsyncGenerator "** in **tsconfig.json/lib** and **"ES2018.AsyncIterable "** or the type will not display properly.
+If you are using Async Iterable and *"target "* in **tsconfig.json** is smaller than **"es2018"**, you must add **"ES2018.AsyncGenerator "** and **"ES2018.AsyncIterable "** in **tsconfig.json/lib** or the type will not display properly.
 ```json
 {
   "compilerOptions": {
