@@ -78,7 +78,7 @@ test('operator: flattenAsync index', async () => {
   ])
   .pipe(
     flattenAsync(async(i, index) => {
-      abortableSleep(20);
+      await abortableSleep(20);
       indexes.push(index);
       return i;
     })
@@ -100,7 +100,7 @@ test('operator: mapAsync index', async () => {
   const output = await fromAsAsync([1, 2, 3])
     .pipe(
       mapAsync(async (i, index) => {
-        abortableSleep(20);
+        await abortableSleep(20);
         indexes.push(index);
         return i * i;
       })
@@ -183,7 +183,7 @@ test('operator: takeAsync over count', async () => {
 test('operator: simple takeWhileAsync', async () => {
   const output = await fromAsAsync([2, 4, 5, 6, 7, 8])
     .pipe(takeWhileAsync(async i => {
-      abortableSleep(20); 
+      await abortableSleep(20);
       return i % 2 == 0;
     }))
     .toArrayAsync();
