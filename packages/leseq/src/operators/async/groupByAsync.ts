@@ -77,8 +77,8 @@ export const groupByAsync = <T, TComparableValue, TKey = T, TValue = T>(
   keySelector: (target: T) => Promise<TKey>,
   elementSelector: (target: T) => Promise<TValue> = asyncDefaultSelector,
   comparableValueForKey?: (key: TKey) => Promise<TComparableValue>
-): AsyncOperator<T, { key: TKey; values: TValue[] }> =>
-  async function* groupByAsync(source: AsyncSeq<T>): AsyncGen<{ key: TKey; values: TValue[] }> {
+): AsyncOperator<T, { key: TKey; values: readonly TValue[] }> =>
+  async function* groupByAsync(source: AsyncSeq<T>): AsyncGen<{ key: TKey; values: readonly TValue[] }> {
     const resultMap = new Map<TComparableValue | TKey, { key: TKey; values: TValue[] }>();
     const createKeyValue = async (i: T) => (comparableValueForKey ? comparableValueForKey(await keySelector(i)) : keySelector(i));
 

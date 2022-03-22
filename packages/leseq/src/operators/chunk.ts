@@ -13,8 +13,8 @@ import { Gen, Operator, Seq } from '../seq';
  * @typeParam T Source element type.
  * @category Operators
  */
-export const chunk = <T>(size: number): Operator<T, T[]> =>
-  function* chunk(source: Seq<T>): Gen<T[]> {
+export const chunk = <T>(size: number): Operator<T, readonly T[]> =>
+  function* chunk(source: Seq<T>): Gen<readonly T[]> {
     let ch: T[] = [];
     for (const one of source) {
       ch.push(one);
