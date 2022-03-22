@@ -147,7 +147,7 @@ AsyncSource =
 value = await AsyncSource.valueAsync(AsyncValues(ex: findAsync,someAsync, ...etc));
 ```
 
-Since lazy evaluation is employed, the process is not executed when **pipe()** is called, but only when **value(valueAsync)**, **toArray(toArrayAsync)**, or **forEach(forEachAsync)** is called.
+Since lazy evaluation is employed, the process is not executed when **pipe()** is called, but only when **value(valueAsync)**, **toArray(toArrayAsync)/toMutableArray(toMutableArrayAsync)**, or **forEach(forEachAsync)** is called.
 
 > Changes from "Iterable" or Seq<T\> to "Async Iterable" can be made at any time with **.value(toAsync())**.
 but **Once the chain is changed to "Async Iterable" by **.value(toAsync())** or other means, only the asynchronous version of Operator/Value can be used in the same chain thereafter.** This is because, in principle, it is impossible to change from an "Async Iterable" to "Iterable".
