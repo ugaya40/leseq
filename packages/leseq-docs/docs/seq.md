@@ -17,7 +17,8 @@ The Seq<T\> object has the following methods
 | pipe | Takes an arbitrary number of **Operators** as arguments and converts the sequence. |
 | value | Takes only one **Value** and converts the sequence to a value. |
 | forEach | Performs iterative processing on elements of a sequence. |
-| toArray | Converts a sequence to an array. |
+| toArray | Converts a sequence to an readonly array.(Type of the return value is `readonly T[]`. The only difference from `toMutableArray()` is the return type.) |
+| toMutableArray | Converts a sequence to an array. (Type of the return value is `T[]`. The only difference from `toArray()` is the return type.)|
 
 Since lazy evaluation is employed, the process is not executed when **pipe()** is called, but only when **value()**, **toArray()**, or **forEach()** is called.
 
@@ -30,4 +31,5 @@ Basically the same as Seq<T\>, but **valueAsync()**, **toArrayAsync()**, and **f
 | pipe | Takes an arbitrary number of **Operators** as arguments and converts the sequence. |
 | valueAsync | Takes only one **Value** and converts the sequence to a value. |
 | forEachAsync | Performs iterative processing on elements of a sequence. |
-| toArrayAsync | Converts a sequence to an array. |
+| toArrayAsync | Converts a sequence to an readonly array. (Type of the return value is `Promise<readonly T[]>`. The only difference from `toMutableArrayAsync()` is the return type.) |
+| toMutableArrayAsync | Converts a sequence to an array. (Type of the return value is `Promise<T[]>`. The only difference from `toArrayAsync()` is the return type.) |
