@@ -106,10 +106,14 @@ export class AsyncSeq<T> implements AsyncIterable<T> {
     }
   }
 
-  async toArrayAsync(): Promise<T[]> {
+  async toMutableArrayAsync(): Promise<T[]> {
     const result: T[] = [];
     await this.forEachAsync(one => result.push(one));
     return result;
+  }
+
+  async toArrayAsync(): Promise<readonly T[]> {
+    return this.toMutableArrayAsync()
   }
 }
 
