@@ -70,8 +70,8 @@ export const groupBy = <T, TComparableValue, TKey = T, TValue = T>(
   keySelector: (target: T) => TKey,
   elementSelector: (target: T) => TValue = defaultSelector,
   comparableValueForKey?: (key: TKey) => TComparableValue
-): Operator<T, { key: TKey; values: TValue[] }> =>
-  function* groupBy(source: Seq<T>): Gen<{ key: TKey; values: TValue[] }> {
+): Operator<T, { key: TKey; values: readonly TValue[] }> =>
+  function* groupBy(source: Seq<T>): Gen<{ key: TKey; values: readonly TValue[] }> {
     const resultMap = new Map<TComparableValue | TKey, { key: TKey; values: TValue[] }>();
     const createKeyValue = (i: T) => (comparableValueForKey ? comparableValueForKey(keySelector(i)) : keySelector(i));
     for (const one of source) {

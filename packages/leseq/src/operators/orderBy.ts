@@ -50,7 +50,7 @@ export const orderBy = <T, TKey>(
   compareFunction: (a: TKey, b: TKey) => number = defaultCompareFunction
 ): Operator<T> =>
   function* orderBy(source: Seq<T>): Gen<T> {
-    const sortedArray = source.toArray().sort(createSortFunction(keySelector, sortType, compareFunction));
+    const sortedArray = source.toMutableArray().sort(createSortFunction(keySelector, sortType, compareFunction));
     yield* sortedArray;
   };
 

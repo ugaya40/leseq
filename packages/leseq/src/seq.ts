@@ -89,7 +89,11 @@ export class Seq<T> implements Iterable<T> {
     }
   }
 
-  toArray(): T[] {
+  toMutableArray(): T[] {
+    return [...this];
+  }
+
+  toArray(): readonly T[] {
     return [...this];
   }
 }

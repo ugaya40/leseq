@@ -1,5 +1,14 @@
 import { concat, concatValue, skip, skipWhile, filter, flatten, from, map, orderBy, take, takeWhile, tap, uniq, groupBy, chunk, scan, union, difference, intersect, reverse } from '../src';
 
+test('sec generates readonly array', () => {
+  const readOnlyOutput = from([1, 2, 3, 4]).toArray();
+
+  // @ts-expect-error Property 'push' does not exist on type 'readonly number[]'.
+  readOnlyOutput.push(99);
+
+  expect(readOnlyOutput).toEqual([1, 2, 3, 4, 99]);
+});
+
 test('operator: simple concat', () => {
   const output = from([1, 2, 3, 4, 5])
     .pipe(concat([6, 7]))
@@ -98,6 +107,17 @@ test('operator: map index', () => {
     .toArray();
   expect(output).toEqual([1, 4, 9]);
   expect(indexes).toEqual([0, 1, 2]);
+});
+
+test('operator: orderBy is not mutate operation', () => {
+  const source = [6, 3, 2, 1, 4, 5];
+  const sourceCopy = source.slice();
+
+  const output = from(source)
+    .pipe(orderBy(i => i))
+    .toArray();
+  expect(output).toEqual([1, 2, 3, 4, 5, 6]);
+  expect(source).toEqual(sourceCopy);
 });
 
 test('operator: orderBy asc', () => {
