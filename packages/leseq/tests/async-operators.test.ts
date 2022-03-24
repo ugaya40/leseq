@@ -1,4 +1,4 @@
-import { concat, concatValue, skip, skipWhile, filter, flatten, from, map, orderBy, take, takeWhile, tap, uniq, groupBy, chunk, scan, union, difference, intersect, reverse, concatAsync, fromAsAsync, tapAsync, concatValueAsync, skipAsync, skipWhileAsync, filterAsync, flattenAsync, mapAsync, orderByAsync, takeAsync, takeWhileAsync, uniqAsync, chunkAsync, scanAsync, groupByAsync, unionAsync, differenceAsync, intersectAsync, reverseAsync } from '../src';
+import { concat, concatValue, skip, skipWhile, filter, flatten, from, map, orderBy, take, takeWhile, tap, uniq, groupBy, chunk, scan, union, difference, intersect, reverse, concatAsync, fromAsAsync, tapAsync, concatValueAsync, skipAsync, skipWhileAsync, filterAsync, flattenAsync, mapAsync, orderByAsync, takeAsync, takeWhileAsync, uniqAsync, chunkAsync, scanAsync, groupByAsync, unionAsync, differenceAsync, intersectAsync, reverseAsync, finalizeAsync, findAsync, everyAsync, toAsync, finalize } from '../src';
 import { abortableSleep } from './testUtil';
 
 test('operator: simple concatAsync', async () => {
@@ -373,3 +373,225 @@ test('operator: simple reverseAsync', async () => {
   const output = await fromAsAsync([1, 2, 3, 4, 5]).pipe(reverseAsync()).toArrayAsync();
   expect(output).toEqual([5,4,3,2,1]);
 });
+
+test('operator: simple finalizeAsync for syntax 1', async () => {
+  const output: number[] = [];
+  let finalized = false;
+  const source = fromAsAsync([1, 2, 3, 4, 5]).pipe(
+    finalizeAsync(async () => {finalized = true})
+  );
+  for await (const one of source) {
+    output.push(one);
+  }
+  expect(output).toEqual([1,2,3,4,5]);
+  expect(finalized).toBe(true);
+});
+
+test('operator: simple finalizeAsync for syntax 2', async () => {
+  const output: number[] = [];
+  let finalized = false;
+  const source = fromAsAsync([1, 2, 3, 4, 5]).pipe(
+    takeAsync(3),
+    finalizeAsync(async () => {finalized = true})
+  );
+  for await (const one of source) {
+    output.push(one);
+  }
+  expect(output).toEqual([1,2,3]);
+  expect(finalized).toBe(true);
+});
+
+test('operator: simple finalizeAsync break', async () => {
+  const output: number[] = [];
+  let finalized = false;
+  const source = fromAsAsync([1, 2, 3, 4, 5]).pipe(
+    takeAsync(4),
+    finalizeAsync(async () => {finalized = true})
+  );
+  for await (const one of source) {
+    output.push(one);
+    if(one == 2) break;
+  }
+  expect(output).toEqual([1,2]);
+  expect(finalized).toBe(true);
+});
+
+test('operator: simple finalizeAsync toArray', async () => {
+  let finalized = false;
+
+  const output = await fromAsAsync([1, 2, 3, 4, 5]).pipe(
+    takeAsync(4),
+    finalizeAsync(async () => {finalized = true})
+  ).toArrayAsync();
+  
+  expect(output).toEqual([1,2,3,4]);
+  expect(finalized).toBe(true);
+});
+
+test('operator: simple finalizeAsync value 1', async () => {
+  let finalized = false;
+
+  const output = await fromAsAsync([1, 2, 3, 4, 5]).pipe(
+    takeAsync(4),
+    finalizeAsync(async () => {finalized = true})
+  ).valueAsync(findAsync(async i => i == 3));
+  
+  expect(output).toBe(3);
+  expect(finalized).toBe(true);
+});
+
+test('operator: simple finalizeAsync value 2', async () => {
+  let finalized = false;
+
+  const output = await fromAsAsync([1, 2, 3, 4, 5]).pipe(
+    takeAsync(4),
+    finalizeAsync(async () => {finalized = true})
+  ).valueAsync(everyAsync(async i => i < 10));
+  
+  expect(output).toBe(true);
+  expect(finalized).toBe(true);
+});
+
+test('operator: simple finalizeAsync error 1', async () => {
+  let finalized = false;
+
+  const output = fromAsAsync([1, 2, 3, 4, 5]).pipe(
+    tapAsync(async () => {throw new Error('test')}),
+    takeAsync(4),
+    finalizeAsync(async () => {finalized = true})
+  );
+  await expect(output.toArrayAsync()).rejects.toThrow();
+  expect(finalized).toBe(true);
+});
+
+test('operator: simple finalizeAsync error 2', async () => {
+  let finalized = false;
+
+  const output = fromAsAsync([1, 2, 3, 4, 5]).pipe(
+    takeAsync(4),
+    finalizeAsync(async () => {finalized = true}),
+    tapAsync(async () => {throw new Error('test')}),
+  );
+  await expect(output.toArrayAsync()).rejects.toThrow();
+  expect(finalized).toBe(true);
+});
+
+test('operator: simple finalizeAsync error 3', async () => {
+  const finalized: true[] = [];
+
+  const output = fromAsAsync([1, 2, 3, 4, 5]).pipe(
+    takeAsync(4),
+    finalizeAsync(async () => {finalized.push(true)}),
+    tapAsync(async () => {throw new Error('test')}),
+    finalizeAsync(async () => {finalized.push(true)}),
+  );
+  await expect(output.toArrayAsync()).rejects.toThrow();
+  expect(finalized).toEqual([true, true]);
+});
+
+test('operator: simple finalizeAsync iterable to async iterable - for syntax 1', async () => {
+  const output: number[] = [];
+  const finalized: number[] = [];
+  const source = from([1, 2, 3, 4, 5]).pipe(finalize(() => finalized.push(1))).value(toAsync()).pipe(
+    finalizeAsync(async () => {finalized.push(2)})
+  );
+  for await (const one of source) {
+    output.push(one);
+  }
+  expect(output).toEqual([1,2,3,4,5]);
+  expect(finalized).toEqual([1,2]);
+});
+
+test('operator: simple finalizeAsync iterable to async iterable - for syntax 2', async () => {
+  const output: number[] = [];
+  const finalized: number[] = [];
+  const source = from([1, 2, 3, 4, 5]).pipe(finalize(() => finalized.push(1))).value(toAsync()).pipe(
+    takeAsync(3),
+    finalizeAsync(async () => {finalized.push(2)})
+  );
+  for await (const one of source) {
+    output.push(one);
+  }
+  expect(output).toEqual([1,2,3]);
+  expect(finalized).toEqual([1,2]);
+});
+
+test('operator: simple finalizeAsync iterable to async iterable - break', async () => {
+  const output: number[] = [];
+  const finalized: number[] = [];
+  const source = from([1, 2, 3, 4, 5]).pipe(finalize(() => finalized.push(1))).value(toAsync()).pipe(
+    takeAsync(4),
+    finalizeAsync(async () => {finalized.push(2)})
+  );
+  for await (const one of source) {
+    output.push(one);
+    if(one == 2) break;
+  }
+  expect(output).toEqual([1,2]);
+  expect(finalized).toEqual([1,2]);
+});
+
+test('operator: simple finalizeAsync iterable to async iterable - toArray', async () => {
+  const finalized: number[] = [];
+
+  const output = await from([1, 2, 3, 4, 5]).pipe(finalize(() => finalized.push(1))).value(toAsync()).pipe(
+    takeAsync(4),
+    finalizeAsync(async () => {finalized.push(2)})
+  ).toArrayAsync();
+  
+  expect(output).toEqual([1,2,3,4]);
+  expect(finalized).toEqual([1,2]);
+});
+
+test('operator: simple finalizeAsync iterable to async iterable - value 1', async () => {
+  const finalized: number[] = [];
+
+  const output = await from([1, 2, 3, 4, 5]).pipe(finalize(() => finalized.push(1))).value(toAsync()).pipe(
+    takeAsync(4),
+    finalizeAsync(async () => {finalized.push(2)})
+  ).valueAsync(findAsync(async i => i == 3));
+  
+  expect(output).toBe(3);
+  expect(finalized).toEqual([1,2]);
+});
+
+test('operator: simple finalizeAsync iterable to async iterable - value 2', async () => {
+  const finalized: number[] = [];
+
+  const output = await from([1, 2, 3, 4, 5]).pipe(finalize(() => finalized.push(1))).value(toAsync()).pipe(
+    takeAsync(4),
+    finalizeAsync(async () => {finalized.push(2)})
+  ).valueAsync(everyAsync(async i => i < 10));
+  
+  expect(output).toBe(true);
+  expect(finalized).toEqual([1,2]);
+});
+
+test('operator: simple finalizeAsync iterable to async iterable - error 1', async () => {
+  const finalized: number[] = [];
+
+  const output = from([1, 2, 3, 4, 5]).pipe(
+    finalize(() => {finalized.push(1)}),
+  ).value(toAsync()).pipe(
+    takeAsync(4),
+    tapAsync(async () => {throw new Error('test')}),
+    finalizeAsync(async () => {finalized.push(2)}),
+  );
+  await expect(output.toArrayAsync()).rejects.toThrow();
+  expect(finalized).toEqual([1, 2]);
+});
+
+test('operator: simple finalizeAsync iterable to async iterable - error 2', async () => {
+  const finalized: number[] = [];
+
+  const output = from([1, 2, 3, 4, 5]).pipe(
+    tap(() => {throw new Error('test')}),
+    finalize(() => {finalized.push(1)}),
+  ).value(toAsync()).pipe(
+    takeAsync(4),
+    finalizeAsync(async () => {finalized.push(2)}),
+  );
+  await expect(output.toArrayAsync()).rejects.toThrow();
+  expect(finalized).toEqual([1, 2]);
+});
+

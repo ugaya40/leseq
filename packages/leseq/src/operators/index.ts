@@ -17,5 +17,6 @@ export { union } from './union';
 export { difference } from './difference';
 export { intersect } from './intersect';
 export { reverse } from './reverse';
+export { finalize } from './finalize';
 
 export * from './async';

@@ -1,13 +1,4 @@
-import { concat, concatValue, skip, skipWhile, filter, flatten, from, map, orderBy, take, takeWhile, tap, uniq, groupBy, chunk, scan, union, difference, intersect, reverse } from '../src';
-
-test('sec generates readonly array', () => {
-  const readOnlyOutput = from([1, 2, 3, 4]).toArray();
-
-  // @ts-expect-error Property 'push' does not exist on type 'readonly number[]'.
-  readOnlyOutput.push(99);
-
-  expect(readOnlyOutput).toEqual([1, 2, 3, 4, 99]);
-});
+import { concat, concatValue, skip, skipWhile, filter, flatten, from, map, orderBy, take, takeWhile, tap, uniq, groupBy, chunk, scan, union, difference, intersect, reverse, finalize, find, every, toAsync } from '../src';
 
 test('operator: simple concat', () => {
   const output = from([1, 2, 3, 4, 5])
@@ -349,4 +340,130 @@ test('operator: simple intersect', () => {
 test('operator: simple reverse', () => {
   const output = from([1, 2, 3, 4, 5]).pipe(reverse()).toArray();
   expect(output).toEqual([5,4,3,2,1]);
+});
+
+test('operator: simple finalize for syntax 1', () => {
+  const output: number[] = [];
+  let finalized = false;
+  const source = from([1, 2, 3, 4, 5]).pipe(
+    finalize(() => finalized = true)
+  );
+  for(const one of source) {
+    output.push(one);
+  }
+  expect(output).toEqual([1,2,3,4,5]);
+  expect(finalized).toBe(true);
+});
+
+test('operator: simple finalize for syntax 2', () => {
+  const output: number[] = [];
+  let finalized = false;
+  const source = from([1, 2, 3, 4, 5]).pipe(
+    take(3),
+    finalize(() => finalized = true)
+  );
+  for(const one of source) {
+    output.push(one);
+  }
+  expect(output).toEqual([1,2,3]);
+  expect(finalized).toBe(true);
+});
+
+test('operator: simple finalize break', () => {
+  const output: number[] = [];
+  let finalized = false;
+  const source = from([1, 2, 3, 4, 5]).pipe(
+    take(4),
+    finalize(() => finalized = true)
+  );
+  for(const one of source) {
+    output.push(one);
+    if(one == 2) break;
+  }
+  expect(output).toEqual([1,2]);
+  expect(finalized).toBe(true);
+});
+
+test('operator: simple finalize toArray', () => {
+  let finalized = false;
+
+  const output = from([1, 2, 3, 4, 5]).pipe(
+    take(4),
+    finalize(() => finalized = true)
+  ).toArray();
+  
+  expect(output).toEqual([1,2,3,4]);
+  expect(finalized).toBe(true);
+});
+
+test('operator: simple finalize value 1', () => {
+  let finalized = false;
+
+  const output = from([1, 2, 3, 4, 5]).pipe(
+    take(4),
+    finalize(() => finalized = true)
+  ).value(find(i => i == 3));
+  
+  expect(output).toBe(3);
+  expect(finalized).toBe(true);
+});
+
+test('operator: simple finalize value 2', () => {
+  let finalized = false;
+
+  const output = from([1, 2, 3, 4, 5]).pipe(
+    take(4),
+    finalize(() => finalized = true)
+  ).value(every(i => i < 10));
+  
+  expect(output).toBe(true);
+  expect(finalized).toBe(true);
+});
+
+test('operator: simple finalize value toAsync', () => {
+  let finalized = false;
+
+  from([1, 2, 3, 4, 5]).pipe(
+    take(4),
+    finalize(() => finalized = true)
+  ).value(toAsync());
+  
+  expect(finalized).toBe(false);
+});
+
+test('operator: simple finalize error 1', () => {
+  let finalized = false;
+
+  const output = from([1, 2, 3, 4, 5]).pipe(
+    tap(() => {throw new Error('test')}),
+    take(4),
+    finalize(() => finalized = true)
+  );
+  expect(() => output.toArray()).toThrow();
+  expect(finalized).toBe(true);
+});
+
+test('operator: simple finalize error 2', () => {
+  let finalized = false;
+
+  const output = from([1, 2, 3, 4, 5]).pipe(
+    take(4),
+    finalize(() => finalized = true),
+    tap(() => {throw new Error('test')}),
+  );
+  expect(() => output.toArray()).toThrow();
+  expect(finalized).toBe(true);
+});
+
+test('operator: simple finalize error 3', () => {
+  const finalized: true[] = [];
+
+  const output = from([1, 2, 3, 4, 5]).pipe(
+    take(4),
+    finalize(() => finalized.push(true)),
+    tap(() => {throw new Error('test')}),
+    finalize(() => finalized.push(true)),
+  );
+  expect(() => output.toArray()).toThrow();
+  expect(finalized).toEqual([true, true]);
 });

@@ -17,3 +17,4 @@ export { unionAsync } from './unionAsync';
 export { differenceAsync } from './differenceAsync';
 export { intersectAsync } from './intersectAsync';
 export { reverseAsync } from './reverseAsync';
+export { finalizeAsync } from './finalizeAsync';

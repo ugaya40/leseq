@@ -15,7 +15,18 @@ export class AsyncSeq<T> implements AsyncIterable<T> {
     } else {
       const iterator = this.source[Symbol.iterator]();
       return {
-        next: () => Promise.resolve(iterator.next()),
+        next: async () => iterator.next(),
+        // for iterable finally
+        return: async (value?: any) => {
+          if(iterator.return != null) {
+            return iterator.return(value);
+          } else {
+            return {
+              value,
+              done: true
+            }
+          }
+        },
       };
     }
   }
