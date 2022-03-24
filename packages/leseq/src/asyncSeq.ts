@@ -18,13 +18,13 @@ export class AsyncSeq<T> implements AsyncIterable<T> {
         next: async () => iterator.next(),
         // for iterable finally
         return: async (value?: any) => {
-          if(iterator.return != null) {
+          if (iterator.return != null) {
             return iterator.return(value);
           } else {
             return {
               value,
-              done: true
-            }
+              done: true,
+            };
           }
         },
       };
@@ -124,7 +124,7 @@ export class AsyncSeq<T> implements AsyncIterable<T> {
   }
 
   async toArrayAsync(): Promise<readonly T[]> {
-    return this.toMutableArrayAsync()
+    return this.toMutableArrayAsync();
   }
 }
 
