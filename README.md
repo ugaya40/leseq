@@ -31,6 +31,13 @@ This is the result of [bundle visualizer](https://github.com/btd/rollup-plugin-v
 
 - ### [Docs](https://ugaya40.github.io/leseq/)
 
+# Advanced
+- #### [Create Original Functions](https://ugaya40.github.io/leseq/create/)
+
+- #### [Equality Strategy](https://ugaya40.github.io/leseq/equality/)
+
+- #### [Finalization, and Resource Management](https://ugaya40.github.io/leseq/finalize/)
+
 # Getting Started
 ```
 npm install leseq
@@ -191,6 +198,7 @@ It is used within the pipe method of the Seq&lt;T&gt; object. Any number of oper
 | [tap](https://ugaya40.github.io/leseq/api/operators/#tap) | Run side effects. (async version: [tapAsync](https://ugaya40.github.io/leseq/api/operators/#tapasync) )  | |
 | [union](https://ugaya40.github.io/leseq/api/operators/#union) | Returns a sequence that is the union set of the current sequence and the specified sequence. (async version: [unionAsync](https://ugaya40.github.io/leseq/api/operators/#unionasync) )  | |
 | [uniq](https://ugaya40.github.io/leseq/api/operators/#uniq) | Returns a deduplicated sequence. (async version: [uniqAsync](https://ugaya40.github.io/leseq/api/operators/#uniqasync) )  | |
+| [finalize](https://ugaya40.github.io/leseq/api/operators/#finalize) | Invokes a specified action after the source iterable sequence terminates gracefully or exceptionally. (async version: [finalizeAsync](https://ugaya40.github.io/leseq/api/operators/#finalizeasync) )  | |
 
 
 ## Predefined Values

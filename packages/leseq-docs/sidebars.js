@@ -15,9 +15,10 @@
 const sidebars = {
   mainSidebar: [
     'overview',
-    'equality',
     'seq',
     'create',
+    'equality',
+    'finalize',
     {
       type: 'category',
       label: 'Predefined Functions',
