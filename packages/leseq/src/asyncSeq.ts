@@ -108,7 +108,7 @@ export class AsyncSeq<T> implements AsyncIterable<T> {
   }
 
   async valueAsync<TResult>(seqToValue: AsyncSeqToValue<T, TResult>): Promise<TResult> {
-    return await seqToValue(this);
+    return seqToValue(this);
   }
 
   async forEachAsync(func: (arg: T) => void): Promise<void> {
