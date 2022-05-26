@@ -1,4 +1,4 @@
-import { concat, concatValue, skip, skipWhile, filter, flatten, from, map, orderBy, take, takeWhile, tap, uniq, groupBy, chunk, scan, union, difference, intersect, reverse, concatAsync, fromAsAsync, tapAsync, concatValueAsync, skipAsync, skipWhileAsync, filterAsync, flattenAsync, mapAsync, orderByAsync, takeAsync, takeWhileAsync, uniqAsync, chunkAsync, scanAsync, groupByAsync, unionAsync, differenceAsync, intersectAsync, reverseAsync, finalizeAsync, findAsync, everyAsync, toAsync, finalize } from '../src';
+import { from, tap, concatAsync, fromAsAsync, tapAsync, concatValueAsync, skipAsync, skipWhileAsync, filterAsync, flattenAsync, mapAsync, orderByAsync, takeAsync, takeWhileAsync, uniqAsync, chunkAsync, scanAsync, groupByAsync, unionAsync, differenceAsync, intersectAsync, reverseAsync, finalizeAsync, findAsync, everyAsync, toAsync, finalize } from '../src';
 import { abortableSleep } from './testUtil';
 
 test('operator: simple concatAsync', async () => {

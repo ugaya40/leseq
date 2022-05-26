@@ -2,6 +2,7 @@
     "editor.tabSize": 2,
     "editor.bracketPairColorization.enabled": true,
     "cSpell.words": [
+        "abortable",
         "deduplicated",
         "leseq"
     ]
