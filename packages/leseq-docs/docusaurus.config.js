@@ -58,6 +58,13 @@ const config = {
         ...leseqApisConfigBase('values'),
         categoryOrder: ['Values', 'Async Values']
       }
+    ],
+    [
+      'docusaurus-plugin-typedoc',
+      {
+        ...leseqApisConfigBase('to'),
+        categoryOrder: ['To', 'Async To']
+      }
     ]
   ],
 

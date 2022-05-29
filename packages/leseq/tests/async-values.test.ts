@@ -1,4 +1,4 @@
-import { every, everyAsync, find, findAsync, findOrDefault, findOrDefaultAsync, from, fromAsAsync, reduce, reduceAsync, some, someAsync, tapAsync, toShareAsync } from '../src';
+import { everyAsync, findAsync, findOrDefaultAsync, fromAsAsync, reduceAsync, sharedAsyncSeq, someAsync, tapAsync } from '../src';
 import { abortableSleep } from './testUtil';
 
 test('value: everyAsync true case', async () => {
@@ -81,70 +81,4 @@ test('value: someAsync true case', async () => {
 test('value: someAsync false case', async () => {
   const output = await fromAsAsync([1, 2, 3, 4, 5]).valueAsync(someAsync(async i => i > 10));
   expect(output).toBe(false);
-});
-
-test('value: simple share 1', async () => {
-  const seq = fromAsAsync([1, 2, 3]).valueAsync(toShareAsync());
-  const output1: number[] = [];
-  const output2: number[] = [];
-  const output3: number[] = [];
-  const output4: number[] = [];
-  const output5: number[] = [];
-  for await (const one of seq) {
-    output1.push(one);
-    break;
-  }
-  for await (const one of seq) {
-    output2.push(one);
-    break;
-  }
-  for await (const one of seq) {
-    output3.push(one);
-    break;
-  }
-  for await (const one of seq) {
-    output4.push(one);
-  }
-  seq.reset();
-  for await (const one of seq) {
-    output5.push(one);
-  }
-  expect(output1).toEqual([1]);
-  expect(output2).toEqual([2]);
-  expect(output3).toEqual([3]);
-  expect(output4).toEqual([]);
-  expect(output5).toEqual([1,2,3]);
-});
-
-test('value: simple share 2', async () => {
-  const seq = fromAsAsync([1, 2, 3]).pipe(tapAsync(async i => await abortableSleep(20))).valueAsync(toShareAsync());
-  const output1: number[] = [];
-  const output2: number[] = [];
-  const output3: number[] = [];
-  const output4: number[] = [];
-  const output5: number[] = [];
-  for await (const one of seq) {
-    output1.push(one);
-    break;
-  }
-  for await (const one of seq) {
-    output2.push(one);
-    break;
-  }
-  for await (const one of seq) {
-    output3.push(one);
-    break;
-  }
-  for await (const one of seq) {
-    output4.push(one);
-  }
-  seq.reset();
-  for await (const one of seq) {
-    output5.push(one);
-  }
-  expect(output1).toEqual([1]);
-  expect(output2).toEqual([2]);
-  expect(output3).toEqual([3]);
-  expect(output4).toEqual([]);
-  expect(output5).toEqual([1,2,3]);
 });

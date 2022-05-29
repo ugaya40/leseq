@@ -1,5 +1,6 @@
 export type Gen<T = unknown> = Generator<T, any, undefined>;
 export type Operator<T = any, TResult = T> = (source: Seq<T>) => Gen<TResult>;
+export type SeqConverter<T, TResultSeq extends Iterable<T> | AsyncIterable<T>> = (source: Seq<T>) => TResultSeq;
 export type SeqToValue<T = any, TResult = any> = (source: Seq<T>) => TResult;
 
 export class Seq<T> implements Iterable<T> {
@@ -77,6 +78,10 @@ export class Seq<T> implements Iterable<T> {
       return this;
     }
     return new PipelineSeq(this, operators);
+  }
+
+  to<TResultSeq extends Iterable<T> | AsyncIterable<T>>(converter: SeqConverter<T, TResultSeq>): TResultSeq {
+    return converter(this);
   }
 
   value<TResult>(seqToValue: SeqToValue<T, TResult>): TResult {

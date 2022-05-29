@@ -1,15 +1,13 @@
 import { AsyncSeq } from '../asyncSeq';
-import { Seq } from '../seq';
+import { Seq, SeqConverter } from '../seq';
 
 /**
- * @deprecated Use `Seq<T>.to(asyncSeq())` instead.
- *
  * Converts the current sequence to AsyncSeq<T\> and returns it.
  * At this point, it is only converted to an asynchronous sequence; no actual enumeration is performed.
  *
  * ```typescript
- * const result = await from([1, 2, 3, 4, 5]).value(
- *   toAsync()
+ * const result = await from([1, 2, 3, 4, 5]).to(
+ *   asyncSeq()
  * ).valueAsync(
  *   findAsync(async i => i % 2 == 0)
  * );
@@ -19,9 +17,9 @@ import { Seq } from '../seq';
  *
  * @typeParam T Source element type.
  * @returns AsyncSeq<T\>
- * @category Values
+ * @category To
  */
-export const toAsync = <T>() =>
-  function toAsync(seq: Seq<T>): AsyncSeq<T> {
+export const asyncSeq = <T>(): SeqConverter<T, AsyncSeq<T>> =>
+  function asyncSeq(seq: Seq<T>): AsyncSeq<T> {
     return new AsyncSeq(seq);
   };

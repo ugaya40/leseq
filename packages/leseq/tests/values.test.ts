@@ -1,4 +1,4 @@
-import { every, find, findOrDefault, from, reduce, some, tap, toShare } from '../src';
+import { every, find, findOrDefault, from, reduce, sharedSeq, some, tap } from '../src';
 
 test('value: every true case', () => {
   const output = from([1, 2, 3, 4, 5]).value(every(i => i < 6));
@@ -78,70 +78,4 @@ test('value: some true case', () => {
 test('value: some false case', () => {
   const output = from([1, 2, 3, 4, 5]).value(some(i => i > 10));
   expect(output).toBe(false);
-});
-
-test('value: simple share 1', () => {
-  const seq = from([1, 2, 3]).value(toShare());
-  const output1: number[] = [];
-  const output2: number[] = [];
-  const output3: number[] = [];
-  const output4: number[] = [];
-  const output5: number[] = [];
-  for(const one of seq) {
-    output1.push(one);
-    break;
-  }
-  for(const one of seq) {
-    output2.push(one);
-    break;
-  }
-  for(const one of seq) {
-    output3.push(one);
-    break;
-  }
-  for(const one of seq) {
-    output4.push(one);
-  }
-  seq.reset();
-  for(const one of seq) {
-    output5.push(one);
-  }
-  expect(output1).toEqual([1]);
-  expect(output2).toEqual([2]);
-  expect(output3).toEqual([3]);
-  expect(output4).toEqual([]);
-  expect(output5).toEqual([1,2,3]);
-});
-
-test('value: simple share 2', () => {
-  const seq = from([1, 2, 3]).pipe(tap(() =>{})).value(toShare());
-  const output1: number[] = [];
-  const output2: number[] = [];
-  const output3: number[] = [];
-  const output4: number[] = [];
-  const output5: number[] = [];
-  for(const one of seq) {
-    output1.push(one);
-    break;
-  }
-  for(const one of seq) {
-    output2.push(one);
-    break;
-  }
-  for(const one of seq) {
-    output3.push(one);
-    break;
-  }
-  for(const one of seq) {
-    output4.push(one);
-  }
-  seq.reset();
-  for(const one of seq) {
-    output5.push(one);
-  }
-  expect(output1).toEqual([1]);
-  expect(output2).toEqual([2]);
-  expect(output3).toEqual([3]);
-  expect(output4).toEqual([]);
-  expect(output5).toEqual([1,2,3]);
 });

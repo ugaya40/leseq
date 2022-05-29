@@ -1,4 +1,4 @@
-import { Seq, Gen } from '../seq';
+import { Gen, Seq } from '../seq';
 
 function* rangeInternal(start: number, count: number): Gen<number> {
   let currentCount = 0;

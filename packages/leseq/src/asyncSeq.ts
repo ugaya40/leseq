@@ -1,6 +1,7 @@
 export type AsyncGen<T = unknown> = AsyncGenerator<T, any, undefined>;
 export type AsyncOperator<T = any, TResult = T> = (source: AsyncSeq<T>) => AsyncGen<TResult>;
-export type AsyncSeqToValue<T = any, TResult = any> = (source: AsyncSeq<T>) => TResult;
+export type AsyncSeqConverter<T, TResultSeq extends AsyncIterable<T>> = (source: AsyncSeq<T>) => TResultSeq;
+export type AsyncSeqToValue<T = any, TResult = any> = (source: AsyncSeq<T>) => Promise<TResult>;
 
 export function isAsyncIterable(source: any): source is AsyncIterable<unknown> {
   return Symbol.asyncIterator in source;
@@ -13,13 +14,14 @@ export class AsyncSeq<T> implements AsyncIterable<T> {
     if (isAsyncIterable(this.source)) {
       return this.source[Symbol.asyncIterator]();
     } else {
-      const iterator = this.source[Symbol.iterator]()
+      const iterator = this.source[Symbol.iterator]();
       return {
         next: async (args: any) => iterator.next(args),
         // for iterable finally
-        return: iterator.return != null ? 
-          async (value?: any): Promise<IteratorResult<T>> => iterator.return!(value): 
-          async (value?: any): Promise<IteratorResult<T>> => ({value, done: true}),
+        return:
+          iterator.return != null
+            ? async (value?: any): Promise<IteratorResult<T>> => iterator.return!(value)
+            : async (value?: any): Promise<IteratorResult<T>> => ({ value, done: true }),
       };
     }
   }
@@ -100,7 +102,11 @@ export class AsyncSeq<T> implements AsyncIterable<T> {
     return new AsyncPipelineSeq(this, operators);
   }
 
-  valueAsync<TResult>(seqToValue: AsyncSeqToValue<T, TResult>): TResult {
+  to<TResultSeq extends AsyncIterable<T>>(converter: AsyncSeqConverter<T, TResultSeq>): TResultSeq {
+    return converter(this);
+  }
+
+  valueAsync<TResult>(seqToValue: AsyncSeqToValue<T, TResult>): Promise<TResult> {
     return seqToValue(this);
   }
 

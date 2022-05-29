@@ -71,13 +71,13 @@ const result = await fromAsAsync([1, 2, 3, 4, 5]).pipe(
 //Error
 //console: finalized
 ```
-However, for those that do not actually enumerate at that time, such as [toAsync()](https://ugaya40.github.io/leseq/api/values/#toasync), finalize does not work either; if `toAsync()` starts enumerating, finalize will work at the end of enumeration or on an error.
+However, for those that do not actually enumerate at that time, such as [asyncSeq()](https://ugaya40.github.io/leseq/api/to/#asyncseq), finalize does not work either; if `asyncSeq()` starts enumerating, finalize will work at the end of enumeration or on an error.
 
 ```typescript
 const source = from([1, 2, 3]).pipe(
   tap(() => {throw new Error('test')}),
   finalize(() => {console.log('finalized')}),
-).value(toAsync());
+).to(asyncSeq());
 
 //no output
 
@@ -97,7 +97,7 @@ In addition, all finalizes work as expected even in such a compound case of iter
 const output = await from([1, 2, 3, 4, 5]).pipe(
   tap(() => {throw new Error('test')}),
   finalize(() => {console.log('iterable finalized')}),
-).value(toAsync()).pipe(
+).to(asyncSeq()).pipe(
   takeAsync(4),
   finalizeAsync(async () => {console.log('async iterable finalized')}),
 ).toArrayAsync();
@@ -110,7 +110,7 @@ const output = await from([1, 2, 3, 4, 5]).pipe(
 ```typescript
 const output = from([1, 2, 3, 4, 5]).pipe(
     finalize(() => {console.log('iterable finalized')}),
-  ).value(toAsync()).pipe(
+  ).to(asyncSeq()).pipe(
     takeAsync(4),
     tapAsync(async () => {throw new Error('test')}),
     finalizeAsync(async () => {console.log('async iterable finalized')}),

@@ -88,12 +88,12 @@ const result3 = range(1, 10000000).pipe(
 ```
 ## Async Iterable
 ```typescript
-import {from, mapAsync, filterAsync, fromAsAsync, findAsync, toAsync} from 'leseq';
+import {from, mapAsync, filterAsync, fromAsAsync, findAsync, asyncSeq} from 'leseq';
 
 const sleep = (milliseconds: number) => new Promise(resolve => setTimeout(resolve,milliseconds));
 
 //from iterable to async iterable.
-const result1 = await from([1,2,3,4,5]).value(toAsync()).pipe(
+const result1 = await from([1,2,3,4,5]).to(asyncSeq()).pipe(
   mapAsync(async i => {
     await sleep(1000);
     return i * i;
@@ -131,12 +131,13 @@ for await (const one of result3) {
 ```
 # Usage
 
-You can generate a sequence(Seq&lt;T&gt;/AsyncSeq&lt;T&gt; object) with **Generator**, perform transformations and other operations with any number of **Operators**, and convert it to a value with **Value**.
+It is possible to generate sequences (Seq&lt;T&gt;/AsyncSeq&lt;T&gt; object) with **Generator**, convert them to sequences with different characteristics with **To**, perform operations such as value conversion and filtering with any number of **Operators**, and convert them to a single value with **Value**.
 
 ```typescript
 // sync iterator
 SyncSource = 
   Generators(ex: from, fromConcat, ..etc) | 
+  SyncSource.to(To(ex: sharedSeq, asyncSeq))
   SyncSource.pipe(
     ...SyncOperators(ex: map, filter, ...etc)
   );
@@ -146,7 +147,8 @@ value = SyncSource.value(SyncValues(ex: find,some, ...etc));
 // async iterator
 AsyncSource = 
   AsyncGenerators(ex: fromAsAsync, fromConcatAsAsync, ...etc) |
-  SyncSource.value(toAsync()) | // iterable to async iterable.
+  SyncSource.to(asyncSeq()) | // iterable to async iterable. |
+  AsyncSource.to(To(ex: sharedAsyncSeq)) |
   AsyncSource.pipe(
     ...AsyncOperators(ex: mapAsync, filterAsync, ...etc)
   );
@@ -154,12 +156,12 @@ AsyncSource =
 value = await AsyncSource.valueAsync(AsyncValues(ex: findAsync,someAsync, ...etc));
 ```
 
-Since lazy evaluation is employed, the process is not executed when **pipe()** is called, but only when **value(valueAsync)**, **toArray(toArrayAsync)/toMutableArray(toMutableArrayAsync)**, or **forEach(forEachAsync)** is called.
+Since lazy evaluation is employed, the process is not executed when **pipe()**/**to()** is called, but only when **value(valueAsync)**, **toArray(toArrayAsync)/toMutableArray(toMutableArrayAsync)**, or **forEach(forEachAsync)** is called.
 
-> Changes from "Iterable" or Seq<T\> to "Async Iterable" can be made at any time with **.value(toAsync())**.
-but **Once the chain is changed to "Async Iterable" by **.value(toAsync())** or other means, only the asynchronous version of Operator/Value can be used in the same chain thereafter.** This is because, in principle, it is impossible to change from an "Async Iterable" to "Iterable".
+> Changes from "Iterable" or Seq<T\> to "Async Iterable" can be made at any time with **.to(asyncSeq())**.
+but **Once the chain is changed to "Async Iterable" by **.to(asyncSeq())** or other means, only the asynchronous version of Operator/Value can be used in the same chain thereafter.** This is because, in principle, it is impossible to change from an "Async Iterable" to "Iterable".
 
-The predefined **Generators/Operators/Values** are as follows. And all of them have asynchronous versions(*xxxAsAsync* or *xxxAsync*).
+The predefined **Generators/Operators/To/Values** are as follows. And all of them have asynchronous versions(*xxxAsAsync* or *xxxAsync*).
 
 If the function you want to use does not exist, you can also define your own Operator/Value function [in this way](https://ugaya40.github.io/leseq/create/).
 
@@ -172,7 +174,11 @@ If the function you want to use does not exist, you can also define your own Ope
 | [range](https://ugaya40.github.io/leseq/api/generators/#range) | Generates a sequential number sequence. (async version: [rangeAsAsync](https://ugaya40.github.io/leseq/api/generators/#rangeasasync) )  | (async version: [rangeAsAsync](https://ugaya40.github.io/leseq/api/generators/#rangeasasync) )  | |
 | [repeat](https://ugaya40.github.io/leseq/api/generators/#repeat) | Generates a sequence in which the specified value is repeated a specified number of times. (async version: [repeatAsAsync](https://ugaya40.github.io/leseq/api/generators/#repeatasasync) )  | (async version: [repeatAsAsync](https://ugaya40.github.io/leseq/api/generators/#repeatasasync) )  | |
 
-
+## Predefined To
+| To | Description |
+| --- | --- |
+| [asyncSeq](https://ugaya40.github.io/leseq/api/to/#asyncseq) | Converts the current sequence to AsyncSeq<T\> and returns it. ||
+| [sharedSeq](https://ugaya40.github.io/leseq/api/api/to/#sharedseq) | Converts the current sequence to SharedSeq<T\> and returns it; in a SharedSeq<T\>, `iterator` is shared until `close` method is called. (async version: [sharedAsyncSeq](https://ugaya40.github.io/leseq/api/to/#sharedasyncseq) )  | (async version: [sharedAsyncSeq](https://ugaya40.github.io/leseq/api/to/#sharedasyncseq) )  | |
 
 ## Predefined Operators
 It is used within the pipe method of the Seq&lt;T&gt; object. Any number of operators can be connected.
@@ -206,7 +212,6 @@ Generates a value from a sequence. Used in the value method of the Seq&lt;T&gt; 
 
 | Value | Description |
 | --- | --- |
-| [toAsync](https://ugaya40.github.io/leseq/api/values/#toasync) | Converts the current sequence to AsyncSeq<T\> and returns it.  | |
 | [every](https://ugaya40.github.io/leseq/api/values/#every) | Returns whether or not all elements of a sequence meet the specified conditions. (async version: [everyAsync](https://ugaya40.github.io/leseq/api/values/#everyasync) )  | |
 | [find](https://ugaya40.github.io/leseq/api/values/#find) | Returns the first element that satisfies the condition. If no element satisfying the condition is found, an error is thrown. (async version: [findAsync](https://ugaya40.github.io/leseq/api/values/#findasync) )  | |
 | [findOrDefault](https://ugaya40.github.io/leseq/api/values/#findordefault) | Returns the first element that satisfies the condition. If no element is found that satisfies the condition, it returns the specified default value. (async version: [findOrDefaultAsync](https://ugaya40.github.io/leseq/api/values/#findordefaultasync) )  | |

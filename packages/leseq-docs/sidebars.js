@@ -24,6 +24,7 @@ const sidebars = {
       label: 'Predefined Functions',
       items: [
         'api/generators/api-generators',
+        'api/to/api-to',
         'api/operators/api-operators',
         'api/values/api-values'
       ],
