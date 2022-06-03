@@ -178,7 +178,7 @@ If the function you want to use does not exist, you can also define your own Ope
 | To | Description |
 | --- | --- |
 | [asyncSeq](https://ugaya40.github.io/leseq/api/to/#asyncseq) | Converts the current sequence to AsyncSeq<T\> and returns it. ||
-| [sharedSeq](https://ugaya40.github.io/leseq/api/api/to/#sharedseq) | Converts the current sequence to SharedSeq<T\> and returns it; in a SharedSeq<T\>, `iterator` is shared until `close` method is called. (async version: [sharedAsyncSeq](https://ugaya40.github.io/leseq/api/to/#sharedasyncseq) )  | (async version: [sharedAsyncSeq](https://ugaya40.github.io/leseq/api/to/#sharedasyncseq) )  | |
+| [sharedSeq](https://ugaya40.github.io/leseq/api/to/#sharedseq) | Converts the current sequence to SharedSeq<T\> and returns it; in a SharedSeq<T\>, `iterator` is shared until `close` method is called. (async version: [sharedAsyncSeq](https://ugaya40.github.io/leseq/api/to/#sharedasyncseq) )  | (async version: [sharedAsyncSeq](https://ugaya40.github.io/leseq/api/to/#sharedasyncseq) )  | |
 
 ## Predefined Operators
 It is used within the pipe method of the Seq&lt;T&gt; object. Any number of operators can be connected.
