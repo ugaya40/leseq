@@ -85,9 +85,7 @@ for await(const one of source) {
   console.log(one);
 }
 
-//console: 1
-//console: 2
-//console: 3
+//Error
 //console: finalized
 ```
 
@@ -101,20 +99,6 @@ const output = await from([1, 2, 3, 4, 5]).pipe(
   takeAsync(4),
   finalizeAsync(async () => {console.log('async iterable finalized')}),
 ).toArrayAsync();
-
-//Error
-//console: iterable finalized
-//console: async iterable finalized
-```
-
-```typescript
-const output = from([1, 2, 3, 4, 5]).pipe(
-    finalize(() => {console.log('iterable finalized')}),
-  ).to(asyncSeq()).pipe(
-    takeAsync(4),
-    tapAsync(async () => {throw new Error('test')}),
-    finalizeAsync(async () => {console.log('async iterable finalized')}),
-  );
 
 //Error
 //console: iterable finalized
