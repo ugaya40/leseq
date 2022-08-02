@@ -1,5 +1,5 @@
-import { chunkAsync, concatAsync, concatValueAsync, differenceAsync, everyAsync, filterAsync, finalize, finalizeAsync, findAsync, flattenAsync, from, fromAsAsync, groupByAsync, intersectAsync, mapAsync, orderByAsync, reverseAsync, scanAsync, skipAsync, skipWhileAsync, takeAsync, takeWhileAsync, tap, tapAsync, toAsync, unionAsync, uniqAsync } from '../src';
-import { abortableSleep } from './testUtil';
+import { chunkAsync, concatAsync, concatValueAsync, differenceAsync, everyAsync, filterAsync, finalize, finalizeAsync, findAsync, flattenAsync, from, fromAsAsync, groupByAsync, intersectAsync, mapAsync, orderByAsync, reverseAsync, scanAsync, skipAsync, skipWhileAsync, take, takeAsync, takeWhileAsync, tap, tapAsync, toAsync, unionAsync, uniqAsync, zipWithAsync } from '../src';
+import { abortableSleep, performanceAsync } from './testUtil';
 
 test('operator: simple concatAsync', async () => {
 
@@ -593,5 +593,82 @@ test('operator: simple finalizeAsync iterable to async iterable - error 2', asyn
   );
   await expect(output.toArrayAsync()).rejects.toThrow();
   expect(finalized).toEqual([1, 2]);
+});
+
+test('operator: simple zipWithAsync 1', async () => {
+  const [output,time] =  await performanceAsync(async () => {
+    return await fromAsAsync([1, 2, 3, 4, 5]).pipe(
+      tapAsync(async () => await abortableSleep(20)),
+      zipWithAsync(
+        fromAsAsync([11,12,13]).pipe(tapAsync(async () => await abortableSleep(30))),
+        fromAsAsync([101,102,103,104]).pipe(tapAsync(async () => await abortableSleep(40))),
+      ),
+    ).toArrayAsync();
+  });
+  expect(output).toEqual([[1,11,101],[2,12,102],[3,13,103]]);
+  expect(time > 160 && time < 200).toBe(true);
+});
+
+test('operator: simple zipWithAsync 2', async () => {
+  const output = await fromAsAsync([1, 2, 3, 4, 5]).pipe(
+    zipWithAsync([],[101,102,103,104]),
+  ).toArrayAsync();
+  expect(output).toEqual([]);
+});
+
+test('operator: simple zipWithAsync 3', async () => {
+  const output = await fromAsAsync([1, 2, 3, 4, 5]).pipe(
+    zipWithAsync([]),
+  ).toArrayAsync();
+  expect(output).toEqual([]);
+});
+
+test('operator: simple zipWithAsync 4', async () => {
+  const output = await fromAsAsync([1, 2, 3, 4, 5]).pipe(
+    zipWithAsync(),
+  ).toArrayAsync();
+  expect(output).toEqual([]);
+});
+
+test('operator: simple zipWithAsync 5', async () => {
+  const output = await fromAsAsync([1, 2, 3, 4, 5]).pipe(
+    zipWithAsync(["a","b","c"],[true,false,true,false]),
+  ).toArrayAsync();
+  expect(output).toEqual([[1,"a",true],[2,"b",false],[3,"c",true]]);
+});
+
+test('operator: finalize zipWithAsync 1', async () => {
+  const finalized: true[] = [];
+
+  const output = await fromAsAsync([1,2,3,4]).pipe(
+    finalizeAsync(async () =>{finalized.push(true)}),
+    zipWithAsync(
+      from([11,12,13]).pipe(finalize(() => finalized.push(true))),
+      fromAsAsync([101,102,103,104]).pipe(finalizeAsync(async () => {finalized.push(true)})),
+    )
+  ).pipe(
+    finalizeAsync(async () => {finalized.push(true)})
+  ).toArrayAsync();
+
+  expect(output).toEqual([[1,11,101],[2,12,102],[3,13,103]]);
+  expect(finalized.length).toEqual(4);
+});
+
+test('operator: finalize zipWithAsync 2', async () => {
+  const finalized: true[] = [];
+
+  const output = await fromAsAsync([1,2,3,4]).pipe(
+    finalizeAsync(async () =>{finalized.push(true)}),
+    zipWithAsync(
+      from([11,12,13]).pipe(finalize(() => finalized.push(true))),
+      fromAsAsync([101,102,103,104]).pipe(finalizeAsync(async () => {finalized.push(true)})),
+    )
+  ).pipe(
+    takeAsync(1),
+    finalizeAsync(async () => {finalized.push(true)})
+  ).toArrayAsync();
+
+  expect(output).toEqual([[1,11,101]]);
+  expect(finalized.length).toEqual(4);
 });
 

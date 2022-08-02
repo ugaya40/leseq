@@ -1,4 +1,4 @@
-import { concat, concatValue, skip, skipWhile, filter, flatten, from, map, orderBy, take, takeWhile, tap, uniq, groupBy, chunk, scan, union, difference, intersect, reverse, finalize, find, every, toAsync } from '../src';
+import { concat, concatValue, skip, skipWhile, filter, flatten, from, map, orderBy, take, takeWhile, tap, uniq, groupBy, chunk, scan, union, difference, intersect, reverse, finalize, find, every, toAsync, zipWith } from '../src';
 
 test('operator: simple concat', () => {
   const output = from([1, 2, 3, 4, 5])
@@ -466,4 +466,74 @@ test('operator: simple finalize error 3', () => {
   );
   expect(() => output.toArray()).toThrow();
   expect(finalized).toEqual([true, true]);
+});
+
+test('operator: simple zipWith 1', () => {
+  const output = from([1, 2, 3, 4, 5]).pipe(
+    zipWith([11,12,13],[101,102,103,104]),
+  ).toArray();
+  expect(output).toEqual([[1,11,101],[2,12,102],[3,13,103]]);
+});
+
+test('operator: simple zipWith 2', () => {
+  const output = from([1, 2, 3, 4, 5]).pipe(
+    zipWith([],[101,102,103,104]),
+  ).toArray();
+  expect(output).toEqual([]);
+});
+
+test('operator: simple zipWith 3', () => {
+  const output = from([1, 2, 3, 4, 5]).pipe(
+    zipWith([]),
+  ).toArray();
+  expect(output).toEqual([]);
+});
+
+test('operator: simple zipWith 4', () => {
+  const output = from([1, 2, 3, 4, 5]).pipe(
+    zipWith(),
+  ).toArray();
+  expect(output).toEqual([]);
+});
+
+test('operator: simple zipWith 5', () => {
+  const output = from([1, 2, 3, 4, 5]).pipe(
+    zipWith(["a","b","c"],[true,false,true,false]),
+  ).toArray();
+  expect(output).toEqual([[1,"a",true],[2,"b",false],[3,"c",true]]);
+});
+
+test('operator: finalize zipWith 1', () => {
+  const finalized: true[] = [];
+
+  const output = from([1,2,3,4]).pipe(
+    finalize(() => finalized.push(true)),
+    zipWith(
+      from([11,12,13]).pipe(finalize(() => finalized.push(true))),
+      from([101,102,103,104]).pipe(finalize(() => finalized.push(true))),
+    )
+  ).pipe(
+    finalize(() => finalized.push(true))
+  ).toArray();
+
+  expect(output).toEqual([[1,11,101],[2,12,102],[3,13,103]]);
+  expect(finalized.length).toEqual(4);
+});
+
+test('operator: finalize zipWith 2', () => {
+  const finalized: true[] = [];
+
+  const output = from([1,2,3,4]).pipe(
+    finalize(() => finalized.push(true)),
+    zipWith(
+      from([11,12,13]).pipe(finalize(() => finalized.push(true))),
+      from([101,102,103,104]).pipe(finalize(() => finalized.push(true))),
+    )
+  ).pipe(
+    take(1),
+    finalize(() => finalized.push(true))
+  ).toArray();
+
+  expect(output).toEqual([[1,11,101]]);
+  expect(finalized.length).toEqual(4);
 });
