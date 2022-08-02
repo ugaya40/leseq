@@ -7,22 +7,26 @@ export function isAsyncIterable(source: any): source is AsyncIterable<unknown> {
   return Symbol.asyncIterator in source;
 }
 
+export function toAsyncIterator<T>(iterator: Iterator<T>): AsyncIterator<T> {
+  return {
+    next: async (args: any) => iterator.next(args),
+    return:
+      iterator.return != null
+        ? async (value?: any): Promise<IteratorResult<T>> => iterator.return!(value)
+        : async (value?: any): Promise<IteratorResult<T>> => ({ value, done: true }),
+  };
+}
+
+export type Iterables<T> = AsyncIterable<T> | Iterable<T>;
+
 export class AsyncSeq<T> implements AsyncIterable<T> {
-  constructor(protected source: AsyncIterable<T> | Iterable<T>) {}
+  constructor(protected source: Iterables<T>) {}
 
   [Symbol.asyncIterator](): AsyncIterator<T> {
     if (isAsyncIterable(this.source)) {
       return this.source[Symbol.asyncIterator]();
     } else {
-      const iterator = this.source[Symbol.iterator]();
-      return {
-        next: async (args: any) => iterator.next(args),
-        // for iterable finally
-        return:
-          iterator.return != null
-            ? async (value?: any): Promise<IteratorResult<T>> => iterator.return!(value)
-            : async (value?: any): Promise<IteratorResult<T>> => ({ value, done: true }),
-      };
+      return toAsyncIterator(this.source[Symbol.iterator]());
     }
   }
 

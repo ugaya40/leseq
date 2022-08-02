@@ -1,4 +1,4 @@
-import { AsyncGen, AsyncOperator, AsyncSeq } from '../../asyncSeq';
+import { AsyncGen, AsyncOperator, AsyncSeq, Iterables } from '../../asyncSeq';
 
 /**
  * Returns a sequence in which the current sequence and the specified sequence are concatenated.
@@ -15,7 +15,7 @@ import { AsyncGen, AsyncOperator, AsyncSeq } from '../../asyncSeq';
  * @typeParam T Source element type.
  * @category Async Operators
  */
-export const concatAsync = <T>(target: AsyncIterable<T> | Iterable<T>): AsyncOperator<T> =>
+export const concatAsync = <T>(target: Iterables<T>): AsyncOperator<T> =>
   async function* concatAsync(source: AsyncSeq<T>): AsyncGen<T> {
     yield* source;
     yield* target;
