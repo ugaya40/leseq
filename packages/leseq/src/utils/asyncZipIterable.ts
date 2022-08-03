@@ -29,6 +29,17 @@ export class AsyncZipIterable implements AsyncIterable<unknown> {
       next: async () => {
         if (iterators.length == 0) return doneResult;
 
+        /*
+        Ideally zip should immediately terminate next() of the other iterators if any one of the multiple iterators is done. 
+        Also, if it terminates next(), return() should be called immediately for finalize. 
+        However, the iterator created using the generator function manages operations on the iterator with a queue, 
+        so even if an iterator is prepared that makes it possible to ignore the result of next() and cancel next(), 
+        it will eventually wait for next() to finish when return() is called. In other words, 
+        if the generator function is used together, other next() cannot be canceled after all.
+
+        It is possible to define an iterable for each operator without using a generator function, 
+        but this is against the policy of leseq, so it is not adopted.
+        */
         const results = await Promise.all(iterators.map(i => i.next()));
 
         if (results.find(r => r.done) != null) {
