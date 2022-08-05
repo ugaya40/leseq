@@ -168,11 +168,12 @@ If the function you want to use does not exist, you can also define your own Ope
 ## Predefined Generators
 | Generator | Description |
 | --- | --- |
-| [from](https://ugaya40.github.io/leseq/api/generators/#from) | Generates a sequence from an iterable object. (async version: [fromAsAsync](https://ugaya40.github.io/leseq/api/generators/#fromasasync) )  | (async version: [fromAsAsync](https://ugaya40.github.io/leseq/api/generators/#fromasasync) )  | |
-| [fromConcat](https://ugaya40.github.io/leseq/api/generators/#fromconcat) | Generates a concatenated sequence of multiple iterable objects. (async version: [fromConcatAsAsync](https://ugaya40.github.io/leseq/api/generators/#fromconcatasasync) )  | (async version: [fromConcatAsAsync](https://ugaya40.github.io/leseq/api/generators/#fromconcatasasync) )  | |
-| [fromValue](https://ugaya40.github.io/leseq/api/generators/#fromvalue) | Generates a sequence from a single value. (async version: [fromValueAsAsync](https://ugaya40.github.io/leseq/api/generators/#fromvalueasasync) )  | (async version: [fromValueAsAsync](https://ugaya40.github.io/leseq/api/generators/#fromvalueasasync) )  | |
-| [range](https://ugaya40.github.io/leseq/api/generators/#range) | Generates a sequential number sequence. (async version: [rangeAsAsync](https://ugaya40.github.io/leseq/api/generators/#rangeasasync) )  | (async version: [rangeAsAsync](https://ugaya40.github.io/leseq/api/generators/#rangeasasync) )  | |
-| [repeat](https://ugaya40.github.io/leseq/api/generators/#repeat) | Generates a sequence in which the specified value is repeated a specified number of times. (async version: [repeatAsAsync](https://ugaya40.github.io/leseq/api/generators/#repeatasasync) )  | (async version: [repeatAsAsync](https://ugaya40.github.io/leseq/api/generators/#repeatasasync) )  | |
+| [from](https://ugaya40.github.io/leseq/api/generators/#from) | Generates a sequence from an iterable object. (async version: [fromAsAsync](https://ugaya40.github.io/leseq/api/generators/#fromasasync) ) | |
+| [fromConcat](https://ugaya40.github.io/leseq/api/generators/#fromconcat) | Generates a concatenated sequence of multiple iterable objects. (async version: [fromConcatAsAsync](https://ugaya40.github.io/leseq/api/generators/#fromconcatasasync) )  | |
+| [fromValue](https://ugaya40.github.io/leseq/api/generators/#fromvalue) | Generates a sequence from a single value. (async version: [fromValueAsAsync](https://ugaya40.github.io/leseq/api/generators/#fromvalueasasync) )  | |
+| [range](https://ugaya40.github.io/leseq/api/generators/#range) | Generates a sequential number sequence. (async version: [rangeAsAsync](https://ugaya40.github.io/leseq/api/generators/#rangeasasync) )  | |
+| [repeat](https://ugaya40.github.io/leseq/api/generators/#repeat) | Generates a sequence in which the specified value is repeated a specified number of times. (async version: [repeatAsAsync](https://ugaya40.github.io/leseq/api/generators/#repeatasasync) )  | |
+| [zip](https://ugaya40.github.io/leseq/api/generators/#zip) | Generates a sequence of arrays made by concatenating the elements of multiple sequences one at a time. (async version: [zipAsAsync](https://ugaya40.github.io/leseq/api/generators/#zipasasync) )  | |
 
 ## Predefined To
 | To | Description |
@@ -205,6 +206,7 @@ It is used within the pipe method of the Seq&lt;T&gt; object. Any number of oper
 | [union](https://ugaya40.github.io/leseq/api/operators/#union) | Returns a sequence that is the union set of the current sequence and the specified sequence. (async version: [unionAsync](https://ugaya40.github.io/leseq/api/operators/#unionasync) )  | |
 | [uniq](https://ugaya40.github.io/leseq/api/operators/#uniq) | Returns a deduplicated sequence. (async version: [uniqAsync](https://ugaya40.github.io/leseq/api/operators/#uniqasync) )  | |
 | [finalize](https://ugaya40.github.io/leseq/api/operators/#finalize) | Invokes a specified action after the source iterable sequence terminates gracefully or exceptionally. (async version: [finalizeAsync](https://ugaya40.github.io/leseq/api/operators/#finalizeasync) )  | |
+| [zipWith](https://ugaya40.github.io/leseq/api/operators/#zipwith) | Returns a sequence of arrays consisting of the elements of the source array and the elements of the multiple sequences given as arguments, concatenated one by one. (async version: [zipWithAsync](https://ugaya40.github.io/leseq/api/operators/#zipwithasync) )  | |
 
 
 ## Predefined Values
