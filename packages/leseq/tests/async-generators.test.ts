@@ -28,7 +28,7 @@ test('generator: simple rangeAsync', async () => {
 });
 
 test('generator: simple repeatAsync', async () => {
-  const output = await repeatAsASync(100, 3).pipe(tapAsync(async () => await abortableSleep(20))).toArrayAsync();
+  const output = await repeatAsAsync(100, 3).pipe(tapAsync(async () => await abortableSleep(20))).toArrayAsync();
   expect(output).toEqual([100, 100, 100]);
 });
 
