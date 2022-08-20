@@ -1,4 +1,4 @@
-import { chunkAsync, concatAsync, concatValueAsync, differenceAsync, everyAsync, filterAsync, finalize, finalizeAsync, findAsync, flattenAsync, from, fromAsAsync, groupByAsync, intersectAsync, mapAsync, orderByAsync, reverseAsync, scanAsync, skipAsync, skipWhileAsync, take, takeAsync, takeWhileAsync, tap, tapAsync, toAsync, unionAsync, uniqAsync, zipWithAsync } from '../src';
+import { asyncSeq, chunkAsync, concatAsync, concatValueAsync, differenceAsync, everyAsync, filterAsync, finalize, finalizeAsync, findAsync, flattenAsync, from, fromAsAsync, groupByAsync, intersectAsync, mapAsync, orderByAsync, reverseAsync, scanAsync, skipAsync, skipWhileAsync, take, takeAsync, takeWhileAsync, tap, tapAsync, unionAsync, uniqAsync, zipWithAsync } from '../src';
 import { abortableSleep, performanceAsync } from './testUtil';
 
 test('operator: simple concatAsync', async () => {
@@ -492,7 +492,7 @@ test('operator: simple finalizeAsync error 3', async () => {
 test('operator: simple finalizeAsync iterable to async iterable - for syntax 1', async () => {
   const output: number[] = [];
   const finalized: number[] = [];
-  const source = from([1, 2, 3, 4, 5]).pipe(finalize(() => finalized.push(1))).value(toAsync()).pipe(
+  const source = from([1, 2, 3, 4, 5]).pipe(finalize(() => finalized.push(1))).to(asyncSeq()).pipe(
     finalizeAsync(async () => {finalized.push(2)})
   );
   for await (const one of source) {
@@ -505,7 +505,7 @@ test('operator: simple finalizeAsync iterable to async iterable - for syntax 1',
 test('operator: simple finalizeAsync iterable to async iterable - for syntax 2', async () => {
   const output: number[] = [];
   const finalized: number[] = [];
-  const source = from([1, 2, 3, 4, 5]).pipe(finalize(() => finalized.push(1))).value(toAsync()).pipe(
+  const source = from([1, 2, 3, 4, 5]).pipe(finalize(() => finalized.push(1))).to(asyncSeq()).pipe(
     takeAsync(3),
     finalizeAsync(async () => {finalized.push(2)})
   );
@@ -519,7 +519,7 @@ test('operator: simple finalizeAsync iterable to async iterable - for syntax 2',
 test('operator: simple finalizeAsync iterable to async iterable - break', async () => {
   const output: number[] = [];
   const finalized: number[] = [];
-  const source = from([1, 2, 3, 4, 5]).pipe(finalize(() => finalized.push(1))).value(toAsync()).pipe(
+  const source = from([1, 2, 3, 4, 5]).pipe(finalize(() => finalized.push(1))).to(asyncSeq()).pipe(
     takeAsync(4),
     finalizeAsync(async () => {finalized.push(2)})
   );
@@ -534,7 +534,7 @@ test('operator: simple finalizeAsync iterable to async iterable - break', async 
 test('operator: simple finalizeAsync iterable to async iterable - toArray', async () => {
   const finalized: number[] = [];
 
-  const output = await from([1, 2, 3, 4, 5]).pipe(finalize(() => finalized.push(1))).value(toAsync()).pipe(
+  const output = await from([1, 2, 3, 4, 5]).pipe(finalize(() => finalized.push(1))).to(asyncSeq()).pipe(
     takeAsync(4),
     finalizeAsync(async () => {finalized.push(2)})
   ).toArrayAsync();
@@ -546,7 +546,7 @@ test('operator: simple finalizeAsync iterable to async iterable - toArray', asyn
 test('operator: simple finalizeAsync iterable to async iterable - value 1', async () => {
   const finalized: number[] = [];
 
-  const output = await from([1, 2, 3, 4, 5]).pipe(finalize(() => finalized.push(1))).value(toAsync()).pipe(
+  const output = await from([1, 2, 3, 4, 5]).pipe(finalize(() => finalized.push(1))).to(asyncSeq()).pipe(
     takeAsync(4),
     finalizeAsync(async () => {finalized.push(2)})
   ).valueAsync(findAsync(async i => i == 3));
@@ -558,7 +558,7 @@ test('operator: simple finalizeAsync iterable to async iterable - value 1', asyn
 test('operator: simple finalizeAsync iterable to async iterable - value 2', async () => {
   const finalized: number[] = [];
 
-  const output = await from([1, 2, 3, 4, 5]).pipe(finalize(() => finalized.push(1))).value(toAsync()).pipe(
+  const output = await from([1, 2, 3, 4, 5]).pipe(finalize(() => finalized.push(1))).to(asyncSeq()).pipe(
     takeAsync(4),
     finalizeAsync(async () => {finalized.push(2)})
   ).valueAsync(everyAsync(async i => i < 10));
@@ -572,7 +572,7 @@ test('operator: simple finalizeAsync iterable to async iterable - error 1', asyn
 
   const output = from([1, 2, 3, 4, 5]).pipe(
     finalize(() => {finalized.push(1)}),
-  ).value(toAsync()).pipe(
+  ).to(asyncSeq()).pipe(
     takeAsync(4),
     tapAsync(async () => {throw new Error('test')}),
     finalizeAsync(async () => {finalized.push(2)}),
@@ -587,7 +587,7 @@ test('operator: simple finalizeAsync iterable to async iterable - error 2', asyn
   const output = from([1, 2, 3, 4, 5]).pipe(
     tap(() => {throw new Error('test')}),
     finalize(() => {finalized.push(1)}),
-  ).value(toAsync()).pipe(
+  ).to(asyncSeq()).pipe(
     takeAsync(4),
     finalizeAsync(async () => {finalized.push(2)}),
   );

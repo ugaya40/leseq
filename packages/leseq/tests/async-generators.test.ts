@@ -1,4 +1,4 @@
-import { fromAsAsync, fromValueAsAsync, tapAsync, fromConcatAsAsync, rangeAsAsync, repeatAsASync, zipAsAsync, finalizeAsync, takeAsync } from '../src';
+import { fromAsAsync, fromValueAsAsync, tapAsync, fromConcatAsAsync, rangeAsAsync, repeatAsAsync, zipAsAsync, finalizeAsync, takeAsync } from '../src';
 import { abortableSleep, performanceAsync } from './testUtil';
 
 test('generator: simple fromAsync', async () => {

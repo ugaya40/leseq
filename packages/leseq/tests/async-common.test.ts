@@ -1,11 +1,11 @@
-import { filterAsync, findAsync, from, fromAsAsync, mapAsync, reverse, tapAsync, toAsync } from "../src";
+import { filterAsync, findAsync, from, fromAsAsync, mapAsync, reverse, tapAsync,asyncSeq } from "../src";
 import { abortableSleep, performanceAsync } from "./testUtil";
 
 test('async operator: simple', async () => {
 
   const [output,time] = await performanceAsync(async () =>
 
-    await from([1, 2, 3, 4, 5]).pipe(reverse()).value(toAsync()).pipe(
+    await from([1, 2, 3, 4, 5]).pipe(reverse()).to(asyncSeq()).pipe(
       tapAsync(async () => await abortableSleep(20)),
       mapAsync(async i => {
         await abortableSleep(20);
@@ -41,7 +41,7 @@ test('async operator: simple aborted 1', async () => {
 
   const [output,time] = await performanceAsync(async () =>
 
-    await from([1, 2, 3, 4, 5]).pipe(reverse()).value(toAsync()).pipe(
+    await from([1, 2, 3, 4, 5]).pipe(reverse()).to(asyncSeq()).pipe(
       tapAsync(async () => await abortableSleep(20, signal)),
       mapAsync(async i => {
         await abortableSleep(20, signal);
@@ -63,7 +63,7 @@ test('async operator: simple aborted 2', async () => {
 
   const [output,time] = await performanceAsync(async () =>
 
-    await from([1, 2, 3, 4, 5]).pipe(reverse()).value(toAsync()).pipe(
+    await from([1, 2, 3, 4, 5]).pipe(reverse()).to(asyncSeq()).pipe(
       tapAsync(async i => await abortableSleep(20, signal)),
       mapAsync(async i => {
         await abortableSleep(20, signal);

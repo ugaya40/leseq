@@ -1,4 +1,4 @@
-import { concat, concatValue, skip, skipWhile, filter, flatten, from, map, orderBy, take, takeWhile, tap, uniq, groupBy, chunk, scan, union, difference, intersect, reverse, finalize, find, every, toAsync, zipWith } from '../src';
+import { concat, concatValue, skip, skipWhile, filter, flatten, from, map, orderBy, take, takeWhile, tap, uniq, groupBy, chunk, scan, union, difference, intersect, reverse, finalize, find, every, zipWith } from '../src';
 
 test('operator: simple concat', () => {
   const output = from([1, 2, 3, 4, 5])
@@ -418,17 +418,6 @@ test('operator: simple finalize value 2', () => {
   
   expect(output).toBe(true);
   expect(finalized).toBe(true);
-});
-
-test('operator: simple finalize value toAsync', () => {
-  let finalized = false;
-
-  from([1, 2, 3, 4, 5]).pipe(
-    take(4),
-    finalize(() => finalized = true)
-  ).value(toAsync());
-  
-  expect(finalized).toBe(false);
 });
 
 test('operator: simple finalize error 1', () => {
