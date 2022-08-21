@@ -1,4 +1,4 @@
-import { fromAsAsync, fromValueAsAsync, tapAsync, fromConcatAsAsync, rangeAsAsync, repeatAsAsync, zipAsAsync, finalizeAsync, takeAsync } from '../src';
+import { fromAsAsync, fromValueAsAsync, tapAsync, fromConcatAsAsync, rangeAsAsync, zipAsAsync, finalizeAsync, takeAsync } from '../src';
 import { abortableSleep, performanceAsync } from './testUtil';
 
 test('generator: simple fromAsync', async () => {
@@ -25,11 +25,6 @@ test('generator: simple fromConcatAsync 2', async () => {
 test('generator: simple rangeAsync', async () => {
   const output = await rangeAsAsync(100, 3).pipe(tapAsync(async () => await abortableSleep(20))).toArrayAsync();
   expect(output).toEqual([100, 101, 102]);
-});
-
-test('generator: simple repeatAsync', async () => {
-  const output = await repeatAsAsync(100, 3).pipe(tapAsync(async () => await abortableSleep(20))).toArrayAsync();
-  expect(output).toEqual([100, 100, 100]);
 });
 
 test('generator: simple zipAsAsync 1', async () => {

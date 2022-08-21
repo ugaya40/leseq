@@ -1,4 +1,4 @@
-import { concat, concatValue, skip, skipWhile, filter, flatten, from, map, orderBy, take, takeWhile, tap, uniq, groupBy, chunk, scan, union, difference, intersect, reverse, finalize, find, every, zipWith } from '../src';
+import { concat, concatValue, skip, skipWhile, filter, flatten, from, map, orderBy, repeat,take, takeWhile, tap, uniq, groupBy, chunk, scan, union, difference, intersect, reverse, finalize, find, every, zipWith, fromValue } from '../src';
 
 test('operator: simple concat', () => {
   const output = from([1, 2, 3, 4, 5])
@@ -525,4 +525,14 @@ test('operator: finalize zipWith 2', () => {
 
   expect(output).toEqual([[1,11,101]]);
   expect(finalized.length).toEqual(4);
+});
+
+test('operator: simple repeat 1', () => {
+  const output = fromValue(100).pipe(repeat(3)).toArray();
+  expect(output).toEqual([100, 100, 100]);
+});
+
+test('operator: simple repeat 2', () => {
+  const output = from([1,2,3]).pipe(repeat(3)).toArray();
+  expect(output).toEqual([1,2,3,1,2,3,1,2,3]);
 });

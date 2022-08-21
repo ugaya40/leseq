@@ -1,4 +1,4 @@
-import { asyncSeq, chunkAsync, concatAsync, concatValueAsync, differenceAsync, everyAsync, filterAsync, finalize, finalizeAsync, findAsync, flattenAsync, from, fromAsAsync, groupByAsync, intersectAsync, mapAsync, orderByAsync, reverseAsync, scanAsync, skipAsync, skipWhileAsync, take, takeAsync, takeWhileAsync, tap, tapAsync, unionAsync, uniqAsync, zipWithAsync } from '../src';
+import { asyncSeq, chunkAsync, concatAsync, concatValueAsync, differenceAsync, everyAsync, filterAsync, finalize, finalizeAsync, findAsync, flattenAsync, from, fromAsAsync, fromValueAsAsync, groupByAsync, intersectAsync, mapAsync, orderByAsync, repeatAsync, reverseAsync, scanAsync, skipAsync, skipWhileAsync, take, takeAsync, takeWhileAsync, tap, tapAsync, unionAsync, uniqAsync, zipWithAsync } from '../src';
 import { abortableSleep, performanceAsync } from './testUtil';
 
 test('operator: simple concatAsync', async () => {
@@ -670,5 +670,15 @@ test('operator: finalize zipWithAsync 2', async () => {
 
   expect(output).toEqual([[1,11,101]]);
   expect(finalized.length).toEqual(4);
+});
+
+test('operator: simple repeatAsync 1', async () => {
+  const output = await fromValueAsAsync(100).pipe(repeatAsync(3)).toArrayAsync();
+  expect(output).toEqual([100, 100, 100]);
+});
+
+test('operator: simple repeatAsync 2', async () => {
+  const output = await fromAsAsync([1,2,3]).pipe(repeatAsync(3)).toArrayAsync();
+  expect(output).toEqual([1,2,3,1,2,3,1,2,3]);
 });
 

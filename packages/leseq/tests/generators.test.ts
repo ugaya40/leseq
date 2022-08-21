@@ -1,4 +1,4 @@
-import { from, fromValue, fromConcat, range, repeat, zip, finalize,take } from '../src';
+import { from, fromValue, fromConcat, range, zip, finalize,take } from '../src';
 
 test('generator: simple from', () => {
   const output = from([1, 2, 3, 4, 5]).toArray();
@@ -18,11 +18,6 @@ test('generator: simple fromConcat', () => {
 test('generator: simple range', () => {
   const output = range(100, 3).toArray();
   expect(output).toEqual([100, 101, 102]);
-});
-
-test('generator: simple repeat', () => {
-  const output = repeat(100, 3).toArray();
-  expect(output).toEqual([100, 100, 100]);
 });
 
 test('generator: simple zip 1', () => {

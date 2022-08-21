@@ -20,3 +20,4 @@ export { tap } from './tap';
 export { union } from './union';
 export { uniq } from './uniq';
 export { zipWith } from './zipWith';
+export { repeat } from './repeat';

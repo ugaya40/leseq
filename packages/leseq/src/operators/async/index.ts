@@ -19,3 +19,4 @@ export { intersectAsync } from './intersectAsync';
 export { reverseAsync } from './reverseAsync';
 export { finalizeAsync } from './finalizeAsync';
 export { zipWithAsync } from './zipWithAsync';
+export { repeatAsync } from './repeatAsync';
