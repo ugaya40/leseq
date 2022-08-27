@@ -1,4 +1,4 @@
-import { Gen, Operator, Seq } from '../seq';
+import { Gen, Operator, Seq } from '../Seq';
 
 /**
  * Returns the resulting sequence after applying the aggregate function to the elements of the current sequence.

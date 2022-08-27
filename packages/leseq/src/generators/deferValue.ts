@@ -1,4 +1,4 @@
-import { Seq } from '../seq';
+import { Seq } from '../Seq';
 import { DeferIterable } from '../utils/DeferIterable';
 
 /**

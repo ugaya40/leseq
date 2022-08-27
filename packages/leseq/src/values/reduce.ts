@@ -1,4 +1,4 @@
-import { Seq } from '../seq';
+import { Seq } from '../Seq';
 
 /**
  * Returns the result of applying the aggregate function to the elements of the current sequence.

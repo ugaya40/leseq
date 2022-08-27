@@ -1,4 +1,4 @@
-import { Seq, SeqToValue } from '../seq';
+import { Seq, SeqToValue } from '../Seq';
 
 /**
  * Returns the first element that satisfies the condition. If no element satisfying the condition is found, an error is thrown.

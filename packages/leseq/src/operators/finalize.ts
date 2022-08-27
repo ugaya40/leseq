@@ -1,4 +1,4 @@
-import { Gen, Operator, Seq } from '../seq';
+import { Gen, Operator, Seq } from '../Seq';
 
 /**
  * Invokes a specified action after the source iterable sequence terminates gracefully or exceptionally.

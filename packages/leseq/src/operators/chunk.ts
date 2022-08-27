@@ -1,4 +1,4 @@
-import { Gen, Operator, Seq } from '../seq';
+import { Gen, Operator, Seq } from '../Seq';
 
 /**
  * Returns a sequence divided into array of the specified size.

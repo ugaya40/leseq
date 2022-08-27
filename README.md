@@ -1,6 +1,6 @@
 [![npm version](https://badge.fury.io/js/leseq.svg)](https://badge.fury.io/js/leseq)
 
-Lazy evaluation list with high tree-shaking affinity and easy customization.
+Lazy evaluation list(lazy list) with high tree-shaking affinity and easy customization.
 
 # Features
 - 🎁 **Lazy Evaluation**: The collections are only enumerated to the minimum necessary. Infinite sequences are supported.
@@ -168,11 +168,13 @@ If the function you want to use does not exist, you can also define your own Ope
 ## Predefined Generators
 | Generator | Description |
 | --- | --- |
+| [defer](https://ugaya40.github.io/leseq/api/generators/#defer) | Generates a sequence that delays the generation of sources until the actual enumeration is performed. (async version: [deferAsAsync](https://ugaya40.github.io/leseq/api/generators/#deferasasync) )  | |
+| [deferFromPromise](https://ugaya40.github.io/leseq/api/generators/#deferfrompromise) | **[Async Only]** Generates a sequence that delays the generation of the source until the actual enumeration is performed. the source in deferValue consists of a single value.   | |
+| [deferValue](https://ugaya40.github.io/leseq/api/generators/#defervalue) | Generates a sequence that delays the generation of the source until the actual enumeration is performed. the source in deferValue consists of a single value. (async version: [deferValueAsAsync](https://ugaya40.github.io/leseq/api/generators/#defervalueasasync) )  | |
 | [from](https://ugaya40.github.io/leseq/api/generators/#from) | Generates a sequence from an iterable object. (async version: [fromAsAsync](https://ugaya40.github.io/leseq/api/generators/#fromasasync) ) | |
 | [fromConcat](https://ugaya40.github.io/leseq/api/generators/#fromconcat) | Generates a concatenated sequence of multiple iterable objects. (async version: [fromConcatAsAsync](https://ugaya40.github.io/leseq/api/generators/#fromconcatasasync) )  | |
 | [fromValue](https://ugaya40.github.io/leseq/api/generators/#fromvalue) | Generates a sequence from a single value. (async version: [fromValueAsAsync](https://ugaya40.github.io/leseq/api/generators/#fromvalueasasync) )  | |
 | [range](https://ugaya40.github.io/leseq/api/generators/#range) | Generates a sequential number sequence. (async version: [rangeAsAsync](https://ugaya40.github.io/leseq/api/generators/#rangeasasync) )  | |
-| [repeat](https://ugaya40.github.io/leseq/api/generators/#repeat) | Generates a sequence in which the specified value is repeated a specified number of times. (async version: [repeatAsAsync](https://ugaya40.github.io/leseq/api/generators/#repeatasasync) )  | |
 | [zip](https://ugaya40.github.io/leseq/api/generators/#zip) | Generates a sequence of arrays made by concatenating the elements of multiple sequences one at a time. (async version: [zipAsAsync](https://ugaya40.github.io/leseq/api/generators/#zipasasync) )  | |
 
 ## Predefined To
@@ -191,11 +193,13 @@ It is used within the pipe method of the Seq&lt;T&gt; object. Any number of oper
 | [concatValue](https://ugaya40.github.io/leseq/api/operators/#concatvalue) | Returns the sequence to which the specified value is added. (async version: [concatValueAsync](https://ugaya40.github.io/leseq/api/operators/#concatvalueasync) )  | |
 | [difference](https://ugaya40.github.io/leseq/api/operators/#difference) | Returns the sequence that is the difference set between the current sequence and the specified sequence. (async version: [differenceAsync](https://ugaya40.github.io/leseq/api/operators/#differenceasync) )  | |
 | [filter](https://ugaya40.github.io/leseq/api/operators/#filter) | Returns a sequence that has been filtered by the specified condition. (async version: [filterAsync](https://ugaya40.github.io/leseq/api/operators/#filterasync) )  | |
+| [finalize](https://ugaya40.github.io/leseq/api/operators/#finalize) | Invokes a specified action after the source iterable sequence terminates gracefully or exceptionally. (async version: [finalizeAsync](https://ugaya40.github.io/leseq/api/operators/#finalizeasync) )  | |
 | [flatten](https://ugaya40.github.io/leseq/api/operators/#flatten) | Returns a flattened sequence. (async version: [flattenAsync](https://ugaya40.github.io/leseq/api/operators/#flattenasync) )  | |
 | [groupBy](https://ugaya40.github.io/leseq/api/operators/#groupby) | Returns a sequence grouped by a specified key. (async version: [groupByAsync](https://ugaya40.github.io/leseq/api/operators/#groupbyasync) )  | |
 | [intersect](https://ugaya40.github.io/leseq/api/operators/#intersect) | Returns a sequence that is the product set of the current sequence and the specified sequence. (async version: [intersectAsync](https://ugaya40.github.io/leseq/api/operators/#intersectasync) )  | |
 | [map](https://ugaya40.github.io/leseq/api/operators/#map) | Returns the sequence in which each element has been transformed by the specified transformation function. (async version: [mapAsync](https://ugaya40.github.io/leseq/api/operators/#mapasync) )  | |
 | [orderBy](https://ugaya40.github.io/leseq/api/operators/#orderby) | Returns a sequence sorted by a specified key. (async version: [orderByAsync](https://ugaya40.github.io/leseq/api/operators/#orderbyasync) )  | |
+| [repeat](https://ugaya40.github.io/leseq/api/operators/#repeat) | Returns a sequence that repeats the source sequence a specified number of times. (async version: [repeatAsync](https://ugaya40.github.io/leseq/api/operators/#repeatasync) )  | |
 | [reverse](https://ugaya40.github.io/leseq/api/operators/#reverse) | Returns a sequence in reverse order of the current sequence. (async version: [reverseAsync](https://ugaya40.github.io/leseq/api/operators/#reverseasync) )  | |
 | [scan](https://ugaya40.github.io/leseq/api/operators/#scan) | Returns the resulting sequence after applying the aggregate function to the elements of the current sequence. (async version: [scanAsync](https://ugaya40.github.io/leseq/api/operators/#scanasync) )  | |
 | [skip](https://ugaya40.github.io/leseq/api/operators/#skip) | Returns the sequence with the specified number of skips. (async version: [skipAsync](https://ugaya40.github.io/leseq/api/operators/#skipasync) )  | |
@@ -205,8 +209,8 @@ It is used within the pipe method of the Seq&lt;T&gt; object. Any number of oper
 | [tap](https://ugaya40.github.io/leseq/api/operators/#tap) | Run side effects. (async version: [tapAsync](https://ugaya40.github.io/leseq/api/operators/#tapasync) )  | |
 | [union](https://ugaya40.github.io/leseq/api/operators/#union) | Returns a sequence that is the union set of the current sequence and the specified sequence. (async version: [unionAsync](https://ugaya40.github.io/leseq/api/operators/#unionasync) )  | |
 | [uniq](https://ugaya40.github.io/leseq/api/operators/#uniq) | Returns a deduplicated sequence. (async version: [uniqAsync](https://ugaya40.github.io/leseq/api/operators/#uniqasync) )  | |
-| [finalize](https://ugaya40.github.io/leseq/api/operators/#finalize) | Invokes a specified action after the source iterable sequence terminates gracefully or exceptionally. (async version: [finalizeAsync](https://ugaya40.github.io/leseq/api/operators/#finalizeasync) )  | |
 | [zipWith](https://ugaya40.github.io/leseq/api/operators/#zipwith) | Returns a sequence of arrays consisting of the elements of the source array and the elements of the multiple sequences given as arguments, concatenated one by one. (async version: [zipWithAsync](https://ugaya40.github.io/leseq/api/operators/#zipwithasync) )  | |
+
 
 
 ## Predefined Values

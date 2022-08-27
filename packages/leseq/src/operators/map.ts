@@ -1,4 +1,4 @@
-import { Gen, Operator, Seq } from '../seq';
+import { Gen, Operator, Seq } from '../Seq';
 
 /**
  * Returns the sequence in which each element has been transformed by the specified transformation function.

@@ -1,4 +1,4 @@
-import { Gen, Operator, Seq } from '../seq';
+import { Gen, Operator, Seq } from '../Seq';
 
 /**
  * Returns a sequence in which the current sequence and the specified sequence are concatenated.

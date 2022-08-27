@@ -1,4 +1,4 @@
-import { Seq } from '../seq';
+import { Seq } from '../Seq';
 
 /**
  * Returns the first element that satisfies the condition. If no element is found that satisfies the condition, it returns the specified default value.

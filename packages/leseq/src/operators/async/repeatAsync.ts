@@ -11,7 +11,7 @@ import { AsyncGen, AsyncOperator, AsyncSeq } from '../../asyncSeq';
  * @param count If this argument is not specified or -1 is specified, it repeats indefinitely. If a natural number is specified, it repeats the specified number of times.
  * @returns Operator function.
  * @typeParam T Source element type.
- * @category Operators
+ * @category Async Operators
  */
 export const repeatAsync = <T>(count: number = -1): AsyncOperator<T, T> =>
   async function* repeatAsync(source: AsyncSeq<T>): AsyncGen<T> {

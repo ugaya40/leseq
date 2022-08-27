@@ -1,5 +1,5 @@
 import { AsyncSeq } from '../asyncSeq';
-import { Seq, SeqConverter } from '../seq';
+import { Seq, SeqConverter } from '../Seq';
 
 /**
  * Converts the current sequence to AsyncSeq<T\> and returns it.

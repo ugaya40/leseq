@@ -1,4 +1,4 @@
-import { Gen, Seq } from '../seq';
+import { Gen, Seq } from '../Seq';
 
 function* fromConcatInternal<T>(args: Iterable<T>[]): Gen<T> {
   for (const one of args) {

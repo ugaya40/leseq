@@ -1,4 +1,4 @@
-import { Seq } from '../seq';
+import { Seq } from '../Seq';
 
 /**
  * Returns whether or not any element of the sequence satisfies the specified condition.

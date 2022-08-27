@@ -1,4 +1,4 @@
-import { Seq, SeqToValue } from '../seq';
+import { Seq, SeqToValue } from '../Seq';
 
 /**
  * Returns whether or not all elements of a sequence meet the specified conditions.

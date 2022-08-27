@@ -17,7 +17,7 @@ import { AsyncDeferIterable } from '../../utils/AsyncDeferIterable';
  * @param sourceFactory Function to generate a single value.
  * @returns A sequence in which the generation of sources is delayed until the actual enumeration begins.
  * @typeParam T Source element type.
- * @category Generators
+ * @category Async Generators
  *
  */
 export function deferValueAsAsync<T>(sourceFactory: () => T): AsyncSeq<T> {

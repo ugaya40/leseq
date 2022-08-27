@@ -1,4 +1,4 @@
-import { Gen, Operator, Seq } from '../seq';
+import { Gen, Operator, Seq } from '../Seq';
 import { ZipIterable } from '../utils/ZipIterable';
 
 /**

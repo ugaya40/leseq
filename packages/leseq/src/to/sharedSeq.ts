@@ -1,4 +1,4 @@
-import { Seq, SeqConverter } from '../seq';
+import { Seq, SeqConverter } from '../Seq';
 
 /**
  * Converts the current sequence to SharedSeq<T\> and returns it;

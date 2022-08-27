@@ -11,7 +11,7 @@ hide_title: true
 
 ### Create Generator Functions
 
-The synchronous version of **Generator** returns [Seq<T\>](/seq/#seqt-object/). The asynchronous version returns [AsyncSeq<T\>](/seq/#asyncseqt-object).
+The synchronous version of **Generator** returns [Seq<T\>](/Seq/#seqt-object/). The asynchronous version returns [AsyncSeq<T\>](/Seq/#asyncseqt-object).
 
 The simplest **Generator** is [from](/api/generators/#from). It is also very easy to reimplement.
 
@@ -36,9 +36,9 @@ const result2 = await fromAsAsyncOriginal([1,2,3,4,5]).pipe(
 
 //result2: [2,4]
 ```
-The constructor of [AsyncSeq<T\>](/seq/#asyncseqt-object) accepts an [Iterable<T\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterable_protocol) or [AsyncIterable<T\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/asyncIterator) object.
+The constructor of [AsyncSeq<T\>](/Seq/#asyncseqt-object) accepts an [Iterable<T\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterable_protocol) or [AsyncIterable<T\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/asyncIterator) object.
 
-The constructor of [Seq<T\>](/seq/) accepts an [Iterable<T\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterable_protocol) object. Therefore, such an implementation is also possible.
+The constructor of [Seq<T\>](/Seq/) accepts an [Iterable<T\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterable_protocol) object. Therefore, such an implementation is also possible.
 
 ```typescript
 function* rangeInternal(start: number, count: number): Gen<number> {
