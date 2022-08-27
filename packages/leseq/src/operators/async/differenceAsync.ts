@@ -1,4 +1,4 @@
-import { AsyncGen, AsyncOperator, AsyncSeq, AllIterables } from '../../asyncSeq';
+import { AllIterables, AsyncGen, AsyncOperator, AsyncSeq } from '../../AsyncSeq';
 import { asyncDefaultSelector } from '../../utils';
 
 /**

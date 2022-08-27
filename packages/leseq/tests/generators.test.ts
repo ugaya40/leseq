@@ -1,4 +1,4 @@
-import { from, fromValue, fromConcat, range, zip, finalize,take, defer,repeat, deferValue } from '../src';
+import { defer, deferValue, finalize, from, fromConcat, fromValue, range, repeat, take, zip } from '../src';
 
 test('generator: simple from', () => {
   const output = from([1, 2, 3, 4, 5]).toArray();

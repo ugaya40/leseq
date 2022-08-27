@@ -1,4 +1,4 @@
-import { concat, concatValue, skip, skipWhile, filter, flatten, from, map, orderBy, repeat,take, takeWhile, tap, uniq, groupBy, chunk, scan, union, difference, intersect, reverse, finalize, find, every, zipWith, fromValue } from '../src';
+import { chunk, concat, concatValue, difference, every, filter, finalize, find, flatten, from, fromValue, groupBy, intersect, map, orderBy, repeat, reverse, scan, skip, skipWhile, take, takeWhile, tap, union, uniq, zipWith } from '../src';
 
 test('operator: simple concat', () => {
   const output = from([1, 2, 3, 4, 5])

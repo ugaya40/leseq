@@ -1,4 +1,4 @@
-import { AsyncGen, AsyncOperator, AsyncSeq } from '../../asyncSeq';
+import { AsyncGen, AsyncOperator, AsyncSeq } from '../../AsyncSeq';
 
 /**
  * Invokes a specified action after the source iterable sequence terminates gracefully or exceptionally.

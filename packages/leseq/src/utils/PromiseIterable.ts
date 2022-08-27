@@ -1,4 +1,4 @@
-import { isAsyncIterable, AllIterables, toAsyncIterator } from '../asyncSeq';
+import { isAsyncIterable, AllIterables, toAsyncIterator } from '../AsyncSeq';
 
 export class PromiseIterable<T> implements AsyncIterable<T> {
   constructor(private sources: AllIterables<Promise<T>>) {}

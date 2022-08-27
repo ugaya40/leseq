@@ -1,4 +1,4 @@
-import { AsyncSeq, AsyncSeqToValue } from '../../asyncSeq';
+import { AsyncSeq, AsyncSeqToValue } from '../../AsyncSeq';
 
 /**
  * Returns the result of applying the aggregate function to the elements of the current sequence.

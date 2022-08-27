@@ -1,4 +1,4 @@
-import { AsyncGen, AsyncOperator, AsyncSeq } from '../../asyncSeq';
+import { AsyncGen, AsyncOperator, AsyncSeq } from '../../AsyncSeq';
 
 /**
  * Returns a sequence divided into array of the specified size.

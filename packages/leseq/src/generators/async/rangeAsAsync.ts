@@ -1,4 +1,4 @@
-import { AsyncGen, AsyncSeq } from '../../asyncSeq';
+import { AsyncGen, AsyncSeq } from '../../AsyncSeq';
 
 async function* rangeAsAsyncInternal(start: number, count: number): AsyncGen<number> {
   let currentCount = 0;

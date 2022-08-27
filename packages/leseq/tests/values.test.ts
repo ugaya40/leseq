@@ -1,4 +1,4 @@
-import { every, find, findOrDefault, from, reduce, sharedSeq, some, tap } from '../src';
+import { every, find, findOrDefault, from, reduce, some } from '../src';
 
 test('value: every true case', () => {
   const output = from([1, 2, 3, 4, 5]).value(every(i => i < 6));

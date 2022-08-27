@@ -1,4 +1,4 @@
-import { fromAsAsync, fromValueAsAsync, tapAsync, fromConcatAsAsync, rangeAsAsync, zipAsAsync, finalizeAsync, takeAsync, deferValueAsAsync, deferFromPromise, repeatAsync, deferAsAsync } from '../src';
+import { deferAsAsync, deferFromPromise, deferValueAsAsync, finalizeAsync, fromAsAsync, fromConcatAsAsync, fromValueAsAsync, rangeAsAsync, repeatAsync, takeAsync, tapAsync, zipAsAsync } from '../src';
 import { abortableSleep, performanceAsync } from './testUtil';
 
 test('generator: simple fromAsync', async () => {

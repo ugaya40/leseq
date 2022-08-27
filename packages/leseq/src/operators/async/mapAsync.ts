@@ -1,4 +1,4 @@
-import { AsyncGen, AsyncOperator, AsyncSeq } from '../../asyncSeq';
+import { AsyncGen, AsyncOperator, AsyncSeq } from '../../AsyncSeq';
 
 /**
  * Returns the sequence in which each element has been transformed by the specified transformation function.

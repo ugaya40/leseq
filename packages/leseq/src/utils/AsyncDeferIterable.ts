@@ -1,4 +1,4 @@
-import { isAsyncIterable, AllIterables, toAsyncIterator } from '../asyncSeq';
+import { isAsyncIterable, AllIterables, toAsyncIterator } from '../AsyncSeq';
 import { lazy } from './lazy';
 
 export class AsyncDeferIterable<T> implements AsyncIterable<T> {

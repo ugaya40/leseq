@@ -1,4 +1,4 @@
-import { AsyncSeq, AllIterables } from '../../asyncSeq';
+import { AsyncSeq, AllIterables } from '../../AsyncSeq';
 import { AsyncDeferIterable } from '../../utils/AsyncDeferIterable';
 import { PromiseIterable } from '../../utils/PromiseIterable';
 

@@ -1,11 +1,11 @@
-import { asyncSeq, finalize, from, mapAsync, reverse, sharedSeq, tap, tapAsync } from "../src";
+import { async, finalize, from, mapAsync, reverse, shared, tap, tapAsync } from "../src";
 import { abortableSleep, performanceAsync } from "./testUtil";
 
 test('to: simple asyncSeq', async () => {
 
   const [output,time] = await performanceAsync(async () =>
 
-    await from([1, 2, 3, 4, 5]).pipe(reverse()).to(asyncSeq()).pipe(
+    await from([1, 2, 3, 4, 5]).pipe(reverse()).to(async()).pipe(
       tapAsync(async () => await abortableSleep(20)),
       mapAsync(async i => {
         await abortableSleep(20);
@@ -19,8 +19,8 @@ test('to: simple asyncSeq', async () => {
   expect(time > 200 && time < 300).toBe(true);
 });
 
-test('to: simple sharedSeq 1', () => {
-  const seq = from([1, 2]).to(sharedSeq());
+test('to: simple shared 1', () => {
+  const seq = from([1, 2]).to(shared());
   const output1: number[] = [];
   const output2: number[] = [];
   const output3: number[] = [];
@@ -51,8 +51,8 @@ test('to: simple sharedSeq 1', () => {
   expect(output4).toEqual([1,2]);
 });
 
-test('to: simple sharedSeq 2', () => {
-  const seq = from([1, 2]).pipe(tap(() =>{})).to(sharedSeq());
+test('to: simple shared 2', () => {
+  const seq = from([1, 2]).pipe(tap(() =>{})).to(shared());
   const output1: number[] = [];
   const output2: number[] = [];
   const output3: number[] = [];
@@ -84,8 +84,8 @@ test('to: simple sharedSeq 2', () => {
   expect(output4).toEqual([1,2]);
 });
 
-test('to: simple sharedSeq 3', () => {
-  const seq = from([1, 2]).to(sharedSeq()).pipe(tap(() =>{}));
+test('to: simple shared 3', () => {
+  const seq = from([1, 2]).to(shared()).pipe(tap(() =>{}));
   const output1: number[] = [];
   const output2: number[] = [];
   const output3: number[] = [];
@@ -115,11 +115,11 @@ test('to: simple sharedSeq 3', () => {
   expect(output4).toEqual([]);
 });
 
-test('to: sharedSeq with finalize 1', () => {
+test('to: shared with finalize 1', () => {
   let finalized = false;
   const seq = from([1, 2]).pipe(
     finalize(() =>{finalized = true})
-  ).to(sharedSeq());
+  ).to(shared());
 
   const output1: number[] = [];
   const output2: number[] = [];
@@ -159,9 +159,9 @@ test('to: sharedSeq with finalize 1', () => {
   expect(output4).toEqual([1,2]);
 });
 
-test('to: sharedSeq with finalize 2', () => {
+test('to: shared with finalize 2', () => {
   let finalized = false;
-  const shareSeq = from([1, 2]).to(sharedSeq());
+  const shareSeq = from([1, 2]).to(shared());
   const seq = shareSeq.pipe(
     finalize(() =>{finalized = true})
   );
@@ -204,11 +204,11 @@ test('to: sharedSeq with finalize 2', () => {
   expect(output4).toEqual([1,2]);
 });
 
-test('to: sharedSeq with finalize 3', () => {
+test('to: shared with finalize 3', () => {
   let finalized = false;
   const seq = from([1, 2]).pipe(
     finalize(() =>{finalized = true})
-  ).to(sharedSeq());
+  ).to(shared());
 
   const output1: number[] = [];
   const output2: number[] = [];

@@ -1,5 +1,4 @@
-import { everyAsync, findAsync, findOrDefaultAsync, fromAsAsync, reduceAsync, sharedAsyncSeq, someAsync, tapAsync } from '../src';
-import { abortableSleep } from './testUtil';
+import { everyAsync, findAsync, findOrDefaultAsync, fromAsAsync, reduceAsync, someAsync } from '../src';
 
 test('value: everyAsync true case', async () => {
   const output = await fromAsAsync([1, 2, 3, 4, 5]).valueAsync(everyAsync(async i => i < 6));

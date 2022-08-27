@@ -1,4 +1,4 @@
-import { AsyncSeq, AsyncSeqToValue } from '../../asyncSeq';
+import { AsyncSeq, AsyncSeqToValue } from '../../AsyncSeq';
 
 /**
  * Returns the first element that satisfies the condition. If no element satisfying the condition is found, an error is thrown.

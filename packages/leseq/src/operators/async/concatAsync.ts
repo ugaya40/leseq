@@ -1,4 +1,4 @@
-import { AsyncGen, AsyncOperator, AsyncSeq, AllIterables } from '../../asyncSeq';
+import { AllIterables, AsyncGen, AsyncOperator, AsyncSeq } from '../../AsyncSeq';
 
 /**
  * Returns a sequence in which the current sequence and the specified sequence are concatenated.

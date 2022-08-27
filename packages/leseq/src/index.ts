@@ -1,4 +1,4 @@
-export * from './asyncSeq';
+export * from './AsyncSeq';
 export * from './generators';
 export * from './operators';
 export * from './Seq';

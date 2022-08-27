@@ -1,4 +1,4 @@
-import { AsyncSeq, AsyncSeqToValue } from '../../asyncSeq';
+import { AsyncSeq, AsyncSeqToValue } from '../../AsyncSeq';
 
 /**
  * Returns whether or not all elements of a sequence meet the specified conditions.

@@ -1,4 +1,4 @@
-import { AsyncSeq } from '../asyncSeq';
+import { AsyncSeq } from '../AsyncSeq';
 import { Seq, SeqConverter } from '../Seq';
 
 /**
@@ -7,7 +7,7 @@ import { Seq, SeqConverter } from '../Seq';
  *
  * ```typescript
  * const result = await from([1, 2, 3, 4, 5]).to(
- *   asyncSeq()
+ *   async()
  * ).valueAsync(
  *   findAsync(async i => i % 2 == 0)
  * );
@@ -19,7 +19,7 @@ import { Seq, SeqConverter } from '../Seq';
  * @returns AsyncSeq<T\>
  * @category To
  */
-export const asyncSeq = <T>(): SeqConverter<T, AsyncSeq<T>> =>
-  function asyncSeq(seq: Seq<T>): AsyncSeq<T> {
+export const async = <T>(): SeqConverter<T, AsyncSeq<T>> =>
+  function async(seq: Seq<T>): AsyncSeq<T> {
     return new AsyncSeq(seq);
   };

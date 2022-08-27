@@ -1,4 +1,4 @@
-import { AsyncSeq } from '../../asyncSeq';
+import { AsyncSeq } from '../../AsyncSeq';
 
 /**
  * Generates a sequence from a single value.

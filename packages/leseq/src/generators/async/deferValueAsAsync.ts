@@ -1,4 +1,4 @@
-import { AsyncSeq } from '../../asyncSeq';
+import { AsyncSeq } from '../../AsyncSeq';
 import { AsyncDeferIterable } from '../../utils/AsyncDeferIterable';
 
 /**

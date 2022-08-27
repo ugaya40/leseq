@@ -1,4 +1,3 @@
-export { sharedSeq } from './sharedSeq';
-export { asyncSeq } from './asyncSeq';
-
-export * from './async';
+export { async } from './async';
+export * from './async/index';
+export { shared } from './shared';

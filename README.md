@@ -137,7 +137,7 @@ It is possible to generate sequences (Seq&lt;T&gt;/AsyncSeq&lt;T&gt; object) wit
 // sync iterator
 SyncSource = 
   Generators(ex: from, fromConcat, ..etc) | 
-  SyncSource.to(To(ex: sharedSeq, asyncSeq))
+  SyncSource.to(To(ex: shared, async))
   SyncSource.pipe(
     ...SyncOperators(ex: map, filter, ...etc)
   );
@@ -148,7 +148,7 @@ value = SyncSource.value(SyncValues(ex: find,some, ...etc));
 AsyncSource = 
   AsyncGenerators(ex: fromAsAsync, fromConcatAsAsync, ...etc) |
   SyncSource.to(asyncSeq()) | // iterable to async iterable. |
-  AsyncSource.to(To(ex: sharedAsyncSeq)) |
+  AsyncSource.to(To(ex: sharedAsync)) |
   AsyncSource.pipe(
     ...AsyncOperators(ex: mapAsync, filterAsync, ...etc)
   );
@@ -180,8 +180,8 @@ If the function you want to use does not exist, you can also define your own Ope
 ## Predefined To
 | To | Description |
 | --- | --- |
-| [asyncSeq](https://ugaya40.github.io/leseq/api/to/#asyncseq) | Converts the current sequence to AsyncSeq<T\> and returns it. ||
-| [sharedSeq](https://ugaya40.github.io/leseq/api/to/#sharedseq) | Converts the current sequence to SharedSeq<T\> and returns it; in a SharedSeq<T\>, `iterator` is shared until `close` method is called. (async version: [sharedAsyncSeq](https://ugaya40.github.io/leseq/api/to/#sharedasyncseq) )  | (async version: [sharedAsyncSeq](https://ugaya40.github.io/leseq/api/to/#sharedasyncseq) )  | |
+| [async](https://ugaya40.github.io/leseq/api/to/#async) | Converts the current sequence to AsyncSeq<T\> and returns it. | |
+| [shared](https://ugaya40.github.io/leseq/api/to/#shared) | Converts the current sequence to SharedSeq<T\> and returns it; in a SharedSeq<T\>, `iterator` is shared until `close` method is called. (async version: [sharedAsync](https://ugaya40.github.io/leseq/api/to/#sharedasyncseq) ) | |
 
 ## Predefined Operators
 It is used within the pipe method of the Seq&lt;T&gt; object. Any number of operators can be connected.

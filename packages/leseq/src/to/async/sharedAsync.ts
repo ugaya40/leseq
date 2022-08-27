@@ -1,11 +1,11 @@
-import { AsyncSeq, AsyncSeqConverter } from '../../asyncSeq';
+import { AsyncSeq, AsyncSeqConverter } from '../../AsyncSeq';
 
 /**
  * Converts the current sequence to SharedAsyncSeq<T\> and returns it;
  * in a SharedAsyncSeq<T\>, `async iterator` is shared until `close` method is called.
  *
  * ```typescript
- * const shared = fromAsAsync([1, 2]).to(sharedAsyncSeq());
+ * const shared = fromAsAsync([1, 2]).to(sharedAsync());
  *
  * for await (const one of shared) {
  *   console.log(one);
@@ -44,8 +44,8 @@ import { AsyncSeq, AsyncSeqConverter } from '../../asyncSeq';
  * @returns SharedAsyncSeq<T\>
  * @category Async To
  */
-export const sharedAsyncSeq = <T>(): AsyncSeqConverter<T, SharedAsyncSeq<T>> =>
-  function sharedAsyncSeq(seq: AsyncSeq<T>): SharedAsyncSeq<T> {
+export const sharedAsync = <T>(): AsyncSeqConverter<T, SharedAsyncSeq<T>> =>
+  function sharedAsync(seq: AsyncSeq<T>): SharedAsyncSeq<T> {
     return new SharedAsyncSeq(seq);
   };
 

@@ -1,4 +1,4 @@
-import { isAsyncIterable, AllIterables, toAsyncIterator } from '../asyncSeq';
+import { isAsyncIterable, AllIterables, toAsyncIterator } from '../AsyncSeq';
 
 const doneResult = { value: undefined, done: true };
 

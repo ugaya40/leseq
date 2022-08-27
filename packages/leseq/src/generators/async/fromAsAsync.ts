@@ -1,4 +1,4 @@
-import { AsyncSeq, AllIterables } from '../../asyncSeq';
+import { AsyncSeq, AllIterables } from '../../AsyncSeq';
 /**
  * Generates a sequence from an iterable/async iterable object.
  *
