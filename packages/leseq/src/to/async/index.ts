@@ -1,1 +1,1 @@
-export { sharedAsync } from './sharedAsync';
+export { shareAsync } from './shareAsync';

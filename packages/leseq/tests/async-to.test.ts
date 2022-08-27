@@ -1,7 +1,7 @@
-import { finalizeAsync, fromAsAsync, sharedAsync, tapAsync } from "../src";
+import { finalizeAsync, fromAsAsync, shareAsync, tapAsync } from "../src";
 
-test('to: simple sharedAsync 1', async () => {
-  const seq = fromAsAsync([1, 2]).to(sharedAsync());
+test('to: simple shareAsync 1', async () => {
+  const seq = fromAsAsync([1, 2]).to(shareAsync());
   const output1: number[] = [];
   const output2: number[] = [];
   const output3: number[] = [];
@@ -32,8 +32,8 @@ test('to: simple sharedAsync 1', async () => {
   expect(output4).toEqual([1,2]);
 });
 
-test('to: simple sharedAsync 2', async() => {
-  const seq = fromAsAsync([1, 2]).pipe(tapAsync(async () =>{})).to(sharedAsync());
+test('to: simple shareAsync 2', async() => {
+  const seq = fromAsAsync([1, 2]).pipe(tapAsync(async () =>{})).to(shareAsync());
   const output1: number[] = [];
   const output2: number[] = [];
   const output3: number[] = [];
@@ -65,8 +65,8 @@ test('to: simple sharedAsync 2', async() => {
   expect(output4).toEqual([1,2]);
 });
 
-test('to: simple sharedAsync 3', async () => {
-  const seq = fromAsAsync([1, 2]).to(sharedAsync()).pipe(tapAsync(async () =>{}));
+test('to: simple shareAsync 3', async () => {
+  const seq = fromAsAsync([1, 2]).to(shareAsync()).pipe(tapAsync(async () =>{}));
   const output1: number[] = [];
   const output2: number[] = [];
   const output3: number[] = [];
@@ -96,11 +96,11 @@ test('to: simple sharedAsync 3', async () => {
   expect(output4).toEqual([]);
 });
 
-test('to: sharedAsync with finalize 1', async () => {
+test('to: shareAsync with finalize 1', async () => {
   let finalized = false;
   const seq = fromAsAsync([1, 2]).pipe(
     finalizeAsync(async () =>{finalized = true})
-  ).to(sharedAsync());
+  ).to(shareAsync());
 
   const output1: number[] = [];
   const output2: number[] = [];
@@ -140,9 +140,9 @@ test('to: sharedAsync with finalize 1', async () => {
   expect(output4).toEqual([1,2]);
 });
 
-test('to: sharedAsync with finalize 2', async () => {
+test('to: shareAsync with finalize 2', async () => {
   let finalized = false;
-  const shareSeq = fromAsAsync([1, 2]).to(sharedAsync());
+  const shareSeq = fromAsAsync([1, 2]).to(shareAsync());
   const seq = shareSeq.pipe(
     finalizeAsync(async () =>{finalized = true})
   );
@@ -185,11 +185,11 @@ test('to: sharedAsync with finalize 2', async () => {
   expect(output4).toEqual([1,2]);
 });
 
-test('to: sharedAsync with finalize 3', async () => {
+test('to: shareAsync with finalize 3', async () => {
   let finalized = false;
   const seq = fromAsAsync([1, 2]).pipe(
     finalizeAsync(async () =>{finalized = true})
-  ).to(sharedAsync());
+  ).to(shareAsync());
 
   const output1: number[] = [];
   const output2: number[] = [];
