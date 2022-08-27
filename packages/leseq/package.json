@@ -16,7 +16,10 @@
   ],
   "keywords": [
     "lazy",
+    "list",
     "util",
+    "lazy list",
+    "lazy sequence",
     "sequence",
     "collection",
     "immutable",

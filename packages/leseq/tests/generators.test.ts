@@ -1,4 +1,4 @@
-import { from, fromValue, fromConcat, range, zip, finalize,take } from '../src';
+import { from, fromValue, fromConcat, range, zip, finalize,take, defer,repeat, deferValue } from '../src';
 
 test('generator: simple from', () => {
   const output = from([1, 2, 3, 4, 5]).toArray();
@@ -75,4 +75,35 @@ test('generator: finalize zip 2', () => {
 
   expect(output).toEqual([[1,11,101]]);
   expect(finalized.length).toEqual(4);
+});
+
+
+function getTestObj() {
+  let count = 0;
+  const array: number[] = [];
+  return {
+    single: () => count++,
+    array: () => {
+      array.push(array.length);
+      return array;
+    }
+  }
+}
+
+test('generator: simple defer', () => {
+  const result1 = from([0]).pipe(repeat(3)).toArray();
+  expect(result1).toEqual([0,0,0]);
+
+  const testObj = getTestObj();
+  const result2 = defer(() => testObj.array()).pipe(repeat(3)).toArray();
+  expect(result2).toEqual([0,0,1,0,1,2]);
+});
+
+test('generator: simple deferValue', () => {
+  const result1 = fromValue(0).pipe(repeat(3)).toArray();
+  expect(result1).toEqual([0,0,0]);
+
+  const testObj = getTestObj();
+  const result2 = deferValue(() => testObj.single()).pipe(repeat(3)).toArray();
+  expect(result2).toEqual([0,1,2]);
 });

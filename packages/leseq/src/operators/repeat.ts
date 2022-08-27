@@ -15,12 +15,12 @@ import { Gen, Operator, Seq } from '../seq';
  */
 export const repeat = <T>(count: number = -1): Operator<T, T> =>
   function* repeat(source: Seq<T>): Gen<T> {
-    if(count == -1) {
-      while(true) {
+    if (count == -1) {
+      while (true) {
         yield* source;
       }
     } else {
-      for(let i = 0; i < count; i++) {
+      for (let i = 0; i < count; i++) {
         yield* source;
       }
     }

@@ -1,4 +1,4 @@
-import { fromAsAsync, fromValueAsAsync, tapAsync, fromConcatAsAsync, rangeAsAsync, zipAsAsync, finalizeAsync, takeAsync } from '../src';
+import { fromAsAsync, fromValueAsAsync, tapAsync, fromConcatAsAsync, rangeAsAsync, zipAsAsync, finalizeAsync, takeAsync, deferValueAsAsync, deferFromPromise, repeatAsync, deferAsAsync } from '../src';
 import { abortableSleep, performanceAsync } from './testUtil';
 
 test('generator: simple fromAsync', async () => {
@@ -91,3 +91,66 @@ test('generator: finalize zipAsAsync 2', async () => {
   expect(output).toEqual([[1,11,101]]);
   expect(finalized.length).toEqual(4);
 });
+
+function getTestObj() {
+  let count = 0;
+  const array: number[] = [];
+  return {
+    single: () => count++,
+    array: () => {
+      array.push(array.length);
+      return array;
+    },
+    singleAsync: async (ms: number) => {
+      const result = count++;
+      await abortableSleep(ms);
+      return result;
+    },
+    arrayAsync: async (ms: number) => {
+      array.push(array.length);
+      await abortableSleep(ms);
+      return array;
+    }
+  }
+}
+
+test('generator: simple deferAsAsync', async () => {
+  const result1 = await fromAsAsync([0]).pipe(repeatAsync(3)).toArrayAsync();
+  expect(result1).toEqual([0,0,0]);
+
+  const testObj = getTestObj();
+  const result2 = await deferAsAsync(() => testObj.array()).pipe(repeatAsync(3)).toArrayAsync();
+  expect(result2).toEqual([0,0,1,0,1,2]);
+});
+
+test('generator: simple deferValueAsAsync', async () => {
+  const result1 = await fromValueAsAsync(0).pipe(repeatAsync(3)).toArrayAsync();
+  expect(result1).toEqual([0,0,0]);
+
+  const testObj = getTestObj();
+  const result2 = await deferValueAsAsync(() => testObj.single()).pipe(repeatAsync(3)).toArrayAsync();
+  expect(result2).toEqual([0,1,2]);
+});
+
+test('generator: simple deferFromPromise 1', async () => {
+  const testObj = getTestObj();
+  const [result,time] = await performanceAsync(async () => 
+    await deferFromPromise(() => testObj.singleAsync(100)).pipe(repeatAsync(3)).toArrayAsync()
+  );
+  expect(result).toEqual([0,1,2])
+  expect(time > 300).toBe(true);
+});
+
+test('generator: simple deferFromPromise 2', async () => {
+  const testObj = getTestObj();
+  const [result,time] = await performanceAsync(async () => 
+    await deferFromPromise(() => [
+      testObj.singleAsync(30),
+      testObj.singleAsync(20),
+      testObj.singleAsync(10),
+    ]).pipe(repeatAsync(3)).toArrayAsync()
+  );
+  expect(result).toEqual([0,1,2,3,4,5,6,7,8]);
+  expect(time > 90).toBe(true);
+});
+

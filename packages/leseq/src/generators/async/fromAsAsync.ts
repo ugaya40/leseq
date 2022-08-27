@@ -1,4 +1,4 @@
-import { AsyncSeq, Iterables } from '../../asyncSeq';
+import { AsyncSeq, AllIterables } from '../../asyncSeq';
 /**
  * Generates a sequence from an iterable/async iterable object.
  *
@@ -12,6 +12,6 @@ import { AsyncSeq, Iterables } from '../../asyncSeq';
  * @typeParam T Source element type.
  * @category Async Generators
  */
-export function fromAsAsync<T>(source: Iterables<T>): AsyncSeq<T> {
+export function fromAsAsync<T>(source: AllIterables<T>): AsyncSeq<T> {
   return new AsyncSeq(source);
 }

@@ -1,4 +1,4 @@
-import { AsyncGen, AsyncOperator, AsyncSeq, Iterables } from '../../asyncSeq';
+import { AsyncGen, AsyncOperator, AsyncSeq, AllIterables } from '../../asyncSeq';
 
 /**
  * Returns a flattened sequence.
@@ -26,7 +26,7 @@ import { AsyncGen, AsyncOperator, AsyncSeq, Iterables } from '../../asyncSeq';
  * @typeParam TResult Result element type.
  * @category Async Operators
  */
-export const flattenAsync = <T, TResult>(func: (arg: T, index: number) => Promise<Iterables<TResult>>): AsyncOperator<T, TResult> =>
+export const flattenAsync = <T, TResult>(func: (arg: T, index: number) => Promise<AllIterables<TResult>>): AsyncOperator<T, TResult> =>
   async function* flattenAsync(source: AsyncSeq<T>): AsyncGen<TResult> {
     let count = 0;
     for await (const i of source) {

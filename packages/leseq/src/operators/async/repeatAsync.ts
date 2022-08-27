@@ -15,12 +15,12 @@ import { AsyncGen, AsyncOperator, AsyncSeq } from '../../asyncSeq';
  */
 export const repeatAsync = <T>(count: number = -1): AsyncOperator<T, T> =>
   async function* repeatAsync(source: AsyncSeq<T>): AsyncGen<T> {
-    if(count == -1) {
-      while(true) {
+    if (count == -1) {
+      while (true) {
         yield* source;
       }
     } else {
-      for(let i = 0; i < count; i++) {
+      for (let i = 0; i < count; i++) {
         yield* source;
       }
     }

@@ -1,5 +1,5 @@
-import { AsyncGen, AsyncOperator, AsyncSeq, Iterables } from '../../asyncSeq';
-import { AsyncZipIterable } from '../../utils/asyncZipIterable';
+import { AsyncGen, AsyncOperator, AsyncSeq, AllIterables } from '../../asyncSeq';
+import { AsyncZipIterable } from '../../utils/AsyncZipIterable';
 
 /**
  * Returns a sequence of arrays consisting of the elements of the source array and the elements of the multiple sequences given as arguments, concatenated one by one.
@@ -33,11 +33,11 @@ import { AsyncZipIterable } from '../../utils/asyncZipIterable';
  * @category Async Operators
  */
 export function zipWithAsync<T, T1, T2, T3, T4, T5>(
-  source1: Iterables<T1>,
-  source2: Iterables<T2>,
-  source3: Iterables<T3>,
-  source4: Iterables<T4>,
-  source5: Iterables<T5>
+  source1: AllIterables<T1>,
+  source2: AllIterables<T2>,
+  source3: AllIterables<T3>,
+  source4: AllIterables<T4>,
+  source5: AllIterables<T5>
 ): AsyncOperator<T, [T, T1, T2, T3, T4, T5]>;
 
 /**
@@ -70,10 +70,10 @@ export function zipWithAsync<T, T1, T2, T3, T4, T5>(
  * @category Async Operators
  */
 export function zipWithAsync<T, T1, T2, T3, T4>(
-  source1: Iterables<T1>,
-  source2: Iterables<T2>,
-  source3: Iterables<T3>,
-  source4: Iterables<T4>
+  source1: AllIterables<T1>,
+  source2: AllIterables<T2>,
+  source3: AllIterables<T3>,
+  source4: AllIterables<T4>
 ): AsyncOperator<T, [T, T1, T2, T3, T4]>;
 
 /**
@@ -103,7 +103,7 @@ export function zipWithAsync<T, T1, T2, T3, T4>(
  * @typeParam T3 Third element type.
  * @category Async Operators
  */
-export function zipWithAsync<T, T1, T2, T3>(source1: Iterables<T1>, source2: Iterables<T2>, source3: Iterables<T3>): AsyncOperator<T, [T, T1, T2, T3]>;
+export function zipWithAsync<T, T1, T2, T3>(source1: AllIterables<T1>, source2: AllIterables<T2>, source3: AllIterables<T3>): AsyncOperator<T, [T, T1, T2, T3]>;
 
 /**
  * Returns a sequence of arrays consisting of the elements of the source array and the elements of the multiple sequences given as arguments, concatenated one by one.
@@ -130,7 +130,7 @@ export function zipWithAsync<T, T1, T2, T3>(source1: Iterables<T1>, source2: Ite
  * @typeParam T2 Second element type.
  * @category Async Operators
  */
-export function zipWithAsync<T, T1, T2>(source1: Iterables<T1>, source2: Iterables<T2>): AsyncOperator<T, [T, T1, T2]>;
+export function zipWithAsync<T, T1, T2>(source1: AllIterables<T1>, source2: AllIterables<T2>): AsyncOperator<T, [T, T1, T2]>;
 
 /**
  * Returns a sequence of arrays consisting of the elements of the source array and the elements of the multiple sequences given as arguments, concatenated one by one.
@@ -155,12 +155,12 @@ export function zipWithAsync<T, T1, T2>(source1: Iterables<T1>, source2: Iterabl
  * @typeParam T1 First element type.
  * @category Async Operators
  */
-export function zipWithAsync<T, T1>(source1: Iterables<T1>): AsyncOperator<T, [T, T1]>;
+export function zipWithAsync<T, T1>(source1: AllIterables<T1>): AsyncOperator<T, [T, T1]>;
 
 /** @ignore */
-export function zipWithAsync<T, T1>(...source1: Iterables<T1>[]): AsyncOperator<T, [T, ...T1[]]>;
+export function zipWithAsync<T, T1>(...source1: AllIterables<T1>[]): AsyncOperator<T, [T, ...T1[]]>;
 
-export function zipWithAsync<T>(...sources: Iterables<unknown>[]): AsyncOperator<T, unknown> {
+export function zipWithAsync<T>(...sources: AllIterables<unknown>[]): AsyncOperator<T, unknown> {
   return async function* zipWithAsync<T>(source: AsyncSeq<T>): AsyncGen<unknown> {
     if (sources.length == 0) {
       yield* new AsyncZipIterable([source, []]);

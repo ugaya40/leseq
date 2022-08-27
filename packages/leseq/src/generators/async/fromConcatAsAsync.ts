@@ -1,4 +1,4 @@
-import { AsyncGen, AsyncSeq, Iterables } from '../../asyncSeq';
+import { AsyncGen, AsyncSeq, AllIterables } from '../../asyncSeq';
 
 async function* fromConcatAsAsyncInternal<T>(args: (Iterable<T> | AsyncIterable<T>)[]): AsyncGen<T> {
   for (const one of args) {
@@ -19,6 +19,6 @@ async function* fromConcatAsAsyncInternal<T>(args: (Iterable<T> | AsyncIterable<
  * @typeParam T Source element type.
  * @category Async Generators
  */
-export function fromConcatAsAsync<T>(...args: Iterables<T>[]): AsyncSeq<T> {
+export function fromConcatAsAsync<T>(...args: AllIterables<T>[]): AsyncSeq<T> {
   return new AsyncSeq(fromConcatAsAsyncInternal(args));
 }

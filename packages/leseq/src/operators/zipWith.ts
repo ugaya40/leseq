@@ -1,5 +1,5 @@
 import { Gen, Operator, Seq } from '../seq';
-import { ZipIterable } from '../utils/zipIterable';
+import { ZipIterable } from '../utils/ZipIterable';
 
 /**
  * Returns a sequence of arrays consisting of the elements of the source array and the elements of the multiple sequences given as arguments, concatenated one by one.

@@ -1,4 +1,4 @@
-import { isAsyncIterable, Iterables, toAsyncIterator } from '../asyncSeq';
+import { isAsyncIterable, AllIterables, toAsyncIterator } from '../asyncSeq';
 
 const doneResult = { value: undefined, done: true };
 
@@ -14,7 +14,7 @@ const returnDoneAllAsync = async (iterators: AsyncIterator<unknown>[]) => {
 };
 
 export class AsyncZipIterable implements AsyncIterable<unknown> {
-  constructor(private sources: Iterables<unknown>[]) {}
+  constructor(private sources: AllIterables<unknown>[]) {}
 
   [Symbol.asyncIterator]() {
     const iterators = this.sources.map(source => {

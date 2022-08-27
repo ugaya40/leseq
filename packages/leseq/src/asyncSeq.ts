@@ -3,6 +3,8 @@ export type AsyncOperator<T = any, TResult = T> = (source: AsyncSeq<T>) => Async
 export type AsyncSeqConverter<T, TResultSeq extends AsyncIterable<T>> = (source: AsyncSeq<T>) => TResultSeq;
 export type AsyncSeqToValue<T = any, TResult = any> = (source: AsyncSeq<T>) => Promise<TResult>;
 
+export type AllIterables<T> = AsyncIterable<T> | Iterable<T>;
+
 export function isAsyncIterable(source: any): source is AsyncIterable<unknown> {
   return Symbol.asyncIterator in source;
 }
@@ -17,10 +19,8 @@ export function toAsyncIterator<T>(iterator: Iterator<T>): AsyncIterator<T> {
   };
 }
 
-export type Iterables<T> = AsyncIterable<T> | Iterable<T>;
-
 export class AsyncSeq<T> implements AsyncIterable<T> {
-  constructor(protected source: Iterables<T>) {}
+  constructor(protected source: AllIterables<T>) {}
 
   [Symbol.asyncIterator](): AsyncIterator<T> {
     if (isAsyncIterable(this.source)) {

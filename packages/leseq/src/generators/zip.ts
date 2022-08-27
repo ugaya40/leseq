@@ -1,5 +1,5 @@
 import { Seq } from '../seq';
-import { ZipIterable } from '../utils/zipIterable';
+import { ZipIterable } from '../utils/ZipIterable';
 
 /**
  * Generates a sequence of arrays made by concatenating the elements of multiple sequences one at a time.

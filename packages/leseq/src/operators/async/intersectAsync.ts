@@ -1,4 +1,4 @@
-import { AsyncGen, AsyncOperator, AsyncSeq, Iterables } from '../../asyncSeq';
+import { AsyncGen, AsyncOperator, AsyncSeq, AllIterables } from '../../asyncSeq';
 import { asyncDefaultSelector } from '../../utils';
 
 /**
@@ -52,7 +52,7 @@ import { asyncDefaultSelector } from '../../utils';
  * @category Async Operators
  */
 export const intersectAsync = <T, TComparableValue, TKey = T>(
-  target: Iterables<T>,
+  target: AllIterables<T>,
   keySelector: (one: T) => Promise<TKey> = asyncDefaultSelector,
   comparableValueForKey?: (key: TKey) => Promise<TComparableValue>
 ): AsyncOperator<T> =>
