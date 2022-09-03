@@ -7,8 +7,7 @@
     "build": "yarn workspace leseq build",
     "test": "yarn workspace leseq test",
     "pub": "yarn workspace leseq pub",
-    "pub:Doc": "yarn workspace leseq-docs deploy",
-    "treeShaking": "yarn workspace treeshaking-inspect build"
+    "pub:Doc": "yarn workspace leseq-docs deploy"
 
   },
   "devDependencies": {
