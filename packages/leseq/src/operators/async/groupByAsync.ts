@@ -53,9 +53,9 @@ import { asyncDefaultSelector } from '../../utils';
  * //   {key: {key: 2}, values: ["test2"]}
  * // ];
  * ```
- * 
+ *
  * For more information on *keySelector* and *comparableValueForKey*, please refer to [Equality Strategy](/#equality-strategy).
- * 
+ *
  * The implementation of *asyncDefaultSelector* is as follows.
  * ```typescript
  * export const asyncDefaultSelector = (target: any): any => Promise.resolve(target);

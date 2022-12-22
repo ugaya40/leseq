@@ -46,9 +46,9 @@ import { defaultSelector } from '../utils';
  * //   {key: {key: 2}, values: ["test2"]}
  * // ];
  * ```
- * 
+ *
  * For more information on *keySelector* and *comparableValueForKey*, please refer to [Equality Strategy](/#equality-strategy).
- * 
+ *
  * The implementation of *defaultSelector* is as follows.
  * ```typescript
  * export const defaultSelector = (target: any): any => target;

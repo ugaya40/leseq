@@ -37,9 +37,9 @@ import { asyncDefaultSelector } from '../../utils';
  * //   {"groupKey":{"mainKey":2,"subKey":"e"},"value":"test2"}
  * // ]
  * ```
- * 
+ *
  * For more information on *keySelector* and *comparableValueForKey*, please refer to [Equality Strategy](/#equality-strategy).
- * 
+ *
  * The implementation of *asyncDefaultSelector* is as follows.
  * ```typescript
  * export const asyncDefaultSelector = (target: any): any => Promise.resolve(target);
