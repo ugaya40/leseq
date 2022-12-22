@@ -30,6 +30,13 @@ import { asyncDefaultSelector } from '../../utils';
  * //   {"groupKey":{"mainKey":1,"subKey":"c"},"value":"test4"},
  * // ]
  * ```
+ * 
+ * For more information on *keySelector* and *comparableValueForKey*, please refer to [Equality Strategy](/#equality-strategy).
+ * 
+ * The implementation of *asyncDefaultSelector* is as follows.
+ * ```typescript
+ * export const asyncDefaultSelector = (target: any): any => Promise.resolve(target);
+ * ```
  *
  * @param keySelector Function to return the object used to check Equality.
  * @param comparableValueForKey This function returns an object that is unique to the key selected by *keySelector*.
@@ -38,12 +45,6 @@ import { asyncDefaultSelector } from '../../utils';
  * @typeParam T Source element type.
  * @typeParam TKey key type.
  * @typeParam TComparableValue The type of the return value returned by *comparableValueForKey*.
- *
- * @remarks For more information on *keySelector* and *comparableValueForKey*, please refer to [Equality Strategy](/#equality-strategy).
- * @remarks The implementation of *asyncDefaultSelector* is as follows.
- * ```typescript
- * export const asyncDefaultSelector = (target: any): any => Promise.resolve(target);
- * ```
  * @category Async Operators
  */
 export const uniqAsync = <T, TComparableValue, TKey = T>(

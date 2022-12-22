@@ -41,6 +41,13 @@ import { asyncDefaultSelector } from '../../utils';
  * //   {"groupKey":{"mainKey":1,"subKey":"c"},"value":"test4"}
  * // ]
  * ```
+ * 
+ * For more information on *keySelector* and *comparableValueForKey*, please refer to [Equality Strategy](/#equality-strategy).
+ * 
+ * The implementation of *asyncDefaultSelector* is as follows.
+ * ```typescript
+ * export const asyncDefaultSelector = (target: any): any => Promise.resolve(target);
+ * ```
  *
  * @param target Sequence to be removed.
  * @param keySelector Function to return the object used to check Equality..
@@ -51,14 +58,6 @@ import { asyncDefaultSelector } from '../../utils';
  * @typeParam T Source element type.
  * @typeParam TKey key type.
  * @typeParam TComparableValue The type of the return value returned by *comparableValueForKey*.
- *
- * @remarks For more information on *keySelector* and *comparableValueForKey*, please refer to [Equality Strategy](/#equality-strategy).
- *
- * @remarks The implementation of *asyncDefaultSelector* is as follows.
- * ```typescript
- * export const asyncDefaultSelector = (target: any): any => Promise.resolve(target);
- * ```
- *
  * @category Async Operators
  */
 export const differenceAsync = <T, TComparableValue, TKey = T>(

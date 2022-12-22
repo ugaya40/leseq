@@ -1,4 +1,5 @@
 export * from './async';
+export { catchError } from './catchError';
 export { chunk } from './chunk';
 export { concat } from './concat';
 export { concatValue } from './concatValue';

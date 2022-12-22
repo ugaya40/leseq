@@ -27,7 +27,7 @@ const leseqApisConfigBase = (kind) => ({
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'leseq',
-  tagline: 'Lazy evaluation list with high tree-shaking affinity and easy customization.',
+  tagline: 'Lazy list with high tree-shaking affinity and easy customization.',
   url: 'https://ugaya40.github.io/',
   baseUrl: '/leseq/',
   trailingSlash: true,

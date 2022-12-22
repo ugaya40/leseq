@@ -21,7 +21,7 @@ The Seq<T\> object has the following methods
 | toArray | Converts a sequence to an readonly array.(Type of the return value is `readonly T[]`. The only difference from `toMutableArray()` is the return type.) |
 | toMutableArray | Converts a sequence to an array. (Type of the return value is `T[]`. The only difference from `toArray()` is the return type.)|
 
-Since lazy evaluation is employed, the process is not executed when **pipe()** is called, but only when **value()**, **toArray()**, or **forEach()** is called.
+Because it is a lazy list, it does not execute processing when **pipe()** is called, but only when **value()**, *toArray()**, or *forEach()** is called.
 
 ## AsyncSeq<T\> Object
 It can be created by passing [asyncSeq()](https://ugaya40.github.io/leseq/api/to/#asyncseq) to **to()** of Seq<T\> or by using [Async Generators](https://ugaya40.github.io/leseq/api/generators/#async-generators).

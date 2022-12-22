@@ -3,7 +3,8 @@ import { AsyncDeferIterable } from '../../utils/AsyncDeferIterable';
 import { PromiseIterable } from '../../utils/PromiseIterable';
 
 /**
- * Generates a sequence whose values are the result of a single Promise or multiple Promises executed sequentially.
+ * Generates a sequence whose values are the result of sequential execution of a single Promise or multiple Promises;
+ * Promise execution is delayed until the sequence is enumerated.
  *
  * ```typescript
  * const sleepAndRandom = (ms: number) => new Promise(resolve => setTimeout(() => resolve(Math.floor(Math.random() * 100)),ms));

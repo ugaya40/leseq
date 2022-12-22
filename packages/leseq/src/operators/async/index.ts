@@ -1,3 +1,4 @@
+export { catchErrorAsync } from './catchErrorAsync';
 export { chunkAsync } from './chunkAsync';
 export { concatAsync } from './concatAsync';
 export { concatValueAsync } from './concatValueAsync';

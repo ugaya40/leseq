@@ -1,7 +1,7 @@
 import { AsyncGen, AsyncOperator, AsyncSeq } from '../../AsyncSeq';
 
 /**
- * Invokes a specified action after the source iterable sequence terminates gracefully or exceptionally.
+ * Invokes a specified action after the source iterable sequence terminates normally or exceptionally.
  *
  * ```typescript
  * const result = await fromAsAsync([1, 2, 3, 4, 5]).pipe(

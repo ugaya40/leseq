@@ -5,7 +5,7 @@
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
-  "description": "Lazy evaluation list with high tree-shaking affinity and easy customization.",
+  "description": "Lazy list with high tree-shaking affinity and easy customization.",
   "sideEffects": false,
   "author": "Masanori Onoue <ugaya40@hotmail.com> (https://github.com/ugaya40)",
   "repository": "git://github.com/ugaya40/leseq.git",

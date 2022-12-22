@@ -1,4 +1,4 @@
-import { async, chunkAsync, concatAsync, concatValueAsync, differenceAsync, everyAsync, filterAsync, finalize, finalizeAsync, findAsync, flattenAsync, from, fromAsAsync, fromValueAsAsync, groupByAsync, intersectAsync, mapAsync, orderByAsync, repeatAsync, reverseAsync, scanAsync, skipAsync, skipWhileAsync, takeAsync, takeWhileAsync, tap, tapAsync, unionAsync, uniqAsync, zipWithAsync } from '../src';
+import { async, catchErrorAsync, chunkAsync, concatAsync, concatValueAsync, differenceAsync, everyAsync, filterAsync, finalize, finalizeAsync, findAsync, flattenAsync, from, fromAsAsync, fromValueAsAsync, groupByAsync, intersectAsync, mapAsync, orderByAsync, repeatAsync, reverseAsync, scanAsync, skipAsync, skipWhileAsync, takeAsync, takeWhileAsync, tap, tapAsync, unionAsync, uniqAsync, zipWithAsync } from '../src';
 import { abortableSleep, performanceAsync } from './testUtil';
 
 test('operator: simple concatAsync', async () => {
@@ -681,4 +681,144 @@ test('operator: simple repeatAsync 2', async () => {
   const output = await fromAsAsync([1,2,3]).pipe(repeatAsync(3)).toArrayAsync();
   expect(output).toEqual([1,2,3,1,2,3,1,2,3]);
 });
+
+test('operator: simple catchErrorAsync 1', async () => {
+  let caught  = false;
+  const output = await fromAsAsync([1,2,3]).pipe(
+    tapAsync(async i => {
+      if(i === 2) throw new Error();
+    }),
+    catchErrorAsync(async (e) => {
+      caught = true;
+    })
+  ).toArrayAsync();
+
+  expect(output).toEqual([1]);
+  expect(caught).toBe(true);
+});
+
+test('operator: simple catchErrorAsync 2', async () => {
+  let caught  = false;
+  const output = await fromAsAsync([1,2,3]).pipe(
+    tapAsync(async i => {
+      if(i === 2) throw new Error();
+    }),
+    catchErrorAsync(async () => {
+      caught = true;
+      return [4,5,6]
+    })
+  ).toArrayAsync();
+
+  expect(output).toEqual([1,4,5,6]);
+  expect(caught).toBe(true);
+});
+
+test('operator: simple catchErrorAsync 3', async () => {
+  let caught  = false;
+  let errorMessage = '';
+  const output = await fromAsAsync([1,2,3]).pipe(
+    tapAsync(async i => {
+      if(i === 2) throw new Error('error occurred');
+    }),
+    catchErrorAsync(async (e) => {
+      caught = true;
+      if(e instanceof Error){
+        errorMessage = e.message;
+      }
+      return [4,5,6]
+    })
+  ).toArrayAsync();
+
+  expect(output).toEqual([1,4,5,6]);
+  expect(caught).toBe(true);
+  expect(errorMessage).toBe('error occurred');
+});
+
+test('operator: simple catchErrorAsync different type', async () => {
+  const output = await fromAsAsync([1,2,3]).pipe(
+    tapAsync(async i => {
+      if(i === 2) throw new Error();
+    }),
+    catchErrorAsync(async () => ['a', 'b', 'c'])
+  ).toArrayAsync();
+
+  expect(output).toEqual([1, 'a', 'b', 'c']);
+});
+
+test('operator: finalize catchErrorAsync 1', async () => {
+  let caught  = false;
+  let finalized = false;
+
+  const output = await fromAsAsync([1,2,3]).pipe(
+    tapAsync(async i => {
+      if(i === 2) throw new Error();
+    }),
+    catchErrorAsync(async () => {caught = true;}),
+    finalizeAsync(async () => {finalized = true;})
+  ).toArrayAsync();
+
+  expect(output).toEqual([1]);
+  expect(caught).toBe(true);
+  expect(finalized).toBe(true);
+});
+
+test('operator: finalize catchErrorAsync 2', async () => {
+  let caught  = false;
+  let mainFinalized = false;
+  let alternativeFinalized = false;
+
+  const output = await fromAsAsync([1,2,3]).pipe(
+    tapAsync(async i => {
+      if(i === 2) throw new Error();
+    }),
+    catchErrorAsync(async () => {
+      caught = true;
+      return from([4,5,6]).pipe(finalize(() =>{alternativeFinalized = true}))
+    }),
+    finalizeAsync(async () => {mainFinalized = true;})
+  ).toArrayAsync();
+
+  expect(output).toEqual([1,4,5,6]);
+  expect(caught).toBe(true);
+  expect(mainFinalized).toBe(true);
+  expect(alternativeFinalized).toBe(true);
+});
+
+test('operator: nested catchError', async () => {
+  let mainFinalized = false;
+  let alternative1Finalized = false;
+  let alternative2Finalized = false;
+  let alternative3Finalized = false;
+
+  const alternative2 = fromAsAsync([7,8,9]).pipe(
+    tapAsync(async i => {
+      if(i === 8) throw new Error();
+    }),
+    catchErrorAsync(async () => from([10,11,12]).pipe(finalize(() => {alternative3Finalized = true}))),
+    finalizeAsync(async () => {alternative2Finalized = true})
+  );
+
+  const alternative1 = fromAsAsync([4,5,6]).pipe(
+    tapAsync(async i => {
+      if(i === 5) throw new Error();
+    }),
+    catchErrorAsync(async () => alternative2),
+    finalizeAsync(async () => {alternative1Finalized = true})
+  );
+
+  const output = await fromAsAsync([1,2,3]).pipe(
+    tapAsync(async i => {
+      if(i === 2) throw new Error();
+    }),
+    catchErrorAsync(async () => alternative1),
+    finalizeAsync(async () => {mainFinalized = true})
+  ).toArrayAsync();
+
+  expect(output).toEqual([1,4,7,10,11,12]);
+  expect(mainFinalized).toBe(true);
+  expect(alternative1Finalized).toBe(true);
+  expect(alternative2Finalized).toBe(true);
+  expect(alternative3Finalized).toBe(true);
+});
+
 

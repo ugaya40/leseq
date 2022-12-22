@@ -1,4 +1,4 @@
-import { chunk, concat, concatValue, difference, every, filter, finalize, find, flatten, from, fromValue, groupBy, intersect, map, orderBy, repeat, reverse, scan, skip, skipWhile, take, takeWhile, tap, union, uniq, zipWith } from '../src';
+import { catchError, chunk, concat, concatValue, difference, every, filter, finalize, find, flatten, from, fromValue, groupBy, intersect, map, orderBy, repeat, reverse, scan, skip, skipWhile, take, takeWhile, tap, union, uniq, zipWith } from '../src';
 
 test('operator: simple concat', () => {
   const output = from([1, 2, 3, 4, 5])
@@ -535,4 +535,135 @@ test('operator: simple repeat 1', () => {
 test('operator: simple repeat 2', () => {
   const output = from([1,2,3]).pipe(repeat(3)).toArray();
   expect(output).toEqual([1,2,3,1,2,3,1,2,3]);
+});
+
+test('operator: simple catchError 1', () => {
+  let caught  = false;
+  const output = from([1,2,3]).pipe(
+    tap(i => {
+      if(i === 2) throw new Error();
+    }),
+    catchError((e) => {
+      caught = true;
+    })
+  ).toArray();
+
+  expect(output).toEqual([1]);
+  expect(caught).toBe(true);
+});
+
+test('operator: simple catchError 2', () => {
+  let caught  = false;
+  const output = from([1,2,3]).pipe(
+    tap(i => {
+      if(i === 2) throw new Error();
+    }),
+    catchError(() => {
+      caught = true;
+      return [4,5,6]
+    })
+  ).toArray();
+  expect(output).toEqual([1,4,5,6]);
+  expect(caught).toBe(true);
+});
+
+test('operator: simple catchError 3', () => {
+  let caught  = false;
+  let errorMessage = '';
+  const output = from([1,2,3]).pipe(
+    tap(i => {
+      if(i === 2) throw new Error('error occurred');
+    }),
+    catchError((e) => {
+      caught = true;
+      if(e instanceof Error){
+        errorMessage = e.message;
+      }
+      return [4,5,6]
+    })
+  ).toArray();
+  expect(output).toEqual([1,4,5,6]);
+  expect(caught).toBe(true);
+  expect(errorMessage).toBe('error occurred');
+});
+
+test('operator: simple catchError different type', () => {
+  const output = from([1,2,3]).pipe(
+    tap(i => {
+      if(i === 2) throw new Error();
+    }),
+    catchError(() => ['a', 'b', 'c'])
+  ).toArray();
+  expect(output).toEqual([1, 'a', 'b', 'c']);
+});
+
+test('operator: finalize catchError 1', () => {
+  let caught  = false;
+  let finalized = false;
+  const output = from([1,2,3]).pipe(
+    tap(i => {
+      if(i === 2) throw new Error();
+    }),
+    catchError(() => {caught = true;}),
+    finalize(() => {finalized = true;})
+  ).toArray();
+  expect(output).toEqual([1]);
+  expect(caught).toBe(true);
+  expect(finalized).toBe(true);
+});
+
+test('operator: finalize catchError 2', () => {
+  let caught  = false;
+  let mainFinalized = false;
+  let alternativeFinalized = false;
+  const output = from([1,2,3]).pipe(
+    tap(i => {
+      if(i === 2) throw new Error();
+    }),
+    catchError(() => {
+      caught = true;
+      return from([4,5,6]).pipe(finalize(() =>{alternativeFinalized = true}))
+    }),
+    finalize(() => {mainFinalized = true;})
+  ).toArray();
+  expect(output).toEqual([1,4,5,6]);
+  expect(caught).toBe(true);
+  expect(mainFinalized).toBe(true);
+  expect(alternativeFinalized).toBe(true);
+});
+
+test('operator: nested catchError', () => {
+  let mainFinalized = false;
+  let alternative1Finalized = false;
+  let alternative2Finalized = false;
+  let alternative3Finalized = false;
+  const alternative2 = from([7,8,9]).pipe(
+    tap(i => {
+      if(i === 8) throw new Error();
+    }),
+    catchError(() => from([10,11,12]).pipe(finalize(() => {alternative3Finalized = true}))),
+    finalize(() => {alternative2Finalized = true})
+  );
+
+  const alternative1 = from([4,5,6]).pipe(
+    tap(i => {
+      if(i === 5) throw new Error();
+    }),
+    catchError(() => alternative2),
+    finalize(() => {alternative1Finalized = true})
+  );
+
+  const output = from([1,2,3]).pipe(
+    tap(i => {
+      if(i === 2) throw new Error();
+    }),
+    catchError(() => alternative1),
+    finalize(() => {mainFinalized = true})
+  ).toArray();
+
+  expect(output).toEqual([1,4,7,10,11,12]);
+  expect(mainFinalized).toBe(true);
+  expect(alternative1Finalized).toBe(true);
+  expect(alternative2Finalized).toBe(true);
+  expect(alternative3Finalized).toBe(true);
 });

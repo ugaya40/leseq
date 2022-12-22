@@ -28,7 +28,14 @@ import { defaultSelector } from '../utils';
  * //   {"groupKey":{"mainKey":1,"subKey":"c"},"value":"test4"},
  * // ]
  * ```
- *
+ * 
+ * For more information on *keySelector* and *comparableValueForKey*, please refer to [Equality Strategy](/#equality-strategy).
+ * 
+ * The implementation of *defaultSelector* is as follows.
+ * ```typescript
+ * export const defaultSelector = (target: any): any => target;
+ * ```
+ * 
  * @param keySelector Function to return the object used to check Equality.
  * @param comparableValueForKey This function returns an object that is unique to the key selected by *keySelector*.
  * It is recommended to return a string or number.
@@ -36,12 +43,6 @@ import { defaultSelector } from '../utils';
  * @typeParam T Source element type.
  * @typeParam TKey key type.
  * @typeParam TComparableValue The type of the return value returned by *comparableValueForKey*.
- *
- * @remarks For more information on *keySelector* and *comparableValueForKey*, please refer to [Equality Strategy](/#equality-strategy).
- * @remarks The implementation of *defaultSelector* is as follows.
- * ```typescript
- * export const defaultSelector = (target: any): any => target;
- * ```
  * @category Operators
  */
 export const uniq = <T, TComparableValue, TKey = T>(
