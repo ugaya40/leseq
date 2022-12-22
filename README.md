@@ -188,7 +188,7 @@ It is used within the pipe method of the Seq&lt;T&gt; object. Any number of oper
 
 | Operator | Description |
 | --- | --- |
-| [catchError](https://ugaya40.github.io/leseq/api/operators/#catchError) | If the original iterable sequence raises an exception, the specified action is performed, terminating the enumeration or enumerating an alternate sequence. (async version: [catchErrorAsync](https://ugaya40.github.io/leseq/api/operators/#catchrrrorasync) ) | |
+| [catchError](https://ugaya40.github.io/leseq/api/operators/#catchError) | If the original iterable sequence raises an exception, the specified action is performed, terminating the enumeration or enumerating an alternate sequence. (async version: [catchErrorAsync](https://ugaya40.github.io/leseq/api/operators/#catcherrorasync) ) | |
 | [chunk](https://ugaya40.github.io/leseq/api/operators/#chunk) | Returns a sequence divided into array of the specified size. (async version: [chunkAsync](https://ugaya40.github.io/leseq/api/operators/#chunkasync) )  | |
 | [concat](https://ugaya40.github.io/leseq/api/operators/#concat) | Returns a sequence in which the current sequence and the specified sequence are concatenated. (async version: [concatAsync](https://ugaya40.github.io/leseq/api/operators/#concatasync) )  | |
 | [concatValue](https://ugaya40.github.io/leseq/api/operators/#concatvalue) | Returns the sequence to which the specified value is added. (async version: [concatValueAsync](https://ugaya40.github.io/leseq/api/operators/#concatvalueasync) )  | |
