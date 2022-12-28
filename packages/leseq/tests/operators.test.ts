@@ -50,6 +50,15 @@ test('operator: filter index', () => {
   expect(indexes).toEqual([0, 1, 2, 3, 4, 5]);
 });
 
+test('operator: filter with User Defined Type Guard', () => {
+  const output = from([1,'a',2,'b'])
+    .pipe(
+      filter<number | string, string>((i): i is string => typeof i === 'string')
+    )
+    .toArray();
+  expect(output).toEqual(['a','b']);
+});
+
 test('operator: simple flatten', () => {
   const output = from([
     [1, 2],

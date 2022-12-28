@@ -16,7 +16,7 @@ import { AsyncGen, AsyncOperator, AsyncSeq } from '../../AsyncSeq';
  * @returns Operator function.
  * @category Async Operators
  */
-export const skipWhileAsync = <T>(predicate: (arg: T) => Promise<boolean>): AsyncOperator<T> =>
+export const skipWhileAsync = <T>(predicate: (arg: T) => Promise<boolean> | boolean): AsyncOperator<T> =>
   async function* skipWhileAsync(source: AsyncSeq<T>): AsyncGen<T> {
     let skipCompleted = false;
     for await (const i of source) {

@@ -18,7 +18,7 @@ import { AsyncSeq, AsyncSeqToValue } from '../../AsyncSeq';
  * @category Async Values
  */
 export const findOrDefaultAsync = <T>(
-  predicate: (arg: T, index: number) => Promise<boolean> = () => Promise.resolve(true),
+  predicate: (arg: T, index: number) => Promise<boolean> | boolean = () => true,
   defaultValue: T | undefined = undefined
 ): AsyncSeqToValue<T, T | undefined> =>
   async function findOrDefaultAsync(seq: AsyncSeq<T>): Promise<T | undefined> {

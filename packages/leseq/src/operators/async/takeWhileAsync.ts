@@ -16,7 +16,7 @@ import { AsyncGen, AsyncOperator, AsyncSeq } from '../../AsyncSeq';
  * @returns Operator function.
  * @category Async Operators
  */
-export const takeWhileAsync = <T>(predicate: (arg: T) => Promise<boolean>): AsyncOperator<T> =>
+export const takeWhileAsync = <T>(predicate: (arg: T) => Promise<boolean> | boolean): AsyncOperator<T> =>
   async function* takeWhileAsync(source: AsyncSeq<T>): AsyncGen<T> {
     for await (const i of source) {
       if (await predicate(i)) {

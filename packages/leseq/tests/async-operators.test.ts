@@ -38,7 +38,7 @@ test('operator: simple skipWhileAsync', async () => {
 
 test('operator: simple filterAsync', async () => {
   const output = await fromAsAsync([2, 4, 5, 6, 7, 8])
-    .pipe(filterAsync(async i => i % 2 == 0))
+    .pipe(filterAsync(i => i % 2 == 0))
     .toArrayAsync();
   expect(output).toEqual([2, 4, 6, 8]);
 });
@@ -56,6 +56,15 @@ test('operator: filterAsync index', async () => {
     .toArrayAsync();
   expect(output).toEqual([2, 4, 6, 8]);
   expect(indexes).toEqual([0, 1, 2, 3, 4, 5]);
+});
+
+test('operator: filterAsync with User Defined Type Guard', async () => {
+  const output = await fromAsAsync([1,'a',2,'b'])
+    .pipe(
+      filterAsync<number | string, string>((i): i is string => typeof i === 'string')
+    )
+    .toArrayAsync();
+  expect(output).toEqual(['a','b']);
 });
 
 test('operator: simple flattenAsync', async () => {

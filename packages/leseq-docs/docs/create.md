@@ -143,7 +143,7 @@ const result1 = fromOriginal([1,2,3,4,5]).pipe(mapOriginal(i => i * i)).value(fi
 
 //async version
 const findAsyncOriginal =
-  <T>(predicate: (arg: T) => Promise<boolean> = () => Promise.resolve(true)): AsyncSeqToValue<T, T> =>
+  <T>(predicate: (arg: T) => Promise<boolean> | boolean = () => boolean): AsyncSeqToValue<T, T> =>
   async (seq: AsyncSeq<T>): Promise<T> => {
     for await (const i of seq) {
       if (await predicate(i)) {

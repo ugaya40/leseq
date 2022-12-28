@@ -1,7 +1,7 @@
 import { everyAsync, findAsync, findOrDefaultAsync, fromAsAsync, reduceAsync, someAsync } from '../src';
 
 test('value: everyAsync true case', async () => {
-  const output = await fromAsAsync([1, 2, 3, 4, 5]).valueAsync(everyAsync(async i => i < 6));
+  const output = await fromAsAsync([1, 2, 3, 4, 5]).valueAsync(everyAsync(i => i < 6));
   expect(output).toBe(true);
 });
 
@@ -11,7 +11,7 @@ test('value: everyAsync false case', async () => {
 });
 
 test('value: simple findAsync', async () => {
-  const output = await fromAsAsync([1, 2, 3, 4, 5]).valueAsync(findAsync(async i => i % 2 == 0));
+  const output = await fromAsAsync([1, 2, 3, 4, 5]).valueAsync(findAsync(i => i % 2 == 0));
   expect(output).toBe(2);
 });
 
@@ -28,13 +28,13 @@ test('value: findAsync index', async () => {
 });
 
 test('value: findAsync throw error', async () => {
-  await expect(async () => await fromAsAsync([1, 2, 3, 4, 5]).valueAsync(findAsync(async i => i > 10)))
+  await expect(async () => await fromAsAsync([1, 2, 3, 4, 5]).valueAsync(findAsync(i => i > 10)))
     .rejects
     .toThrowError(`No elements matching the condition were found.`);
 });
 
 test('value: simple findOrDefaultAsync', async () => {
-  const output = await fromAsAsync([1, 2, 3, 4, 5]).valueAsync(findOrDefaultAsync(async i => i % 2 == 0));
+  const output = await fromAsAsync([1, 2, 3, 4, 5]).valueAsync(findOrDefaultAsync(i => i % 2 == 0));
   expect(output).toBe(2);
 });
 
@@ -51,7 +51,7 @@ test('value: findOrDefaultAsync index', async () => {
 });
 
 test('value: findOrDefaultAsync default case1', async () => {
-  const output = await fromAsAsync([1, 2, 3, 4, 5]).valueAsync(findOrDefaultAsync(async i => i > 10));
+  const output = await fromAsAsync([1, 2, 3, 4, 5]).valueAsync(findOrDefaultAsync(i => i > 10));
   expect(output).toBe(undefined);
 });
 
@@ -73,7 +73,7 @@ test('value: simple reduceAsync', async () => {
 });
 
 test('value: someAsync true case', async () => {
-  const output = await fromAsAsync([1, 2, 3, 4, 5]).valueAsync(someAsync(async i => i == 5));
+  const output = await fromAsAsync([1, 2, 3, 4, 5]).valueAsync(someAsync(i => i == 5));
   expect(output).toBe(true);
 });
 
