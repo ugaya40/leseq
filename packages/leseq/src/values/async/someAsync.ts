@@ -20,12 +20,14 @@ import { AsyncSeq, AsyncSeqToValue } from '../../AsyncSeq';
  * @returns
  * @category Async Values
  */
-export const someAsync = <T>(predicate: (arg: T) => Promise<boolean> | boolean = () => true): AsyncSeqToValue<T, boolean> =>
+export const someAsync = <T>(predicate: (arg: T, index: number) => Promise<boolean> | boolean = () => true): AsyncSeqToValue<T, boolean> =>
   async function someAsync(seq: AsyncSeq<T>): Promise<boolean> {
+    let count = 0;
     for await (const i of seq) {
-      if (await predicate(i)) {
+      if (await predicate(i, count)) {
         return true;
       }
+      count++;
     }
     return false;
   };

@@ -10,6 +10,17 @@ test('value: everyAsync false case', async () => {
   expect(output).toBe(false);
 });
 
+test('value: everyAsync index', async () => {
+  const expected = [0,1,2,3,4];
+  const actual: number[] = []
+  const output = await fromAsAsync([1, 2, 3, 4, 5]).valueAsync(everyAsync((i,index) => {
+    actual.push(index);
+    return i < 6
+  }));
+  expect(output).toBe(true);
+  expect(actual).toEqual(expected);
+});
+
 test('value: simple findAsync', async () => {
   const output = await fromAsAsync([1, 2, 3, 4, 5]).valueAsync(findAsync(i => i % 2 == 0));
   expect(output).toBe(2);
@@ -80,4 +91,15 @@ test('value: someAsync true case', async () => {
 test('value: someAsync false case', async () => {
   const output = await fromAsAsync([1, 2, 3, 4, 5]).valueAsync(someAsync(async i => i > 10));
   expect(output).toBe(false);
+});
+
+test('value: someAsync index', async () => {
+  const expected = [0,1,2,3];
+  const actual: number[] = []
+  const output = await fromAsAsync([99, 98, 97, 1, 2]).valueAsync(someAsync((i,index) => {
+    actual.push(index);
+    return i < 5
+  }));
+  expect(output).toBe(true);
+  expect(actual).toEqual(expected);
 });

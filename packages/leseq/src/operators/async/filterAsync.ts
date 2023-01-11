@@ -12,7 +12,7 @@ export function filterAsync<T>(predicate: (arg: T, index: number) => Promise<boo
  * ).toArrayAsync();
  * //result: [2,4]
  * ```
- * 
+ *
  * **with User Defined Type Guard**
  * ```typescript
  * const result = await fromAsAsync([1,'a',2,'b'])
@@ -38,5 +38,5 @@ export function filterAsync<T>(predicate: (arg: T, index: number) => Promise<boo
       }
       count++;
     }
-  }
+  };
 }

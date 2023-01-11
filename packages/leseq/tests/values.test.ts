@@ -10,6 +10,17 @@ test('value: every false case', () => {
   expect(output).toBe(false);
 });
 
+test('value: every index', () => {
+  const expected = [0,1,2,3,4];
+  const actual: number[] = []
+  const output = from([1, 2, 3, 4, 5]).value(every((i,index) => {
+    actual.push(index);
+    return i < 6
+  }));
+  expect(output).toBe(true);
+  expect(actual).toEqual(expected);
+});
+
 test('value: simple find', () => {
   const output = from([1, 2, 3, 4, 5]).value(find(i => i % 2 == 0));
   expect(output).toBe(2);
@@ -78,4 +89,15 @@ test('value: some true case', () => {
 test('value: some false case', () => {
   const output = from([1, 2, 3, 4, 5]).value(some(i => i > 10));
   expect(output).toBe(false);
+});
+
+test('value: some index', () => {
+  const expected = [0,1,2,3];
+  const actual: number[] = []
+  const output = from([99, 98, 97, 1, 2]).value(some((i,index) => {
+    actual.push(index);
+    return i < 5
+  }));
+  expect(output).toBe(true);
+  expect(actual).toEqual(expected);
 });

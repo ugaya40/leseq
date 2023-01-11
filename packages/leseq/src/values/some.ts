@@ -16,12 +16,14 @@ import { Seq } from '../Seq';
  * @returns
  * @category Values
  */
-export const some = <T>(predicate: (arg: T) => boolean = () => true) =>
+export const some = <T>(predicate: (arg: T, index: number) => boolean = () => true) =>
   function some(seq: Seq<T>): boolean {
+    let count = 0;
     for (const i of seq) {
-      if (predicate(i)) {
+      if (predicate(i, count)) {
         return true;
       }
+      count++;
     }
     return false;
   };
