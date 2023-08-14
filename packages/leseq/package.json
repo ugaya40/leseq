@@ -36,21 +36,20 @@
     "build": "run-s fmt cleanBuildDir build:para",
     "fmt": "prettier --write \"src/**/*.ts\"",
     "cleanBuildDir": "node -e \"if(require('fs').existsSync('dist')) require('fs').rmSync('dist',{recursive:true})\"",
-    "test": "jest",
+    "test": "vitest",
+    "bench": "vitest bench",
     "copyReadMe": "node -e \"require('fs').copyFileSync('../../README.md','README.md')\"",
     "removeReadMe": "node -e \"require('fs').unlinkSync('README.md')\"",
     "pub:internal": "yarn publish",
     "pub": "run-s test build copyReadMe pub:internal removeReadMe"
   },
   "devDependencies": {
-    "@types/jest": "^27.4.0",
-    "jest": "^27.4.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.5.1",
     "rollup": "^2.70.1",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.31.2",
-    "ts-jest": "^27.1.3",
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.4",
+    "vitest": "^0.34.1"
   }
 }
