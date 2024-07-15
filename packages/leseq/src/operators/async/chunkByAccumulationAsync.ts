@@ -12,7 +12,7 @@ import { AsyncGen, AsyncOperator, AsyncSeq } from '../../AsyncSeq';
  *   )
  * ).toArrayAsync();
  *
- * // result1: [[1, 2, 3, 4], [5, 6], [7], [8], [9], [10]]
+ * // result1: [[1, 2, 3, 4], [5], [6], [7], [8], [9], [10]]
  *
  * // Example where the first value doesn't satisfy the condition
  * const result2 = await fromAsAsync([11, 1, 2, 3]).pipe(
