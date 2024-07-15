@@ -1,6 +1,7 @@
 export * from './async';
 export { catchError } from './catchError';
 export { chunk } from './chunk';
+export { chunkByAccumulation } from './chunkByAccumulation';
 export { concat } from './concat';
 export { concatValue } from './concatValue';
 export { difference } from './difference';

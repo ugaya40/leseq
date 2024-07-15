@@ -1,5 +1,6 @@
 export { catchErrorAsync } from './catchErrorAsync';
 export { chunkAsync } from './chunkAsync';
+export { chunkByAccumulationAsync } from './chunkByAccumulationAsync';
 export { concatAsync } from './concatAsync';
 export { concatValueAsync } from './concatValueAsync';
 export { differenceAsync } from './differenceAsync';
