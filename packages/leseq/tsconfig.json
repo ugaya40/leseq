@@ -5,6 +5,7 @@
     "strict": true,
     "outDir": "./dist",
     "moduleResolution": "Node",
+    "esModuleInterop": true,
     "noImplicitAny": true,
     "declaration": true,
   },

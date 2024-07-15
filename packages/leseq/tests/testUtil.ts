@@ -10,7 +10,7 @@ export const abortableSleep = (ms: number, signal?: AbortSignal) => new Promise<
   setTimeout(resolve,ms)
 });
 
-export const performanceAsync = async <T>(func: () => Promise<T>) => {
+export const performanceAsync = async <T>(func: () => Promise<T>): Promise<[Awaited<T>, number]> => {
   const startTime = performance.now();
   const result = await func(); 
   const endTime = performance.now();
