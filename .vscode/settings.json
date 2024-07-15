@@ -6,5 +6,6 @@
         "deduplicated",
         "leseq",
         "nexts"
-    ]
+    ],
+    "jest.jestCommandLine": "yarn run test"
 }
