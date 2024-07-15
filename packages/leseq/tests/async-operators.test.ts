@@ -1,4 +1,4 @@
-import { async, catchErrorAsync, chunkAsync, concatAsync, concatValueAsync, differenceAsync, everyAsync, filterAsync, finalize, finalizeAsync, findAsync, flattenAsync, from, fromAsAsync, fromValueAsAsync, groupByAsync, intersectAsync, mapAsync, orderByAsync, repeatAsync, reverseAsync, scanAsync, skipAsync, skipWhileAsync, takeAsync, takeWhileAsync, tap, tapAsync, unionAsync, uniqAsync, zipWithAsync } from '../src';
+import { async, catchErrorAsync, chunkAsync, chunkByAccumulationAsync, concatAsync, concatValueAsync, differenceAsync, everyAsync, filterAsync, finalize, finalizeAsync, findAsync, flattenAsync, from, fromAsAsync, fromValueAsAsync, groupByAsync, intersectAsync, mapAsync, orderByAsync, repeatAsync, reverseAsync, scanAsync, skipAsync, skipWhileAsync, takeAsync, takeWhileAsync, tap, tapAsync, unionAsync, uniqAsync, zipWithAsync } from '../src';
 import { abortableSleep, performanceAsync } from './testUtil';
 
 test('operator: simple concatAsync', async () => {
@@ -299,6 +299,47 @@ test('operator: simple uniqAsync value equality 2',async () => {
 test('operator: simple chunkAsync', async () => {
   const output = await fromAsAsync([1, 2, 3, 4, 5, 6, 7]).pipe(chunkAsync(2)).toArrayAsync();
   expect(output).toEqual([[1, 2],[3,4],[5,6],[7]]);
+});
+
+test('operator: simple chunkAsync just end', async () => {
+  const output = await fromAsAsync([1, 2, 3, 4, 5, 6, 7, 8]).pipe(chunkAsync(2)).toArrayAsync();
+  expect(output).toEqual([[1, 2],[3,4],[5,6],[7,8]]);
+});
+
+test('operator: simple chunkByAccumulation', async () => {
+  const output = await fromAsAsync([1, 2, 3, 4, 5, 6, 7]).pipe(
+    chunkByAccumulationAsync(0, async (acc, i) => {
+      return acc + i;
+    }, async acc => acc % 2 !== 0)
+  ).toArrayAsync();
+  expect(output).toEqual([[1, 2],[3,4],[5,6],[7]]);
+});
+
+test('operator: chunkByAccumulation no result', async () => {
+  const output = await fromAsAsync([1, 2, 3, 4, 5, 6, 7]).pipe(
+    chunkByAccumulationAsync(0, async (acc, i) => {
+      return acc + i;
+    }, async acc => acc > 10)
+  ).toArrayAsync();
+  expect(output).toEqual([]);
+});
+
+test('operator: chunkByAccumulation abort', async () => {
+  const output = await fromAsAsync([1, 2, 3, 4, 5, 6, 7]).pipe(
+    chunkByAccumulationAsync(0, async (acc, i) => {
+      return acc + i;
+    }, async acc => acc < 4)
+  ).toArrayAsync();
+  expect(output).toEqual([[1,2],[3]]);
+});
+
+test('operator: chunkByAccumulation just end', async () => {
+  const output = await fromAsAsync([1, 2, 3, 4, 5, 6, 7, 8]).pipe(
+    chunkByAccumulationAsync(0, async (acc, i) => {
+      return acc + i;
+    }, async acc => acc % 2 !== 0)
+  ).toArrayAsync();
+  expect(output).toEqual([[1, 2],[3,4],[5,6],[7,8]]);
 });
 
 test('operator: simple scanAsync', async () => {

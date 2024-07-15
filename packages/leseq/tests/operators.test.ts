@@ -1,4 +1,4 @@
-import { catchError, chunk, concat, concatValue, difference, every, filter, finalize, find, flatten, from, fromValue, groupBy, intersect, map, orderBy, repeat, reverse, scan, skip, skipWhile, take, takeWhile, tap, union, uniq, zipWith } from '../src';
+import { catchError, chunk, chunkByAccumulation, concat, concatValue, difference, every, filter, finalize, find, flatten, from, fromValue, groupBy, intersect, map, orderBy, repeat, reverse, scan, skip, skipWhile, take, takeWhile, tap, union, uniq, zipWith } from '../src';
 
 test('operator: simple concat', () => {
   const output = from([1, 2, 3, 4, 5])
@@ -276,6 +276,47 @@ test('operator: simple uniq value equality 2',() => {
 test('operator: simple chunk', () => {
   const output = from([1, 2, 3, 4, 5, 6, 7]).pipe(chunk(2)).toArray();
   expect(output).toEqual([[1, 2],[3,4],[5,6],[7]]);
+});
+
+test('operator: simple chunk just end', () => {
+  const output = from([1, 2, 3, 4, 5, 6, 7, 8]).pipe(chunk(2)).toArray();
+  expect(output).toEqual([[1, 2],[3,4],[5,6],[7,8]]);
+});
+
+test('operator: simple chunkByAccumulation', () => {
+  const output = from([1, 2, 3, 4, 5, 6, 7]).pipe(
+    chunkByAccumulation(0, (acc, i) => {
+      return acc + i;
+    }, acc => acc % 2 !== 0)
+  ).toArray();
+  expect(output).toEqual([[1, 2],[3,4],[5,6],[7]]);
+});
+
+test('operator: chunkByAccumulation no result', () => {
+  const output = from([1, 2, 3, 4, 5, 6, 7]).pipe(
+    chunkByAccumulation(0, (acc, i) => {
+      return acc + i;
+    }, acc => acc > 10)
+  ).toArray();
+  expect(output).toEqual([]);
+});
+
+test('operator: chunkByAccumulation abort', () => {
+  const output = from([1, 2, 3, 4, 5, 6, 7]).pipe(
+    chunkByAccumulation(0, (acc, i) => {
+      return acc + i;
+    }, acc => acc < 4)
+  ).toArray();
+  expect(output).toEqual([[1,2],[3]]);
+});
+
+test('operator: chunkByAccumulation just end', () => {
+  const output = from([1, 2, 3, 4, 5, 6, 7, 8]).pipe(
+    chunkByAccumulation(0, (acc, i) => {
+      return acc + i;
+    }, acc => acc % 2 !== 0)
+  ).toArray();
+  expect(output).toEqual([[1, 2],[3,4],[5,6],[7,8]]);
 });
 
 test('operator: simple scan', () => {
