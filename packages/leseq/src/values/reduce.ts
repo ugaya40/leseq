@@ -19,7 +19,7 @@ import { Seq } from '../Seq';
  * @returns Aggregate results.
  * @category Values
  */
-export const reduce = <T, TAccumulate>(seed: TAccumulate, func: (previous: TAccumulate, current: T, index: number) => TAccumulate) =>
+export const reduce = <T, TAccumulate>(seed: TAccumulate, func: (acc: TAccumulate, current: T, index: number) => TAccumulate) =>
   function reduce(seq: Seq<T>): TAccumulate {
     let count = 0;
     let nextAccumulate = seed;

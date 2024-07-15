@@ -21,7 +21,7 @@ import { AsyncSeq, AsyncSeqToValue } from '../../AsyncSeq';
  */
 export const reduceAsync = <T, TAccumulate>(
   seed: TAccumulate,
-  func: (previous: TAccumulate, current: T, index: number) => Promise<TAccumulate>
+  func: (acc: TAccumulate, current: T, index: number) => Promise<TAccumulate>
 ): AsyncSeqToValue<T, TAccumulate> =>
   async function reduceAsync(seq: AsyncSeq<T>): Promise<TAccumulate> {
     let count = 0;

@@ -21,7 +21,7 @@ import { AsyncGen, AsyncOperator, AsyncSeq } from '../../AsyncSeq';
  */
 export const scanAsync = <T, TAccumulate>(
   seed: TAccumulate,
-  func: (previous: TAccumulate, current: T, index: number) => Promise<TAccumulate>
+  func: (acc: TAccumulate, current: T, index: number) => Promise<TAccumulate>
 ): AsyncOperator<T, TAccumulate> =>
   async function* scanAsync(source: AsyncSeq<T>): AsyncGen<TAccumulate> {
     let count = 0;
