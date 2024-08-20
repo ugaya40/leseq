@@ -7,7 +7,8 @@ export default {
   output: {
     dir: "./dist",
     format: "es",
-    sourcemap: false
+    sourcemap: true,
+    entryFileNames: "[name].esm.js"
   },
   plugins: [
     typescript(),

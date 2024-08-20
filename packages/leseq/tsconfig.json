@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "sourceMap": true,
-    "target": "es6",
+    "target": "ES2022",
     "strict": true,
     "outDir": "./dist",
     "moduleResolution": "Node",
